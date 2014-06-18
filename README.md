@@ -1,4 +1,4 @@
 lightair
 ========
 
-Newsletter Management
+This is a "light as air" Newsletter Management system. 
