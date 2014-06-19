@@ -55,4 +55,19 @@ gem 'mongoid', github: 'mongoid/mongoid'
 gem 'devise_invitable'
 
 # Use bootstrap to generate quick, elegent and responsive layouts
-gem 'twitter-bootstrap-rails', :git => 'git://github.com/seyhunak/twitter-bootstrap-rails.git'
+gem 'twitter-bootstrap-rails', github: 'seyhunak/twitter-bootstrap-rails'
+
+# The following gems for testing purpose in development and testing environment
+group :development, :test do
+# Rspec is used to write the test cases
+  gem 'rspec-rails', '~> 3.0.0'
+# Use factory girl to pass random data for test cases
+  gem 'factory_girl_rails'
+# Use faker to generate fake strings and data
+  gem 'faker'
+# Use to clean database after executing a test case
+  gem 'database_cleaner'
+# Use to track how much code has been tested
+  gem 'simplecov'
+end
+
