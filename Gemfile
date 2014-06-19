@@ -39,6 +39,9 @@ gem 'spring',        group: :development
 # Use google_drive to read/write files or spreadsheets from google drive
 gem 'google_drive'
 
+# Use linkedin to interface with linkedin api
+gem 'linkedin'
+
 # Use sendrid to access sendgrid api to send mails and get their status
 gem 'sendgrid'
 
@@ -71,3 +74,5 @@ group :development, :test do
   gem 'simplecov'
 end
 
+# Use to count the successful operations in mongodb
+gem 'mongoid_magic_counter_cache'
