@@ -1,0 +1,136 @@
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0548ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a9372f6b616e25dd000000'), "email_id"=>"gilbert_beer@funk.com", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Mrs. Reece Gibson"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 104.5874ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.1699ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a938096b616e2611000000'), "email_id"=>"katelynn@oberbrunnerrobel.info", "is_subscribed"=>true, "joined_on"=>2012-11-12 00:00:00 UTC, "source"=>"Kayleigh Schinner"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7738ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.7781ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a938c36b616e262b000000'), "email_id"=>"molly.mcclure@okeefe.org", "is_subscribed"=>true, "joined_on"=>2015-11-11 00:00:00 UTC, "source"=>"Teagan Kilback"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.4307ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.8886ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"wilfred@legros.info"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7148ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ab16b616e2656000000'), "email_id"=>"wilfred@legros.info", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Karianne Schneider"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.8084ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"spencer@buckridgegleason.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6924ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ab16b616e2656010000'), "email_id"=>"spencer@buckridgegleason.org", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Jarret Waelchi"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6690ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"harmony_paucek@mckenzie.biz"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6403ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ab16b616e2656020000'), "email_id"=>"harmony_paucek@mckenzie.biz", "is_subscribed"=>true, "joined_on"=>2012-11-12 00:00:00 UTC, "source"=>"Jordi Lebsack"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6942ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"jaron@collinsfadel.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7572ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ab16b616e2656030000'), "email_id"=>"jaron@collinsfadel.name", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Jason Blick III"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7439ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.7738ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"alysha@lehner.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.3268ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b336b616e2679000000'), "email_id"=>"alysha@lehner.org", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Mrs. Lura Schamberger"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.4545ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"jaiden_howell@larson.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.3777ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b336b616e2679010000'), "email_id"=>"jaiden_howell@larson.name", "is_subscribed"=>true, "joined_on"=>2012-11-12 00:00:00 UTC, "source"=>"Carmella Price"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6646ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"branson@jaskolski.biz"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6957ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b336b616e2679020000'), "email_id"=>"branson@jaskolski.biz", "is_subscribed"=>true, "joined_on"=>2012-11-12 00:00:00 UTC, "source"=>"Zoey Price"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6887ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"matt.dubuque@rath.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7994ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b336b616e2679030000'), "email_id"=>"matt.dubuque@rath.net", "is_subscribed"=>true, "joined_on"=>2015-11-11 00:00:00 UTC, "source"=>"Fabian Spencer"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7326ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"lavern@kunze.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7124ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b336b616e2679040000'), "email_id"=>"lavern@kunze.net", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Sandrine Mitchell II"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7395ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.7780ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"okey@ortizsteuber.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.3318ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b696b616e2689000000'), "email_id"=>"okey@ortizsteuber.net", "is_subscribed"=>true, "joined_on"=>2015-11-11 00:00:00 UTC, "source"=>"Rubie Schroeder"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.4237ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"stephania_okeefe@schmelerwisozk.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.3893ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b696b616e2689010000'), "email_id"=>"stephania_okeefe@schmelerwisozk.com", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Keon Wiza"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6544ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"mylene@pfefferbahringer.info"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6574ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b696b616e2689020000'), "email_id"=>"mylene@pfefferbahringer.info", "is_subscribed"=>true, "joined_on"=>2015-11-11 00:00:00 UTC, "source"=>"Jaycee King"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6338ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"kimberly@bartell.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6879ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b696b616e2689030000'), "email_id"=>"kimberly@bartell.name", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Mr. Kenneth Marvin"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7028ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"jarrett.ratke@baumbachnitzsche.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.8562ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93b696b616e2689040000'), "email_id"=>"jarrett.ratke@baumbachnitzsche.net", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Ms. Korey Marquardt"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7834ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.8392ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"lowell@kirlin.info"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.3260ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93bd36b616e26a3000000'), "email_id"=>"lowell@kirlin.info", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Frederic Rau"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.4201ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"eva@gusikowski.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7713ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93bd36b616e26a3010000'), "email_id"=>"eva@gusikowski.org", "is_subscribed"=>true, "joined_on"=>2015-11-11 00:00:00 UTC, "source"=>"Rylan Tillman"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.7377ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"cyril_beer@heidenreichpfeffer.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7309ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93bd36b616e26a3020000'), "email_id"=>"cyril_beer@heidenreichpfeffer.net", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Dayana Sipes"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6594ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"luella@powlowski.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7541ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93bd36b616e26a3030000'), "email_id"=>"luella@powlowski.com", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Raina Jenkins Jr."}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6895ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"mathias@romaguera.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6598ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93bd36b616e26a3040000'), "email_id"=>"mathias@romaguera.org", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Mr. Queenie Goyette"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 13.4924ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"mathias@romaguera.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.8207ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.2205ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"irwin@ernser.info"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6705ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93d586b616e26ee000000'), "email_id"=>"irwin@ernser.info", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Verda Hane DDS"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.9570ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"hester.halvorson@daniel.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6076ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93d586b616e26ee010000'), "email_id"=>"hester.halvorson@daniel.net", "is_subscribed"=>true, "joined_on"=>2015-11-11 00:00:00 UTC, "source"=>"Pierce Rutherford"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.5800ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"krystel@pagac.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5876ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93d586b616e26ee020000'), "email_id"=>"krystel@pagac.org", "is_subscribed"=>true, "joined_on"=>2012-11-12 00:00:00 UTC, "source"=>"Mrs. Erick Wehner"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6008ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"javier.fritsch@wiza.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6370ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93d586b616e26ee030000'), "email_id"=>"javier.fritsch@wiza.name", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Hugh Rau"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.5813ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"dewitt@jones.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6256ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93d586b616e26ee040000'), "email_id"=>"dewitt@jones.net", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Gilberto Sanford"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6430ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"dewitt@jones.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6725ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.8632ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>74477} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 1.8749ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93ee46b616e2765000000'), "content"=>"Elisabeth Lubowitz", "sent_on"=>2015-11-11 00:00:00 UTC, "user_count"=>74477}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 3.2418ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.8535ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>80933} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.2863ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93fe86b616e2781000000'), "content"=>"Miss Pasquale Tromp", "sent_on"=>2012-11-12 00:00:00 UTC, "user_count"=>80933}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.5884ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>45204} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.3389ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93fe86b616e2781010000'), "content"=>"Dusty Stanton", "sent_on"=>2012-11-12 00:00:00 UTC, "user_count"=>45204}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.4073ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>17336} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5532ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93fe86b616e2781020000'), "content"=>"Jalen Parker IV", "sent_on"=>2015-11-11 00:00:00 UTC, "user_count"=>17336}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6056ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>35685} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6204ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93fe86b616e2781030000'), "content"=>"Elissa Robel", "sent_on"=>2013-09-12 00:00:00 UTC, "user_count"=>35685}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6199ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>35685} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5295ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0513ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>45876} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6624ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791000000'), "content"=>"Nigel Hamill", "sent_on"=>2012-11-12 00:00:00 UTC, "user_count"=>45876}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.8706ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>43100} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5996ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791010000'), "content"=>"Bernadine Morissette", "sent_on"=>2015-11-11 00:00:00 UTC, "user_count"=>43100}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6448ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>16707} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5755ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791020000'), "content"=>"Zaria Monahan", "sent_on"=>2013-09-12 00:00:00 UTC, "user_count"=>16707}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.6017ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>79577} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6306ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791030000'), "content"=>"Jace Rutherford", "sent_on"=>2012-11-12 00:00:00 UTC, "user_count"=>79577}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.5964ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=newsletters selector={"user_count"=>79577} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5599ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"josefa_rowe@corkerycasper.org"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6943ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791050000'), "email_id"=>"josefa_rowe@corkerycasper.org", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Sean Schiller PhD"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.8575ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"lavonne_frami@schaden.net"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6442ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791060000'), "email_id"=>"lavonne_frami@schaden.net", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Peyton White I"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.5839ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"carmelo_johnson@conroy.info"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6437ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791070000'), "email_id"=>"carmelo_johnson@conroy.info", "is_subscribed"=>true, "joined_on"=>2011-10-12 00:00:00 UTC, "source"=>"Hiram Jacobson IV"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 13.9964ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"ransom@simonistreutel.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.6661ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791080000'), "email_id"=>"ransom@simonistreutel.name", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Desiree Schaden"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 1.0987ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"lukas@cummeratadoyle.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.5274ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_test collection=users documents=[{"_id"=>BSON::ObjectId('53a93ff66b616e2791090000'), "email_id"=>"lukas@cummeratadoyle.name", "is_subscribed"=>true, "joined_on"=>2013-09-12 00:00:00 UTC, "source"=>"Chesley Baumbach"}] flags=[]
+                         COMMAND      database=lightair_test command={:getlasterror=>1, :w=>1} runtime: 0.5212ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_test collection=users selector={"email_id"=>"lukas@cummeratadoyle.name"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.4261ms
