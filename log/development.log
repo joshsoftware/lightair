@@ -1,0 +1,48 @@
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 3.0613ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=users documents=[{"_id"=>BSON::ObjectId('53a81ad56b616e4268000000'), "email_id"=>"kanhaiya@gmail.com"}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.5034ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 1.3113ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"newsletter_id"=>BSON::ObjectId('53a81b2d6b616e4268010000')} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.0561ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.2889ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=newsletters selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 0.5541ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"newsletter_id"=>BSON::ObjectId('53a81be86b616e4427000000')} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.4398ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=newsletters documents=[{"_id"=>BSON::ObjectId('53a81c886b616e4427030000'), "content"=>"template1"}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.4297ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=users documents=[{"_id"=>BSON::ObjectId('53a81cc46b616e4427040000'), "email_id"=>"sourav@gmail.com", "newsletter_id"=>BSON::ObjectId('53a81c886b616e4427030000')}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.3326ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=lightair_development collection=newsletters selector={"_id"=>BSON::ObjectId('53a81c886b616e4427030000')} update={"$inc"=>{"user_count"=>1}} flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 0.9007ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=users documents=[{"_id"=>BSON::ObjectId('53a81cd06b616e4427050000'), "email_id"=>"sourav1@gmail.com", "newsletter_id"=>BSON::ObjectId('53a81c886b616e4427030000')}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.2035ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=lightair_development collection=newsletters selector={"_id"=>BSON::ObjectId('53a81c886b616e4427030000')} update={"$inc"=>{"user_count"=>1}} flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 0.7864ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0267ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=users documents=[{"_id"=>BSON::ObjectId('53a81cd76b616e4427060000'), "email_id"=>"sourav2@gmail.com", "newsletter_id"=>BSON::ObjectId('53a81c886b616e4427030000')}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.0540ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=lightair_development collection=newsletters selector={"_id"=>BSON::ObjectId('53a81c886b616e4427030000')} update={"$inc"=>{"user_count"=>1}} flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.1153ms
+
+
+Started GET "/" for 127.0.0.1 at 2014-06-24 11:05:10 +0530
+Processing by Rails::WelcomeController#index as HTML
+  Rendered /home/kanhaiya/.rvm/gems/ruby-2.1.2@lightair/gems/railties-4.1.1/lib/rails/templates/rails/welcome/index.html.erb (18.3ms)
+Completed 200 OK in 122ms (Views: 94.1ms)
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0907ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"email_id"=>"sourav@gmail.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7767ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"_id"=>1} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.9532ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 1.3563ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"email_id"=>"ravi@gmail.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 1.1686ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"newsletter_id"=>BSON::ObjectId('53a941696b616e27ab010000')} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 1.0141ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.1818ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"email_id"=>"ravi@gmail.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.8700ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=users documents=[{"_id"=>BSON::ObjectId('53a940866b616e27ab000000'), "email_id"=>"ravi@gmail.com", "source"=>"linkedin", "joined_on"=>Thu, 01 Jan 1970, "is_subscribed"=>true}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 1.3548ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"email_id"=>"ravi@gmail.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 1.1161ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=newsletters selector={"$query"=>{}, "$orderby"=>{:_id=>1}} flags=[] limit=-1 skip=0 batch_size=nil fields=nil runtime: 14.9687ms
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 1.0441ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"email_id"=>"ravi@gmail.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 1.0195ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={"email_id"=>"hanu@gmail.com"} flags=[] limit=-1 skip=0 batch_size=nil fields={:_id=>1} runtime: 0.7074ms
+  MOPED: 127.0.0.1:27017 INSERT       database=lightair_development collection=users documents=[{"_id"=>BSON::ObjectId('53a943db6b616e27ab030000'), "email_id"=>"hanu@gmail.com", "is_subscribed"=>true, "joined_on"=>Thu, 01 Jan 1970, "source"=>"google drive", "newsletter_id"=>BSON::ObjectId('53a7cf2a6b616e225d000000')}] flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 0.8678ms
+  MOPED: 127.0.0.1:27017 UPDATE       database=lightair_development collection=newsletters selector={"_id"=>BSON::ObjectId('53a7cf2a6b616e225d000000')} update={"$inc"=>{"user_count"=>1}} flags=[]
+                         COMMAND      database=lightair_development command={:getlasterror=>1, :w=>1} runtime: 0.9440ms
