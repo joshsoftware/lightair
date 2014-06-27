@@ -1,10 +1,37 @@
-!!!
+<!DOCTYPE html>
 %html
   %head
-    %title lightair
-    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
-    = javascript_include_tag 'application', 'data-turbolinks-track' => true
-    = csrf_meta_tags
+  %title Lightair
+  = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+  = javascript_include_tag 'application', 'data-turbolinks-track' => true
+  = csrf_meta_tags
   %body
-    = yield
-  
+    %div.nav.navbar-inverse.navbar-fixed-top
+      %div.container
+        %div.navbar-header
+          .navbar-brand
+            %h4 LightAir
+
+        %ul.nav.navbar-nav
+          %li.active
+            %a{href: "#"}
+              %h4 Home
+          %li
+            %a{href: "#"} 
+              %h4 Newsletters
+          %li
+            %a{href: "#"}
+              %h4 Create New
+
+        %ul.nav.navbar-nav.navbar-right
+          %li.active
+            %a{href: "#"}
+              Subscriber count : 
+              1000 
+    %div.container
+      %div.row
+        %div.col-sm-9= yield
+        %div.col-sm-3
+          %center
+            %h3 Insight of LightAir
+            %p LightAir is a mass Mailer designed to send newsletters designed in html to be sent to a few hundered to a tens of thousands of subscribers. It has an inbuilt HTML editor to create a newsletter online.
