@@ -14,11 +14,10 @@ RSpec.describe Newsletter, :type => :model do
   end
 
   it "validates presence of user count" do
-    expect(@newsletter.user_count).to be_present
+    expect(@newsletter.users_count).to be_present
   end
-
-  it "validates updation of user count" do
-    a = Newsletter.new(@newsletter.attributes)
-    expect(a).not_to be_valid 
+  let!(:fake_newsletter_with_users){FactoryGirl.create(:newsletter_with_users)}
+  it "validates counter cache" do
+    expect { fake_newsletter_with_users.users.last.destroy}.to change{fake_newsletter_with_users.users_count}.by(-1)
   end
 end
