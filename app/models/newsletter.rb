@@ -2,12 +2,11 @@ class Newsletter
   include Mongoid::Document
     field :content,     type: String 
     field :sent_on,     type: Date
-    field :user_count,  type: Integer
+    field :users_count,  type: Integer, default: 0
 
     validates :content, presence: true
     validates :sent_on, presence: true
-    validates :user_count, presence: true
-    validates :user_count, uniqueness: true
 
     has_many :users
+
 end

@@ -4,7 +4,7 @@ ruby '2.1.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.1'
 # Use SCSS for stylesheets
-#gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails', '~> 4.0.3'
 
 gem 'haml'
 
@@ -80,4 +80,3 @@ group :development, :test do
 end
 
 # Use to count the successful operations in mongodb
-gem 'mongoid_magic_counter_cache'

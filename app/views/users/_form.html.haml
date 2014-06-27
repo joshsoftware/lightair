@@ -1,0 +1,5 @@
+= form_for @user do |f|
+  Email: #{f.text_field :email_id}
+  Subcription: #{f.text_field :is_subscribed}
+  Joined: #{f.text_field :joined_on}
+  Source: #{f.text_field :source}#{f.submit "Add User Id"}
