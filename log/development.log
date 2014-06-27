@@ -16773,3 +16773,167 @@ Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2014-06-27 15:02:15 +0530
 
 Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-06-27 15:02:15 +0530
 >>>>>>> f4f4d8246b1c76bb1b0b291df147168db225fced
+
+
+Started GET "/" for 127.0.0.1 at 2014-06-27 16:19:25 +0530
+Processing by UsersController#index as HTML
+  MOPED: 127.0.0.1:27017 COMMAND      database=admin command={:ismaster=>1} runtime: 0.8067ms
+  MOPED: 127.0.0.1:27017 QUERY        database=lightair_development collection=users selector={} flags=[] limit=0 skip=0 batch_size=nil fields=nil runtime: 0.6852ms
+  Rendered users/index.html.haml within layouts/application (14.6ms)
+Completed 200 OK in 2492ms (Views: 2473.5ms)
+
+
+Started GET "/assets/bootstrap_config.css?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/newsletters.css?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/alert.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/affix.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/button.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/carousel.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/collapse.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/dropdown.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/tab.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/transition.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/scrollspy.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/modal.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/tooltip.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap/popover.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/newsletters.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-06-27 16:19:27 +0530
+
+
+Started GET "/" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+Processing by HomeController#index as HTML
+  Rendered home/index.html.haml within layouts/application (2.3ms)
+Completed 200 OK in 16ms (Views: 15.5ms)
+
+
+Started GET "/assets/bootstrap_config.css?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/home.css?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/newsletters.css?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/affix.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/carousel.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/alert.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/button.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/collapse.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/dropdown.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/tab.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/transition.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/scrollspy.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/modal.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/tooltip.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap/popover.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/home.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/bootstrap.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/newsletters.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-06-27 16:20:10 +0530
