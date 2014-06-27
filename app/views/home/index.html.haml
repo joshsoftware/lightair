@@ -1,0 +1,8 @@
+%div.carousel.slide{id: "myCarousel"}
+  .carousel-inner
+    .active.item
+      =image_tag("/images/1.jpg")
+    .item
+      =image_tag("/images/2.jpg")
+%script{type: "text/javascript"}
+  var $ = jQuery.noConflict(); $(document).ready(function()  { $('#myCarousel').carousel({ interval: 3000, cycle: true }); });
