@@ -1,6 +1,5 @@
 class User
   include Mongoid::Document
-  include Mongoid::MagicCounterCache
 
   field :email_id,      type: String
   field :is_subscribed, type: Boolean
@@ -13,7 +12,6 @@ class User
   validates :source, presence: true
   validates :email_id, uniqueness: true
 
-  belongs_to :newsletter
-  counter_cache :newsletter
+  belongs_to :newsletter, counter_cache: :users_count
 
 end
