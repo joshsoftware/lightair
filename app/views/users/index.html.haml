@@ -1,14 +1,4 @@
-
-
-
-
-
-
-
-
-
-
-%table 
+%table.table.table-striped 
   - @users.each do |user|
     %tr
       %td
@@ -18,4 +8,3 @@
       %td
         = link_to "Delete", user_path(user), method: :delete
     %tr
-= link_to "Add User Id", new_user_path
