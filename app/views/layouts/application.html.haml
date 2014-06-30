@@ -14,14 +14,18 @@
 
         %ul.nav.navbar-nav
           %li.active
-            %a{href: "#"}
+            %a{href: "#{home_index_path}"}
               %h4 Home
           %li
             %a{href: "#"} 
               %h4 Newsletters
           %li
-            %a{href: "#"}
-              %h4 Create New
+            %a{href: "#{new_user_path}"}
+              %h4 Add New User
+          %li
+            %a{href: "#{users_path}"}
+              %h4 All Users
+
 
         %ul.nav.navbar-nav.navbar-right
           %li.active
