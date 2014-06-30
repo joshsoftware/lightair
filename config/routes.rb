@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :users
   resources :newsletters
+  resources :home
   root :to => "home#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
