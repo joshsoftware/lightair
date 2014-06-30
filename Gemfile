@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 ruby '2.1.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.1.1'
+gem 'rails', '4.1.2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 
@@ -57,7 +57,7 @@ gem 'sidekiq'
 gem 'devise'
 
 # Use mongoid to utilise mongodb
-gem 'mongoid', github: 'mongoid/mongoid'
+gem 'mongoid'
 
 # Use devise_invitable to give authentication to only invited users
 gem 'devise_invitable'
