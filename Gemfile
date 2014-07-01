@@ -42,6 +42,7 @@ gem 'spring',        group: :development
 # gem 'debugger', group: [:development, :test]
 
 # Use google_drive to read/write files or spreadsheets from google drive
+gem 'omniauth-google-oauth2'
 gem 'google_drive'
 
 # Use linkedin to interface with linkedin api
