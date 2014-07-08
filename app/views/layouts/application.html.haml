@@ -19,9 +19,18 @@
           %li
             %a{href: "#"} 
               %h4 Newsletters
-          %li
-            %a{href: "#{new_user_path}"}
-              %h4 Add New User
+          %li.dropdown
+            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
+              %h4 
+                Add Users
+                %span.caret
+            %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu1" }
+              %li
+                %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Manually
+              %li
+                %a{role: "menuitem", tabindex: "-2", href: "#{callback_index_path}"}Google Spreadsheets
+              %li
+                %a{role: "menuitem", tabindex: "-1", href: "#{linkedin_path}"}Linkedin Connections
           %li
             %a{href: "#{users_path}"}
               %h4 All Users
@@ -31,7 +40,7 @@
           %li.active
             %a{href: "#"}
               Subscriber count : 
-              1000 
+              =User.count
     %div.container
       %div.row
         %div.col-sm-9= yield

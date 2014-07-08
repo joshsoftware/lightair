@@ -1,0 +1,14 @@
+=@msg
+=#debug @ref
+
+%br
+= Time.now
+%table.table
+  -@sheets.count.times do |i|
+    %tr
+      %td
+        = @sheets[i]["access_token"]
+      %td
+        = link_to "Update", callback_update_path(@sheets[i]["spreadsheet_id"])
+      %td
+        = @sheets[i]["expires_at"]        
