@@ -36,7 +36,7 @@ class CallbacksController < ApplicationController
     client      = Google::APIClient.new
     client.authorization.access_token = tkn['access_token']
     #session     = GoogleDrive.login_with_oauth(tkn["access_token"])
-    drive       = client.discovered_api('drive', 'v3')
+    drive       = client.discovered_api('drive', 'v2')
 
     wks         = client.execute( 
                       api_method: drive.files.list, 
