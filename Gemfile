@@ -43,9 +43,11 @@ gem 'spring',        group: :development
 
 # Use google_drive to read/write files or spreadsheets from google drive
 gem 'omniauth-google-oauth2'
-gem 'google_drive'
+gem 'google-api-client', require: 'google/api_client' 
+gem 'google_drive', git: 'git://github.com/SixiS/google-drive-ruby'
 
 # Use linkedin to interface with linkedin api
+#gem 'omniauth-linkedin-oauth2'
 gem 'linkedin'
 
 # Use sendrid to access sendgrid api to send mails and get their status
@@ -81,3 +83,5 @@ group :development, :test do
 end
 
 gem 'simple_form'
+gem 'pry'
+gem 'rest_client'
