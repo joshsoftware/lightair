@@ -1,7 +1,16 @@
 Rails.application.routes.draw do
+
+  get '/home/sheets',              to: 'home#add_from_google',  as: 'add_from_google'
+  get '/auth/:provider/callback',  to: 'callbacks#omniauth'
+  get '/linkedin',                 to: 'callbacks#linkedin',    as: 'linkedin'
+  get '/callbacks/sheet/:id',      to: 'callbacks#setSheet',    as: 'set_sheet' 
+  get '/callbacks/index',          to: 'callbacks#index',       as: 'callback_index' 
+  get '/callbacks/update/:id',     to: 'callbacks#update',       as: 'callback_update'
+  
   resources :users
   resources :newsletters
   resources :home
+
   root :to => "home#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
