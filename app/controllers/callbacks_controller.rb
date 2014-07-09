@@ -1,7 +1,6 @@
 class CallbacksController < ApplicationController
 
   def index
-    #Token.delete_all
     tkn = Token.first
 
     if tkn.nil?
@@ -17,7 +16,6 @@ class CallbacksController < ApplicationController
 
   def omniauth
     tkn                   = Token.new
-    req                   = request.env["omniauth.auth"]
     auth_token            = request.env["omniauth.auth"].fetch("credentials")
     tkn["access_token"]   = auth_token.fetch("token")
     tkn["refresh_token"]  = auth_token.fetch("refresh_token")
@@ -35,7 +33,6 @@ class CallbacksController < ApplicationController
   def getSheet(tkn)
     client      = Google::APIClient.new
     client.authorization.access_token = tkn['access_token']
-    #session     = GoogleDrive.login_with_oauth(tkn["access_token"])
     drive       = client.discovered_api('drive', 'v2')
 
     wks         = client.execute( 
@@ -62,17 +59,14 @@ class CallbacksController < ApplicationController
     @ws      = session.spreadsheet_by_key(@tkn['spreadsheet_id']).worksheets[0]
 
     rowcount  = @ws.rows.count
-    usercount = User.count
-    #if rowcount > usercount
-      (rowcount).times do |i|
-        User.create(email_id:       @ws[i + 1, 1], # + usercount, 1],
-                    is_subscribed:  true, 
-                    joined_on:      Date.today, 
-                    source:         "Google Spreadsheet")
-      end
-    #end
 
-    #render action: "test"
+    (rowcount).times do |i|
+      User.create(email_id:       @ws[i + 1, 1],
+                  is_subscribed:  true,
+                  joined_on:      Date.today,
+                  source:         "Google Spreadsheet")
+    end
+
   end
 
   def refresh_token(tkn)
@@ -83,14 +77,7 @@ class CallbacksController < ApplicationController
         grant_type:     'refresh_token'
     }
     re = ActiveSupport::JSON.decode(RestClient.post 'https://accounts.google.com/o/oauth2/token', data)
-=begin
-    client      = Google::APIClient.new
-    client.authorization.access_token = tkn['access_token']
-    client.authorization.client_id = ENV["GOOGLE_ID"]
-    client.authorization.client_secret = ENV["GOOGLE_KEY"]
-    client.authorization.refresh_token = tkn["refresh_token"]
-    re = client.authorization.update_token!
-=end
+
     sheets                 = Token.where(spreadsheet_id: tkn['spreadsheet_id'])[0]
     sheets['access_token'] = re['access_token']
     sheets['expires_at']   = (Time.now + re['expires_in'].second).localtime
