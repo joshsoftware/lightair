@@ -49,3 +49,4 @@ build/
 /tmp
 *.log
 test.html.haml
+

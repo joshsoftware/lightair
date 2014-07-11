@@ -6,8 +6,6 @@ class SpreadsheetsController < ApplicationController
   end
 
   def new
-    @req = params
-=begin
     if params[:access_token]
       spreadsheet = Spreadsheet.where(access_token: params['access_token'])[0]
     else
@@ -24,7 +22,6 @@ class SpreadsheetsController < ApplicationController
       @msg          = 'no work'
       # Handle if data does not get saved
     end
-=end
   end
 
   def edit
