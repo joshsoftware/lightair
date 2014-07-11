@@ -1,0 +1,7 @@
+=@req
+%br
+-#count = @spreadsheets.count
+=#count
+-#count.times do |i|
+  =#link_to @spreadsheets[i]['title'], edit_spreadsheet_path(@spreadsheets[i]['id'], title: @spreadsheets[i]['title'], token: @token) if @spreadsheets[i]['mimeType'].include?('spreadsheet')
+  %br
