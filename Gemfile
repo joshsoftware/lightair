@@ -70,16 +70,20 @@ gem 'bootstrap-sass'
 
 # The following gems for testing purpose in development and testing environment
 group :development, :test do
-# Rspec is used to write the test cases
+  # Rspec is used to write the test cases
   gem 'rspec-rails'
-# Use factory girl to pass random data for test cases
+  # Use factory girl to pass random data for test cases
   gem 'factory_girl_rails'
-# Use faker to generate fake strings and data
+  # Use faker to generate fake strings and data
   gem 'faker'
-# Use to clean database after executing a test case
+  # Use to clean database after executing a test case
   gem 'database_cleaner'
-# Use to track how much code has been tested
+  # Use to track how much code has been tested
   gem 'simplecov'
+  # Webmock to stub http requests
+  gem 'webmock'
+  # VCR to record the responses from web and replay them when needed
+  gem 'vcr'
 end
 
 gem 'simple_form'

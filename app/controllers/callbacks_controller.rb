@@ -54,9 +54,9 @@ class CallbacksController < ApplicationController
   end
 
   def insertEmailInDatabase(tkn)
-    @tkn     = tkn
-    session  = GoogleDrive.login_with_oauth(@tkn["access_token"])
-    @ws      = session.spreadsheet_by_key(@tkn['spreadsheet_id']).worksheets[0]
+    @tkn      = tkn
+    session   = GoogleDrive.login_with_oauth(@tkn["access_token"])
+    @ws       = session.spreadsheet_by_key(@tkn['spreadsheet_id']).worksheets[0]
 
     rowcount  = @ws.rows.count
 
