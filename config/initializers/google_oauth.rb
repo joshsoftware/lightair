@@ -4,7 +4,10 @@ Rails.application.config.middleware.use OmniAuth::Builder do
     name:                 'google',
     scope:                'userinfo.profile,userinfo.email,drive,https://spreadsheets.google.com/feeds',
     prompt:               'consent',
-    access_type:          'offline',
-    #redirect_uri:         'http://localhost:8080/auth/google/spreadsheets'
+    access_type:          'offline'
   }
 end
+
+OmniAuth.config.on_failure = Proc.new { |env|
+  OmniAuth::FailureEndpoint.new(env).redirect_to_failure
+}
