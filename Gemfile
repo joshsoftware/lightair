@@ -79,7 +79,7 @@ group :development, :test do
   # Use to clean database after executing a test case
   gem 'database_cleaner'
   # Use to track how much code has been tested
-  gem 'simplecov'
+  gem 'simplecov', '~> 0.7.1'
   # Webmock to stub http requests
   gem 'webmock'
   # VCR to record the responses from web and replay them when needed
