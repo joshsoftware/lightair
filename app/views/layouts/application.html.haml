@@ -12,35 +12,35 @@
           .navbar-brand
             %h4 LightAir
 
-        %ul.nav.navbar-nav
-          %li.active
-            %a{href: "#{home_index_path}"}
-              %h4 Home
-          %li
-            %a{href: "#"} 
-              %h4 Newsletters
-          %li.dropdown
-            %a.dropdown-toggle{"data-toggle" => "dropdown", href: "#"}
-              %h4 
-                Add Users
-                %span.caret
-            %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu1" }
-              %li
-                %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Manually
-              %li
-                %a{role: "menuitem", tabindex: "-2", href: "#{callback_index_path}"}Google Spreadsheets
-              %li
-                %a{role: "menuitem", tabindex: "-1", href: "#{linkedin_path}"}Linkedin Connections
-          %li
-            %a{href: "#{users_path}"}
-              %h4 All Users
+        %div.nav-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a{href: "#{home_index_path}"}
+                %h4 Home
+            %li
+              %a{href: "#"}
+                %h4 Newsletters
+            %li
+              %a{href: "#{users_path}"}
+                %h4 Show Users
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown"}
+                %h4
+                  Add Users
+                  %span.caret
+              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu1" }
+                %li
+                  %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Add Manually
+                %li
+                  %a{role: "menuitem", tabindex: "-2", href: "#{spreadsheets_path}"}Google Spreadsheets
 
 
         %ul.nav.navbar-nav.navbar-right
           %li.active
             %a{href: "#"}
-              Subscriber count : 
-              =User.count
+              %h4
+                Subscriber count :
+                =User.count
     %div.container
       %div.row
         %div.col-sm-9= yield
