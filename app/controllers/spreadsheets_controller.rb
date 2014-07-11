@@ -17,9 +17,7 @@ class SpreadsheetsController < ApplicationController
       # Spreadsheets from google
       @spreadsheets = get_spreadsheets(spreadsheet)
       @token        = spreadsheet.access_token
-      @msg          = 'work'
     else
-      @msg          = 'no work'
       # Handle if data does not get saved
     end
   end
@@ -28,7 +26,6 @@ class SpreadsheetsController < ApplicationController
     token = spreadsheet_params['token']
     spreadsheet = Spreadsheet.where(access_token: token)[0]
     spreadsheet.add_spreadsheet_credentials(spreadsheet_params)
-    #binding.pry
     spreadsheet.save
 
     @spreadsheets = Spreadsheet.all.to_a
@@ -50,5 +47,13 @@ class SpreadsheetsController < ApplicationController
 
   def spreadsheet_params
     params.permit(:title, :id, :token)
+  end
+
+  def failure
+    if params['message'].match('access_denied')
+      @msg = "Account integration Failed. User Refused to grant permissions"
+    end
+    @spreadsheets = Spreadsheet.all.to_a
+    render action: 'index'
   end
 end
