@@ -1,5 +1,6 @@
 class SpreadsheetsController < ApplicationController
-  include GoogleSpreadsheets
+  require 'google'
+  include Google::Spreadsheets
 
   def index
     @spreadsheets = Spreadsheet.all.to_a
@@ -15,18 +16,23 @@ class SpreadsheetsController < ApplicationController
 
     if spreadsheet.save
       # Spreadsheets from google
-      @spreadsheets = get_spreadsheets(spreadsheet)
+      @spreadsheets = list(spreadsheet)
       @token        = spreadsheet.access_token
     else
       # Handle if data does not get saved
+      @msg = 'Getting same access token. Try deleting '
     end
   end
 
   def edit
     token = spreadsheet_params['token']
     spreadsheet = Spreadsheet.where(access_token: token)[0]
-    spreadsheet.add_spreadsheet_credentials(spreadsheet_params)
-    spreadsheet.save
+
+    if spreadsheet.add_spreadsheet_credentials(spreadsheet_params)
+      spreadsheet.save
+    else
+      @error = 'Already Present'
+    end
 
     @spreadsheets = Spreadsheet.all.to_a
 
@@ -35,8 +41,9 @@ class SpreadsheetsController < ApplicationController
 
   def update
     spreadsheet = Spreadsheet.find(params['id'])
-    @worksheet  = get_worksheets(spreadsheet)
+    @worksheet  = worksheets(spreadsheet)
     User.add_users_from_worksheet(@worksheet)
+
     redirect_to users_path
   end
 
@@ -45,15 +52,19 @@ class SpreadsheetsController < ApplicationController
     redirect_to spreadsheets_path
   end
 
-  def spreadsheet_params
-    params.permit(:title, :id, :token)
-  end
-
   def failure
     if params['message'].match('access_denied')
-      @msg = "Account integration Failed. User Refused to grant permissions"
+      @msg = 'Account integration Failed. User Refused to grant permissions'
     end
     @spreadsheets = Spreadsheet.all.to_a
     render action: 'index'
   end
+
+  #################################
+  private
+  #################################
+
+    def spreadsheet_params
+      params.permit(:title, :id, :token)
+    end
 end

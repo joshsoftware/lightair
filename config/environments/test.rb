@@ -1,6 +1,6 @@
 Rails.application.configure do
-  ENV["GOOGLE_ID"]  = '367225507767-119uvbhdadqbft2kn4759rodoiivksn9.apps.googleusercontent.com'
-  ENV["GOOGLE_KEY"] = '1yX7HzuzWi3yD1OqJ21ZgpSS'
+  ENV['GOOGLE_ID']  = '367225507767-119uvbhdadqbft2kn4759rodoiivksn9.apps.googleusercontent.com'
+  ENV['GOOGLE_KEY'] = '1yX7HzuzWi3yD1OqJ21ZgpSS'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # The test environment is used exclusively to run your application's
