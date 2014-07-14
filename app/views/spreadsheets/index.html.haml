@@ -1,6 +1,6 @@
 = @msg if @msg
 %h4
-  =link_to 'Add New Spreadsheet', 'auth/google/'
+  =link_to 'Add New Spreadsheet', '/auth/google/'
 
 %table.table.table-striped
   %tr.info
@@ -19,10 +19,14 @@
       %td
         = i = i + 1
       %td
-        - if ss['spreadsheet_title']
+        -if ss['spreadsheet_title']
           =ss['spreadsheet_title']
         -else
-          =link_to 'Spreadsheet not initialised', new_spreadsheet_path(access_token: ss['access_token'])
+          =link_to 'Get Spreadsheet', new_spreadsheet_path(access_token: ss['access_token'])
+          -if @error
+            (
+            =@error
+            )
       %td
         =link_to 'Delete', spreadsheet_path(ss), method: :delete
         -if ss['spreadsheet_title']

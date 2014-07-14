@@ -7,7 +7,7 @@ class Spreadsheet
   field :expires_at,        type: Time
   field :access_token,      type: String
 
-  validates :access_token, uniqueness: true
+  validates :access_token,   presence:   true, uniqueness: true
 
   def add_tokens(tokens = {})
     self['access_token']   = tokens.fetch('token')
@@ -16,7 +16,6 @@ class Spreadsheet
   end
 
   def add_spreadsheet_credentials(credentials = {})
-    #binding.pry
     self['spreadsheet_id']    = credentials['id']
     self['spreadsheet_title'] = credentials['title']
   end
