@@ -80,6 +80,9 @@ group :development, :test do
   gem 'database_cleaner'
   # Use to track how much code has been tested
   gem 'simplecov', '~> 0.7.1'
+end
+
+group :test do
   # Webmock to stub http requests
   gem 'webmock'
   # VCR to record the responses from web and replay them when needed
