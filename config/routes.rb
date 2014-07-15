@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-
+  mount RedactorRails::Engine => '/redactor_rails'
+  get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
+  get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
+  resources :users
+  resources :newsletters
+  resources :home
+  resources :user_mailer
   get '/auth/:provider/callback', to: 'spreadsheets#new'
   get '/auth/failure',            to: 'spreadsheets#failure'
   resources :users, :newsletters, :home, :spreadsheets
