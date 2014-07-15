@@ -1,0 +1,6 @@
+= simple_form_for (@newsletter) do |news|
+  .inputs
+    = news.text_area :content, :placeholder => "Input here..", :class => "redactor", :rows => 20, :cols => 60
+    = news.input :sent_on
+    = news.input :users_count
+    = news.button :submit

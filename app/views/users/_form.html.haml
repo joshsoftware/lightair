@@ -1,8 +1,15 @@
 = simple_form_for (@user) do |f|
   .inputs
     = f.input :email_id
-    = f.input :is_subscribed
-    = f.input :joined_on
+    = f.input :username
+    = f.input :is_subscribed, :as => :select
+    = f.input :joined_on, input_html: { 'data-behaviour' => 'datepicker'}
     = f.input :source
     = f.button :submit
+
+  :javascript
+    $('[data-behaviour~=datepicker]').datepicker({
+      format: 'yyyy-mm-dd'
+    })
+  
 
