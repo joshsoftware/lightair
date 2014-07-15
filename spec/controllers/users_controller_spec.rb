@@ -12,7 +12,7 @@ RSpec.describe UsersController, :type => :controller do
   context "GET show" do
     let(:user) {FactoryGirl.create(:user)}
     it "show the details of the users" do
-      get :show, {:id => user.id}
+      get :show, {id: user.id}
       expect(response).to render_template("show")
     end
   end
@@ -32,15 +32,15 @@ RSpec.describe UsersController, :type => :controller do
       expect(response).to redirect_to(users_path)
     end
     it "not arise" do
-      post :create, {user: new_user}
-      expect(response).not_to render_template("new")
+      post :create, {user: {email_id: "",username: "kanhaiya", is_subscribed: "false"}}
+      expect(response).to render_template("new")
     end
   end
 
   context "GET edit" do
     let(:new_user) {FactoryGirl.create(:user)}
     it "fetches the specific all the users" do
-      get :edit, {:id => new_user.id}
+      get :edit, {id: new_user.id}
       expect(response).to render_template("edit")
     end
   end
@@ -49,7 +49,7 @@ RSpec.describe UsersController, :type => :controller do
   context "DELETE delete" do
     let(:user) {FactoryGirl.create(:user)}
     it "delete an user" do
-    delete :destroy, {:id => user.id}
+    delete :destroy, {id: user.id}
     expect(response).to redirect_to(users_path)
     end
   end
@@ -58,12 +58,27 @@ RSpec.describe UsersController, :type => :controller do
   context "PUT update" do
     let(:new_user) {FactoryGirl.create(:user)}
     it "updates details of specified user" do
-      patch :update, {:id =>new_user.id, :user => { :email_id => new_user.email_id}}
+      patch :update, {id: new_user.id, user: { email_id: new_user.email_id}}
       expect(response).to redirect_to(users_path)
     end
     it " not arise" do
-      put :update, {:id =>new_user.id, :user => { :email => new_user.email_id}}
-      expect(response).not_to render_template("edit")
+      put :update, {id: new_user.id, user: { email_id: ""}}
+      expect(response).to render_template("edit")
+    end
+  end
+
+  context "GET subscribe" do
+    let(:new_user) {FactoryGirl.create(:user)}
+    it "unsubcribes a particular user" do
+      get :subscribe, {id: new_user.id}
+      expect(response).to render_template("subscribe")
+    end
+  end
+
+  context "GET sendmailer" do
+    it "sends mails to user" do
+      get :sendmailer
+      expect(response).to redirect_to(users_path)
     end
   end
 end

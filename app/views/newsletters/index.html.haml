@@ -1,0 +1,10 @@
+%table.table.table-striped
+  -@newsletters.each do |news|
+    %tr
+      %td
+        =link_to news.sent_on, newsletter_path(news)
+      %td
+        =link_to "Edit", edit_newsletter_path(news)
+      %td
+        =link_to "Delete", newsletter_path(news), method: :delete
+    %tr
