@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :newsletters
   resources :home
   resources :user_mailer
-  get '/auth/:provider/callback', to: 'spreadsheets#new'
+  get '/auth/:provider/callback', to: 'spreadsheets#new',    as: 'google_spreadsheet'
   get '/auth/failure',            to: 'spreadsheets#failure'
   resources :users, :newsletters, :home, :spreadsheets
 

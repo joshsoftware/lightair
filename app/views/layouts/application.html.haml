@@ -16,12 +16,16 @@
             %li.active
               %a{href: "#{home_index_path}"}
                 %h4 Home
-            %li
-              %a{href: "#{newsletters_path}"}
-                %h4 Newsletters
-            %li
-              %a{href: "#{new_newsletter_path}"}
-                %h4 Add Newsletter
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown"}
+                %h4
+                  Newsletters
+                  %span.caret
+              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu" }
+                %li
+                  %a{role: "menuitem", tabindex: "1", href: "#{newsletters_path}"}  Show Newsletters
+                %li
+                  %a{role: "menuitem", tabindex: "2", href: "#{new_newsletter_path}"} Add Newsletter
             %li
               %a{href: "#{users_path}"}
                 %h4 Show Users
@@ -30,7 +34,7 @@
                 %h4
                   Add Users
                   %span.caret
-              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu1" }
+              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu" }
                 %li
                   %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Add Manually
                 %li
