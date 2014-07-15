@@ -50,3 +50,4 @@ build/
 *.log
 test.html.haml
 
+config/environments/development.rb
