@@ -12,6 +12,9 @@
  *
  *= require_tree .
  *= require_self
+ *= require bootstrap-datepicker
+ *= require redactor-rails
+ *= redactor-rails/plugins
  */
 
  @import "bootstrap";
