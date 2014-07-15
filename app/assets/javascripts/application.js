@@ -14,6 +14,10 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require bootstrap-datepicker
+// require bootstrap-datepicker-rails
+//= require redactor-rails
+//= require redactor-rails/plugins
 //= require_tree .
 
 

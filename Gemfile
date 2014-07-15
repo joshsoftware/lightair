@@ -64,6 +64,7 @@ gem 'devise_invitable'
 
 # Use bootstrap to generate quick, elegent and responsive layouts
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 
 # The following gems for testing purpose in development and testing environment
 group :development, :test do
@@ -80,3 +81,10 @@ group :development, :test do
 end
 
 gem 'simple_form'
+# Use to add redactor editor
+gem 'redactor-rails'
+gem 'carrierwave'
+gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem 'mini_magick'
+gem 'redis-rails'
+gem 'redis-namespace'
