@@ -16,4 +16,12 @@ class User
 
   belongs_to :newsletter, counter_cache: :users_count
 
+  def self.add_users_from_worksheet(worksheet, column = 1)
+    worksheet.rows.count.times do |i|
+      User.create(email_id:       worksheet[i + 1, column],
+                  is_subscribed:  true,
+                  joined_on:      Date.today,
+                  source:         'Google Spreadsheet')
+    end
+  end
 end
