@@ -1,9 +1,0 @@
-<% #@ws['items'].each do |i| %>
-  <% #i.each do |j| %>
-    <%#=j%>
-  <%# end %>
-<%# end %>
-
-<% @ws['items'].each do |i| %>
-  <%= link_to i['title'], set_sheet_path(i['id']) if i['mimeType'].include?("spreadsheet") %><br>
-<% end %>
