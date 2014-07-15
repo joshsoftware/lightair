@@ -3,31 +3,6 @@ require 'webmock/rspec'
 require 'vcr'
 
 RSpec.describe SpreadsheetsController, :type => :controller do
-  context 'GET User Permission' do
-    context 'User accepts' do
-      it 'redirects to new ' do
-        VCR.use_cassette 'controllers/api-permissions-denied' do
-=begin
-          data = {
-              name:                 'google',
-              scope:                'userinfo.profile,userinfo.email,drive,https://spreadsheets.google.com/feeds',
-              prompt:               'consent',
-              access_type:          'offline',
-              redirect_uri:         'http://localhost:8080/auth/google/callback'
-          }
-          RestClient.get 'https://accounts.google.com/o/oauth2/auth',
-                         name:                 'google',
-                         scope:                'userinfo.profile,userinfo.email,drive,https://spreadsheets.google.com/feeds',
-                         prompt:               'consent',
-                         access_type:          'offline',
-                         redirect_uri:         'http://localhost:8080/auth/google/callback'
-=end
-        end
-
-      end
-    end
-  end
-
   context 'GET Index' do
     it 'it renders the index template' do
       get :index
@@ -130,7 +105,7 @@ RSpec.describe SpreadsheetsController, :type => :controller do
     it 'updates the spreadsheet' do
       VCR.use_cassette 'controllers/api-update-with-data', record: :new_episodes do
         post :update, id: sheet
-        expect(response).to redirect_to users_path
+        expect(response).to render_template(:update)
       end
     end
   end
