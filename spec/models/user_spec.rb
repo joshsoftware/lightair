@@ -26,5 +26,6 @@ RSpec.describe User, :type => :model do
     expect(k).not_to be_valid
   end
 
-
+  let(:user) {FactoryGirl.create(:user)}
+  let(:newsletter) {FactoryGirl.create(:newsletter)}
 end
