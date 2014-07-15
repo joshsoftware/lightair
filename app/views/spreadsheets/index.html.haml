@@ -1,0 +1,36 @@
+= @msg if @msg
+%h4
+  =link_to 'Add New Spreadsheet', '/auth/google/'
+
+%table.table.table-striped
+  %tr.info
+    %td
+      %strong #
+    %td
+      %strong
+        Spreadsheets (
+        =Spreadsheet.count
+        )
+    %td
+      %strong Operations
+  - i = 0
+  - @spreadsheets.each do |ss|
+    %tr
+      %td
+        = i = i + 1
+      %td
+        -if ss['spreadsheet_title']
+          =ss['spreadsheet_title']
+        -else
+          =link_to 'Get Spreadsheet', new_spreadsheet_path(access_token: ss['access_token'])
+          -if @error
+            (
+            =@error
+            )
+      %td
+        =link_to 'Delete', spreadsheet_path(ss), method: :delete
+        -if ss['spreadsheet_title']
+          |
+          =link_to 'Update', spreadsheet_path(ss), method: :patch
+
+
