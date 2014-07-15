@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
+  mount RedactorRails::Engine => '/redactor_rails'
+  get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
+  get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
   resources :users
   resources :newsletters
   resources :home
+  resources :user_mailer
   root :to => "home#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
