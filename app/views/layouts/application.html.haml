@@ -17,8 +17,11 @@
               %a{href: "#{home_index_path}"}
                 %h4 Home
             %li
-              %a{href: "#"}
+              %a{href: "#{newsletters_path}"}
                 %h4 Newsletters
+            %li
+              %a{href: "#{new_newsletter_path}"}
+                %h4 Add Newsletter
             %li
               %a{href: "#{users_path}"}
                 %h4 Show Users
@@ -32,6 +35,9 @@
                   %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Add Manually
                 %li
                   %a{role: "menuitem", tabindex: "-2", href: "#{spreadsheets_path}"}Google Spreadsheets
+            %li
+              %a{href: "#{sendmailer_path}"}
+                %h4 Send Mail
 
         %ul.nav.navbar-nav.navbar-right
           %li.active
