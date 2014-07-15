@@ -6,7 +6,8 @@ RSpec.describe SpreadsheetsController, :type => :controller do
   context 'GET User Permission' do
     context 'User accepts' do
       it 'redirects to new ' do
-        VCR.use_cassette 'controllers/api-permissions' do
+        VCR.use_cassette 'controllers/api-permissions-denied' do
+=begin
           data = {
               name:                 'google',
               scope:                'userinfo.profile,userinfo.email,drive,https://spreadsheets.google.com/feeds',
@@ -14,7 +15,13 @@ RSpec.describe SpreadsheetsController, :type => :controller do
               access_type:          'offline',
               redirect_uri:         'http://localhost:8080/auth/google/callback'
           }
-          RestClient.post 'https://accounts.google.com/o/oauth2/auth', data
+          RestClient.get 'https://accounts.google.com/o/oauth2/auth',
+                         name:                 'google',
+                         scope:                'userinfo.profile,userinfo.email,drive,https://spreadsheets.google.com/feeds',
+                         prompt:               'consent',
+                         access_type:          'offline',
+                         redirect_uri:         'http://localhost:8080/auth/google/callback'
+=end
         end
 
       end
@@ -36,6 +43,7 @@ RSpec.describe SpreadsheetsController, :type => :controller do
   end
 
   context 'GET New' do
+    let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'creates new spreadsheet when no access_token given' do
       VCR.use_cassette 'controllers/api-new_tokens' do
         request.env['omniauth.auth'] = {
@@ -52,11 +60,27 @@ RSpec.describe SpreadsheetsController, :type => :controller do
       end
     end
 
-    let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'does not creates new spreadsheet when access_token is given' do
       VCR.use_cassette 'controllers/api-response' do
         get(:new, access_token: sheet.access_token)
         expect(response).to render_template(:new)
+      end
+    end
+
+    it 'does not creates new spreadsheet if access_token already present' do
+      sheet
+
+      VCR.use_cassette 'controllers/api-new_tokens' do
+        request.env['omniauth.auth'] = {
+            'credentials'       => {
+                'token'         => sheet[:access_token],
+                'refresh_token' => sheet[:refresh_token],
+                'expires_at'    => Time.now,
+                'expires'       => true
+            }
+        }
+        get :new
+        expect(assigns(:msg)).not_to be(nil)
       end
     end
   end
