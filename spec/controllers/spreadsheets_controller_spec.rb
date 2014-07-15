@@ -3,7 +3,6 @@ require 'webmock/rspec'
 require 'vcr'
 
 RSpec.describe SpreadsheetsController, :type => :controller do
-
   context 'GET User Permission' do
     context 'User accepts' do
       it 'redirects to new ' do
@@ -65,15 +64,41 @@ RSpec.describe SpreadsheetsController, :type => :controller do
   context 'Get Edit' do
     let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'renders index page after executing' do
-      get :edit, title: 'namecollection', id: sheet['spreadsheet_id'], token: sheet['access_token']
+
+      get :edit, id: sheet['spreadsheet_id'], title: sheet['spreadsheet_title'], token: sheet['access_token']
 
       expect(response).to render_template(:index)
     end
 
     it 'adds spreadsheet\'s credentials' do
-      get :edit, title: 'namecollection', id: sheet['spreadsheet_id'], token: sheet['access_token']
+      sheet
+      Spreadsheet.delete_all
+      spreadsheet = Spreadsheet.new
+      spreadsheet.add_tokens({
+                                 'token'         => sheet[:access_token],
+                                 'refresh_token' => sheet[:refresh_token],
+                                 'expires_at'    => sheet[:expires_at]
+                             })
+      spreadsheet.save
+      get :edit, id: sheet['spreadsheet_id'], title: sheet['spreadsheet_title'], token: sheet['access_token']
       expect(assigns(:error)).to be(nil)
     end
+
+    it 'does not add duplicate spreadsheet' do
+      sheet
+      spreadsheet = Spreadsheet.new
+      spreadsheet.add_tokens({
+                                 'token'         => '0ya29.QgC-kYKwAzcdh8AAABnuwXicpaXRvO_YSlv4V9J556542KazsYWEia63TlRyA',
+                                 'refresh_token' => sheet[:refresh_token],
+                                 'expires_at'    => sheet[:expires_at]
+                             })
+      spreadsheet.save
+
+      get :edit, title: sheet['spreadsheet_title'], id: sheet['spreadsheet_id'], token: '0ya29.QgC-kYKwAzcdh8AAABnuwXicpaXRvO_YSlv4V9J556542KazsYWEia63TlRyA'
+
+      expect(assigns(:error)).not_to be(nil)
+    end
+
   end
 
   context 'Post Update' do
