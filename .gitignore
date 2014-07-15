@@ -48,5 +48,4 @@ build/
 /log/
 /tmp
 *.log
-test.html.haml
-
+*/environment.yml
