@@ -11,33 +11,34 @@
         %div.navbar-header
           .navbar-brand
             %h4 LightAir
-
-        %ul.nav.navbar-nav
-          %li.active
-            %a{href: "#{home_index_path}"}
-              %h4 Home
-          %li
-            %a{href: "#{newsletters_path}"} 
-              %h4 Newsletters
-          %li
-            %a{href: "#{new_user_path}"}
-              %h4 Add New User
-          %li
-            %a{href: "#{users_path}"}
-              %h4 All Users
-          %li
-            %a{href: "#{new_newsletter_path}"}
-              %h4 Add New Newsletter
-          %li
-            %a{href: "#{sendmailer_path}"}
-              %h4 Send Mail
-
+        %div.nav-collapse
+          %ul.nav.navbar-nav
+            %li.active
+              %a{href: "#{home_index_path}"}
+                %h4 Home
+            %li
+              %a{href: "#"}
+                %h4 Newsletters
+            %li
+              %a{href: "#{users_path}"}
+                %h4 Show Users
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown"}
+                %h4
+                  Add Users
+                  %span.caret
+              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu1" }
+                %li
+                  %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Add Manually
+                %li
+                  %a{role: "menuitem", tabindex: "-2", href: "#{spreadsheets_path}"}Google Spreadsheets
 
         %ul.nav.navbar-nav.navbar-right
           %li.active
             %a{href: "#"}
-              Subscriber count : 
-              1000 
+              %h4
+                Subscriber count :
+                =User.count
     %div.container
       %div.row
         %div.col-sm-9= yield
