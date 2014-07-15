@@ -2,11 +2,13 @@ class User
   include Mongoid::Document
 
   field :email_id,      type: String
+  field :username,      type: String
   field :is_subscribed, type: Boolean
   field :joined_on,     type: Date
   field :source,        type: String
 
   validates :email_id, presence: true
+  validates :username, presence: true
   validates :is_subscribed, presence: true
   validates :joined_on, presence: true
   validates :source, presence: true
