@@ -98,9 +98,5 @@ gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
 gem 'mini_magick'
 gem 'redis-rails'
 gem 'redis-namespace'
-<<<<<<< HEAD
 gem 'mina'
-=======
-gem 'pry'
->>>>>>> 0c5ddec6aab31a0e2641dd2f1c7fc71b913a82b9
 gem 'rest_client'
