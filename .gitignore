@@ -5,9 +5,16 @@
 /InstalledFiles
 /pkg/
 /spec/reports/
+<<<<<<< HEAD
 test/*
 tmp/*
 .idea/*
+=======
+/test/tmp/
+/test/version_tmp/
+/tmp/
+/.idea/
+>>>>>>> 0c5ddec6aab31a0e2641dd2f1c7fc71b913a82b9
 
 ## Specific to RubyMotion:
 .dat*
@@ -47,5 +54,13 @@ build/
 /log/
 /tmp
 *.log
+<<<<<<< HEAD
 config/environment.yml
 config/mongoid.yml
+=======
+test.html.haml
+
+config/environments/development.rb
+config/environments/test.rb
+config/environments/production.rb
+>>>>>>> 0c5ddec6aab31a0e2641dd2f1c7fc71b913a82b9

@@ -29,6 +29,7 @@ module Lightair
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
     config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+<<<<<<< HEAD
 
     config.before_configuration do
       env_file = File.join(Rails.root, 'config', 'environment.yml')
@@ -36,6 +37,8 @@ module Lightair
         ENV[key.to_s] = value
       end if File.exist?(env_file)
     end
+=======
+>>>>>>> 0c5ddec6aab31a0e2641dd2f1c7fc71b913a82b9
     #config.cache_store = :redis_store, 'redis://localhost:6379/0/cache', { expires_in: 90.minutes }
   end
 end
