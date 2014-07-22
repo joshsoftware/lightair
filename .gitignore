@@ -49,4 +49,4 @@ build/
 *.log
 config/environment.yml
 config/mongoid.yml
-config/mongoid.yml
+config/secrets.yml

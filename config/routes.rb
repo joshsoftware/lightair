@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   get '/auth/failure',            to: 'spreadsheets#failure'
   resources :users, :newsletters, :home, :spreadsheets
 
-  root :to => 'home#index'
+  root :to => 'newsletters#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

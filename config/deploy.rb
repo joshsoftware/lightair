@@ -12,26 +12,32 @@ require 'mina_extensions/sidekiq'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :domain,      '162.243.86.174'
-set :deploy_to,   '/home/deploy/projects/lightair/production'
-set :repository,  'git@github.com:joshsoftware/lightair.git'
-set :branch,      'master'
+set :domain,        'lightair.com'
+set :deploy_to,     '/home/basnal/www/lightair.com'
+set :repository,    'git@github.com:joshsoftware/lightair.git'
+set :branch,        'master'
+set :identity_file, '/home/basnal/.ssh/id_rsa'
+set :rails_env,     'production'
+set :term_mode,     nil
+
+set :current_path, 'current'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
+
 set :shared_paths, ['config/mongoid.yml', 'log', 'tmp',
                     'config/initializers/google_oauth.rb',
                     'config/environment.yml']
 
 # Optional settings:
-   set :user, 'deploy'    # Username in the server to SSH to.
+set :user, 'basnal'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
 
 # This task is the environment that is loaded for most commands, such as
 # `mina deploy` or `mina rake`.
 task :environment do
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-2.1.2-p95@gemset]'
+  invoke :'rvm:use[ruby-2.1.2@lightair]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -41,17 +47,23 @@ task :setup => :environment do
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
+  queue! %[mkdir -p "#{deploy_to}/shared/tmp"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/tmp"]
+
   queue! %[mkdir -p "#{deploy_to}/shared/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
 
   queue! %[touch "#{deploy_to}/shared/config/mongoid.yml"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config/mongoid.yml"]
 
+  queue! %[mkdir "#{deploy_to}/shared/config/initializers"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config/initializers"]
+
   queue! %[touch "#{deploy_to}/shared/config/initializers/google_oauth.rb"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config/initializers/google_oauth.rb"]
 
-  queue! %[touch "#{deploy_to}/shared/config/initializers/environment.yml"]
-  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config/initializers/environment.yml"]
+  queue! %[touch "#{deploy_to}/shared/config/environment.yml"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config/environment.yml"]
 
 end
 
@@ -77,4 +89,3 @@ end
 #  - http://nadarei.co/mina/tasks
 #  - http://nadarei.co/mina/settings
 #  - http://nadarei.co/mina/helpers
-
