@@ -36,9 +36,6 @@
                   %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Add Manually
                 %li
                   %a{role: "menuitem", tabindex: "-2", href: "#{spreadsheets_path}"}Google Spreadsheets
-            %li
-              %a{href: "#{sendmailer_path}"}
-                %h4 Send Mail
 
         %ul.nav.navbar-nav.navbar-right
           %li.active
@@ -48,8 +45,4 @@
                 =User.count
     %div.container
       %div.row
-        %div.col-sm-9= yield
-        %div.col-sm-3
-          %center
-            %h3 Insight of LightAir
-            %p LightAir is a mass Mailer designed to send newsletters designed in html to be sent to a few hundered to a tens of thousands of subscribers. It has an inbuilt HTML editor to create a newsletter online.
+        %div= yield
