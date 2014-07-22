@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require bootstrap
 //= require bootstrap-datepicker
+//= require select2
 // require bootstrap-datepicker-rails
 //= require redactor-rails
 //= require redactor-rails/plugins

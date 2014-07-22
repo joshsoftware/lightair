@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   mount RedactorRails::Engine => '/redactor_rails'
   get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
+  get '/users/testmail', to: 'users#testmail', as: 'testmail'
+  post '/users/sendtest', to: 'users#sendtest', as: 'sendtest'
   resources :users
   resources :newsletters
   resources :home

@@ -14,7 +14,10 @@
  *= require_self
  *= require bootstrap-datepicker
  *= require redactor-rails
+ *= require select2
+ *= require select2-bootstrap
  *= redactor-rails/plugins
  */
 
- @import "bootstrap";
+//= require 'bootstrap'
+

@@ -1,7 +1,7 @@
 class NewslettersController < ApplicationController
 
   def index
-    @newsletters = Newsletter.order_by([:sent_on, :asc])
+    @newsletters = Newsletter.order_by([:sent_on, :desc])
   end
 
   def show

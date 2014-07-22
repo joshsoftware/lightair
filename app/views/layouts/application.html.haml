@@ -38,13 +38,17 @@
             %li
               %a{href: "#{sendmailer_path}"}
                 %h4 Send Mail
+            %li
+              %a{href: "#{testmail_path}"}
+                %h4 Test Mail
 
         %ul.nav.navbar-nav.navbar-right
           %li.active
             %a{href: "#"}
               %h4
-                Subscriber count :
-                =User.count
+                Subscribers count:
+                =User.where(is_subscribed: "true").count
+                
     %div.container
       %div.row
         %div.col-sm-9= yield

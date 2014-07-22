@@ -2,7 +2,7 @@
   -@newsletters.each do |news|
     %tr
       %td
-        =link_to news.sent_on, newsletter_path(news)
+        =link_to news.sent_on.strftime("%B %Y"), newsletter_path(news)
       %td
         =link_to "Edit", edit_newsletter_path(news)
       %td
