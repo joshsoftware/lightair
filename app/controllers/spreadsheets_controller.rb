@@ -28,7 +28,7 @@ class SpreadsheetsController < ApplicationController
     token = spreadsheet_params['token']
     spreadsheet = Spreadsheet.where(access_token: token)[0]
 
-    if spreadsheet.add_spreadsheet_credentials(spreadsheet_params)
+    if spreadsheet && spreadsheet.add_spreadsheet_credentials(spreadsheet_params)
       spreadsheet.save
     else
       @error = 'Already Present'
@@ -42,9 +42,8 @@ class SpreadsheetsController < ApplicationController
   def update
     spreadsheet = Spreadsheet.find(params['id'])
     @worksheet  = worksheets(spreadsheet)
-    User.add_users_from_worksheet(@worksheet)
-
-    redirect_to users_path
+    @fails = User.add_users_from_worksheet(@worksheet, 2)
+    #redirect_to users_path(fails: User.add_users_from_worksheet(@worksheet))
   end
 
   def destroy
@@ -65,6 +64,6 @@ class SpreadsheetsController < ApplicationController
   #################################
 
     def spreadsheet_params
-      params.permit(:title, :id, :token)
+      params.permit(:id, :title, :token)
     end
 end

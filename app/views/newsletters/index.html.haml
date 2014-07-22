@@ -1,10 +1,11 @@
+%a.pull-right{href: "#{sendmailer_path}"}
+  %button.btn.btn-danger
+    Send Mail
 %table.table.table-striped
+  %tr
+    %h4
+      %strong Newsletters
   -@newsletters.each do |news|
     %tr
       %td
         =link_to news.sent_on.strftime("%B %Y"), newsletter_path(news)
-      %td
-        =link_to "Edit", edit_newsletter_path(news)
-      %td
-        =link_to "Delete", newsletter_path(news), method: :delete
-    %tr

@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, :type => :mailer do
-  pending "add some examples to (or delete) #{__FILE__}"
-
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true

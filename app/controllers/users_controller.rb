@@ -8,7 +8,11 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    if params[:user]
+
+    else
+      @user = User.new
+    end
   end
 
   def create
@@ -38,7 +42,7 @@ class UsersController < ApplicationController
     redirect_to users_path
 
   end
-
+  
   def subscribe
     @user = User.find(params[:id])
     @user.update(is_subscribed: 'false')
@@ -51,7 +55,7 @@ class UsersController < ApplicationController
     HardWorker.perform_async(true,@users)
     redirect_to users_path
   end
-  
+
   def edit
     @user = User.find(params[:id])
   end

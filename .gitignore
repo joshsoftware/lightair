@@ -5,10 +5,9 @@
 /InstalledFiles
 /pkg/
 /spec/reports/
-/test/tmp/
-/test/version_tmp/
-/tmp/
-/.idea/
+test/*
+tmp/*
+.idea/*
 
 ## Specific to RubyMotion:
 .dat*
@@ -19,7 +18,7 @@ build/
 /.yardoc/
 /_yardoc/
 /doc/
-/rdoc/
+*.rdoc
 
 ## Environment normalisation:
 /.bundle/
@@ -48,5 +47,7 @@ build/
 /log/
 /tmp
 *.log
-test.html.haml
-
+config/environment.yml
+config/mongoid.yml
+config/secrets.yml
+config/secrets.yml

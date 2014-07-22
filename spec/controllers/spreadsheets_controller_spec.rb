@@ -3,25 +3,6 @@ require 'webmock/rspec'
 require 'vcr'
 
 RSpec.describe SpreadsheetsController, :type => :controller do
-
-  context 'GET User Permission' do
-    context 'User accepts' do
-      it 'redirects to new ' do
-        VCR.use_cassette 'controllers/api-permissions' do
-          data = {
-              name:                 'google',
-              scope:                'userinfo.profile,userinfo.email,drive,https://spreadsheets.google.com/feeds',
-              prompt:               'consent',
-              access_type:          'offline',
-              redirect_uri:         'http://localhost:8080/auth/google/callback'
-          }
-          RestClient.post 'https://accounts.google.com/o/oauth2/auth', data
-        end
-
-      end
-    end
-  end
-
   context 'GET Index' do
     it 'it renders the index template' do
       get :index
@@ -37,6 +18,7 @@ RSpec.describe SpreadsheetsController, :type => :controller do
   end
 
   context 'GET New' do
+    let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'creates new spreadsheet when no access_token given' do
       VCR.use_cassette 'controllers/api-new_tokens' do
         request.env['omniauth.auth'] = {
@@ -53,11 +35,27 @@ RSpec.describe SpreadsheetsController, :type => :controller do
       end
     end
 
-    let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'does not creates new spreadsheet when access_token is given' do
       VCR.use_cassette 'controllers/api-response' do
         get(:new, access_token: sheet.access_token)
         expect(response).to render_template(:new)
+      end
+    end
+
+    it 'does not creates new spreadsheet if access_token already present' do
+      sheet
+
+      VCR.use_cassette 'controllers/api-new_tokens' do
+        request.env['omniauth.auth'] = {
+            'credentials'       => {
+                'token'         => sheet[:access_token],
+                'refresh_token' => sheet[:refresh_token],
+                'expires_at'    => Time.now,
+                'expires'       => true
+            }
+        }
+        get :new
+        expect(assigns(:msg)).not_to be(nil)
       end
     end
   end
@@ -65,15 +63,40 @@ RSpec.describe SpreadsheetsController, :type => :controller do
   context 'Get Edit' do
     let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'renders index page after executing' do
-      get :edit, title: 'namecollection', id: sheet['spreadsheet_id'], token: sheet['access_token']
+      get :edit, id: sheet['spreadsheet_id'], title: sheet['spreadsheet_title'], token: sheet['access_token']
 
       expect(response).to render_template(:index)
     end
 
     it 'adds spreadsheet\'s credentials' do
-      get :edit, title: 'namecollection', id: sheet['spreadsheet_id'], token: sheet['access_token']
+      sheet
+      Spreadsheet.delete_all
+      spreadsheet = Spreadsheet.new
+      spreadsheet.add_tokens({
+                                 'token'         => sheet[:access_token],
+                                 'refresh_token' => sheet[:refresh_token],
+                                 'expires_at'    => sheet[:expires_at]
+                             })
+      spreadsheet.save
+      get :edit, id: sheet['spreadsheet_id'], title: sheet['spreadsheet_title'], token: sheet['access_token']
       expect(assigns(:error)).to be(nil)
     end
+
+    it 'does not add duplicate spreadsheet' do
+      sheet
+      spreadsheet = Spreadsheet.new
+      spreadsheet.add_tokens({
+                                 'token'         => '0ya29.QgC-kYKwAzcdh8AAABnuwXicpaXRvO_YSlv4V9J556542KazsYWEia63TlRyA',
+                                 'refresh_token' => sheet[:refresh_token],
+                                 'expires_at'    => sheet[:expires_at]
+                             })
+      spreadsheet.save
+
+      get :edit, title: sheet['spreadsheet_title'], id: sheet['spreadsheet_id'], token: '0ya29.QgC-kYKwAzcdh8AAABnuwXicpaXRvO_YSlv4V9J556542KazsYWEia63TlRyA'
+
+      expect(assigns(:error)).not_to be(nil)
+    end
+
   end
 
   context 'Post Update' do
@@ -81,7 +104,7 @@ RSpec.describe SpreadsheetsController, :type => :controller do
     it 'updates the spreadsheet' do
       VCR.use_cassette 'controllers/api-update-with-data', record: :new_episodes do
         post :update, id: sheet
-        expect(response).to redirect_to users_path
+        expect(response).to render_template(:update)
       end
     end
   end

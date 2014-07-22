@@ -8,20 +8,21 @@
   %body
     %div.nav.navbar-inverse.navbar-fixed-top
       %div.container
-        %div.navbar-header
-          .navbar-brand
-            %h4 LightAir
         %div.nav-collapse
           %ul.nav.navbar-nav
             %li.active
-              %a{href: "#{home_index_path}"}
-                %h4 Home
-            %li
               %a{href: "#{newsletters_path}"}
-                %h4 Newsletters
-            %li
-              %a{href: "#{new_newsletter_path}"}
-                %h4 Add Newsletter
+                %h4 LightAir
+            %li.dropdown
+              %a.dropdown-toggle{"data-toggle" => "dropdown"}
+                %h4
+                  Newsletters
+                  %span.caret
+              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu" }
+                %li
+                  %a{role: "menuitem", tabindex: "1", href: "#{newsletters_path}"}  Show Newsletters
+                %li
+                  %a{role: "menuitem", tabindex: "2", href: "#{new_newsletter_path}"} Add Newsletter
             %li
               %a{href: "#{users_path}"}
                 %h4 Show Users
@@ -30,14 +31,11 @@
                 %h4
                   Add Users
                   %span.caret
-              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu1" }
+              %ul.dropdown-menu{role: "menu", "aria-labelledby" => "dropdownMenu" }
                 %li
                   %a{role: "menuitem", tabindex: "-1", href: "#{new_user_path}"}Add Manually
                 %li
                   %a{role: "menuitem", tabindex: "-2", href: "#{spreadsheets_path}"}Google Spreadsheets
-            %li
-              %a{href: "#{sendmailer_path}"}
-                %h4 Send Mail
             %li
               %a{href: "#{testmail_path}"}
                 %h4 Test Mail
@@ -52,7 +50,3 @@
     %div.container
       %div.row
         %div.col-sm-9= yield
-        %div.col-sm-3
-          %center
-            %h3 Insight of LightAir
-            %p LightAir is a mass Mailer designed to send newsletters designed in html to be sent to a few hundered to a tens of thousands of subscribers. It has an inbuilt HTML editor to create a newsletter online.

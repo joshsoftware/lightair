@@ -1,6 +1,4 @@
 Rails.application.configure do
-  ENV["GOOGLE_ID"]  = '367225507767-119uvbhdadqbft2kn4759rodoiivksn9.apps.googleusercontent.com'
-  ENV["GOOGLE_KEY"] = '1yX7HzuzWi3yD1OqJ21ZgpSS'
   # Settings specified here will take precedence over those in config/application.rb.
 
   # In the development environment your application's code is reloaded on
@@ -41,8 +39,8 @@ Rails.application.configure do
     :port => 25,
     :domain => "sendgrid.me",
     :authentication => :plain,
-    :user_name => "gautamrege",
-    :password => "grege123"
+    :user_name => ENV['USERNAME'],
+    :password => ENV['PASSWORD']
   }
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 end

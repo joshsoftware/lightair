@@ -4,15 +4,13 @@ Rails.application.routes.draw do
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
   get '/users/testmail', to: 'users#testmail', as: 'testmail'
   post '/users/sendtest', to: 'users#sendtest', as: 'sendtest'
-  resources :users
-  resources :newsletters
-  resources :home
-  resources :user_mailer
-  get '/auth/:provider/callback', to: 'spreadsheets#new'
-  get '/auth/failure',            to: 'spreadsheets#failure'
-  resources :users, :newsletters, :home, :spreadsheets
 
-  root :to => 'home#index'
+  get '/auth/:provider/callback', to: 'spreadsheets#new',    as: 'google_spreadsheet'
+  get '/auth/failure',            to: 'spreadsheets#failure'
+
+  resources :users, :newsletters, :home, :user_mailer, :spreadsheets
+
+  root :to => 'newsletters#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
