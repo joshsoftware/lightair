@@ -1,6 +1,10 @@
+%a.pull-right{href: "#{sendmailer_path}"}
+  %button.btn.btn-danger
+    Send Mail
 %table.table.table-striped
   %tr
-    %strong Newsletters
+    %h4
+      %strong Newsletters
   -@newsletters.each do |news|
     %tr
       %td
