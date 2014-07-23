@@ -1,11 +1,19 @@
-%a.pull-right{href: "#{sendmailer_path}"}
-  %button.btn.btn-danger
-    Send Mail
-%table.table.table-striped
-  %tr
-    %h4
-      %strong Newsletters
-  -@newsletters.each do |news|
-    %tr
-      %td
-        =link_to news.sent_on, newsletter_path(news)
+.pull-right
+  %a{href: "#{sendmailer_path}"}
+    %button.btn.btn-danger
+      Send Mail
+  %a{href: "#{testmail_path}"}
+    %button.btn.btn-success
+      Test Mail
+%h4
+  %strong Newsletters
+%hr
+-@newsletters.each do |newsletter|
+  .tile
+    %a.link{href: "#{newsletter_path(newsletter)}" }
+      %div.thumbnail
+        %img{src: "images/1.jpg"}
+        %div.cap
+          %h4 
+            %center
+              =newsletter.sent_on.strftime("%B %Y")

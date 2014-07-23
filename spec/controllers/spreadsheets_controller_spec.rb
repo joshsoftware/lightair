@@ -63,7 +63,6 @@ RSpec.describe SpreadsheetsController, :type => :controller do
   context 'Get Edit' do
     let(:sheet) { FactoryGirl.create(:spreadsheet)}
     it 'renders index page after executing' do
-
       get :edit, id: sheet['spreadsheet_id'], title: sheet['spreadsheet_title'], token: sheet['access_token']
 
       expect(response).to render_template(:index)

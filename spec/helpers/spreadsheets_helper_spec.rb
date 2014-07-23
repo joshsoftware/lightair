@@ -11,5 +11,4 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe SpreadsheetsHelper, :type => :helper do
-
 end

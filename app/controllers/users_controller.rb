@@ -33,6 +33,16 @@ class UsersController < ApplicationController
       #end
   end
 
+  def testmail
+  end
+
+  def sendtest
+    @emails = params[:email][:email_id]
+    HardWorker.perform_async(false,@emails)
+    redirect_to users_path
+
+  end
+  
   def subscribe
     @user = User.find(params[:id])
     @user.update(is_subscribed: 'false')
@@ -41,13 +51,10 @@ class UsersController < ApplicationController
   def sendmailer
     #@user = User.where(is_subscribed: 'true')
     #@news = Newsletter.last
-    HardWorker.perform_async()
+    @users = User.where(is_subscribed: "true")
+    HardWorker.perform_async(true,@users)
     redirect_to users_path
   end
-  
-  def users_params
-    params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
-    end
 
   def edit
     @user = User.find(params[:id])
@@ -67,4 +74,10 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_path
   end
+  
+  private
+  def users_params
+    params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
+  end
+
 end

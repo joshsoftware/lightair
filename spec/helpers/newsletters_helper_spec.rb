@@ -11,5 +11,4 @@ require 'rails_helper'
 #   end
 # end
 RSpec.describe NewslettersHelper, :type => :helper do
-
 end

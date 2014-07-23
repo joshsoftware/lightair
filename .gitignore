@@ -50,3 +50,4 @@ build/
 config/environment.yml
 config/mongoid.yml
 config/secrets.yml
+config/secrets.yml

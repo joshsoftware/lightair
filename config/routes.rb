@@ -2,13 +2,13 @@ Rails.application.routes.draw do
   mount RedactorRails::Engine => '/redactor_rails'
   get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
-  resources :users
-  resources :newsletters
-  resources :home
-  resources :user_mailer
+  get '/users/testmail', to: 'users#testmail', as: 'testmail'
+  post '/users/sendtest', to: 'users#sendtest', as: 'sendtest'
+
   get '/auth/:provider/callback', to: 'spreadsheets#new',    as: 'google_spreadsheet'
   get '/auth/failure',            to: 'spreadsheets#failure'
-  resources :users, :newsletters, :home, :spreadsheets
+
+  resources :users, :newsletters, :home, :user_mailer, :spreadsheets
 
   root :to => 'newsletters#index'
 

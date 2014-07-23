@@ -1,15 +1,19 @@
-%table.table.table-striped
+%table.table.table-striped 
   %tr
     %td{colspan: 3}
       %center
         %strong
-          User's Email Id
-  - @users.each do |user|
-    %tr
-      %td
-        = link_to user.email_id, user_path(user)
-      %td
-        = link_to "Edit", edit_user_path(user)
-      %td
-        = link_to "Delete", user_path(user), method: :delete
-    %tr
+          User's Email Id - @users.each do |user|
+  -if user.is_subscribed == true
+    -str = :success
+  -else
+    -str = :warning
+  %tr{:class => str}
+    %td
+      = link_to user.email_id, user_path(user)
+    %td
+      = user.username
+    %td
+      = link_to "Edit", edit_user_path(user)
+    %td
+      = link_to "Delete", user_path(user), method: :delete
