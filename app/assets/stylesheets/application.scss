@@ -20,3 +20,11 @@
  *= require 'bootstrap'
  */
  @import "bootstrap";
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  background-color: #bbbbbb;
+  width: 100%;
+  color: black;
+}
