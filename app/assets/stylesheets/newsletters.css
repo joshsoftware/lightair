@@ -14,6 +14,7 @@
 .link {
   color: black;
 }
+
 .link:hover {
   font-style: oblique; 
   text-decoration: none;
