@@ -3,6 +3,9 @@
   They will automatically be included in application.css.
 */
 
+.table {
+  border-collapse: collapse;
+}
 .tile {
   height: 200px;
   width: 200px;
