@@ -12,8 +12,8 @@ require 'mina_extensions/sidekiq'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :domain,        'lightair.com'
-set :deploy_to,     '/home/basnal/www/lightair.com'
+set :domain,        '192.168.1.196'
+set :deploy_to,     '/home/kanhaiya/www/lightair.com'
 set :repository,    'git@github.com:joshsoftware/lightair.git'
 set :branch,        'master'
 set :identity_file, '/home/basnal/.ssh/id_rsa'
@@ -30,7 +30,7 @@ set :shared_paths, ['config/mongoid.yml', 'log', 'tmp',
                     'config/environment.yml']
 
 # Optional settings:
-set :user, 'basnal'    # Username in the server to SSH to.
+set :user, 'kanhaiya'    # Username in the server to SSH to.
 #   set :port, '30000'     # SSH port number.
 
 # This task is the environment that is loaded for most commands, such as

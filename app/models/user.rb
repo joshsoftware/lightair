@@ -23,7 +23,7 @@ class User
     worksheet.rows.count.times do |i|
       user = User.new(
           email_id:       worksheet[i + 1, column],
-          username:       worksheet[i + 1, column],
+          username:       worksheet[i + 1, column - 1],
           is_subscribed:  true,
           joined_on:      Date.today,
           source:         'Google Spreadsheet')

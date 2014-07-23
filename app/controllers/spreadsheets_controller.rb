@@ -43,7 +43,6 @@ class SpreadsheetsController < ApplicationController
     spreadsheet = Spreadsheet.find(params['id'])
     @worksheet  = worksheets(spreadsheet)
     @fails = User.add_users_from_worksheet(@worksheet, 2)
-    #redirect_to users_path(fails: User.add_users_from_worksheet(@worksheet))
   end
 
   def destroy
