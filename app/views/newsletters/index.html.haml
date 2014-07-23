@@ -7,19 +7,20 @@
       Test Mail
 %h4
   %strong Newsletters
-%table.table  
+
+%table.table
   -count=3
-  -@newsletters.each do |newsletter|    
+  -@newsletters.each do |newsletter|
     -if count > 2
       -count=0
       %tr
     %td
-      .tile
+      %center
         %a.link{href: "#{newsletter_path(newsletter)}" }
-          %div.thumbnail
+          %div.tile.thumbnail
             %img{src: "images/1.jpg"}
-              %div.cap
-                %h4 
+            %div.cap
+              %h4
                 %center
                   =newsletter.sent_on.strftime("%B %Y")
     -count+=1
