@@ -1,10 +1,6 @@
 %div.pull-right{'z-index' => 3452345}
-  %a{href: "#{sendmailer_path}"}
-    %button.btn.btn-danger
-      Send Mail
-  %a{href: "#{testmail_path}"}
-    %button.btn.btn-success
-      Test Mail
+  = link_to "Send Mail", sendmailer_path, class: "btn btn-danger"
+  = link_to "Test Mail", testmail_path, class: "btn btn-success"
 %h4
   %strong Newsletters
 

@@ -1,15 +1,28 @@
 %table.table.table-striped 
   %tr
-    %td{colspan: 3}
+    %td
+      %strong 
+        = "#"
+    %td
+      %strong
+        User's Email Id 
+    %td
+      %strong
+        Username
+    %td{colspan: 2}
       %center
         %strong
-          User's Email Id 
+          Edit
+  -count = 0
   - @users.each do |user|
     -if user.is_subscribed == true
       -str = :success
     -else
       -str = :warning
+    -count = count + 1
     %tr{:class => str}
+      %td
+        =count
       %td
         = link_to user.email_id, user_path(user)
       %td
