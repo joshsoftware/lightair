@@ -2,3 +2,16 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.tile {
+  height: 200px;
+  width: 200px;
+}
+
+.link {
+  color: black;
+}
+.link:hover {
+  font-style: oblique; 
+  text-decoration: none;
+}
