@@ -1,6 +1,6 @@
 = @msg if @msg
-%h4
-  =link_to 'Add New Spreadsheet', '/auth/google/'
+%h4.pull-right
+  =link_to 'Add New Spreadsheet', '/auth/google/', class: "btn btn-primary"
 
 %table.table.table-striped
   %tr.info
@@ -31,6 +31,6 @@
         =link_to 'Delete', spreadsheet_path(ss), method: :delete
         -if ss['spreadsheet_title']
           |
-          =link_to 'Update', spreadsheet_path(ss), method: :patch
+          =link_to 'Add Users', spreadsheet_path(ss), method: :patch
 
 

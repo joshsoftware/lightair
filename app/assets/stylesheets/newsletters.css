@@ -8,12 +8,13 @@
 }
 .tile {
   height: 200px;
-  width: 200px;
+  width: 250px;
 }
 
 .link {
   color: black;
 }
+
 .link:hover {
   font-style: oblique; 
   text-decoration: none;

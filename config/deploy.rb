@@ -12,7 +12,7 @@ require 'mina_extensions/sidekiq'
 #   repository   - Git repo to clone from. (needed by mina/git)
 #   branch       - Branch name to deploy. (needed by mina/git)
 
-set :domain,        'lightair.com'
+set :domain,        'localhost'
 set :deploy_to,     '/home/basnal/www/lightair.com'
 set :repository,    'git@github.com:joshsoftware/lightair.git'
 set :branch,        'master'
