@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   mount RedactorRails::Engine => '/redactor_rails'
   get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'

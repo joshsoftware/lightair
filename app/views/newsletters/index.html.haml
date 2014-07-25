@@ -1,5 +1,5 @@
 %div.pull-right{'z-index' => 3452345}
-  = link_to "Send Mail", sendmailer_path, class: "btn btn-danger"
+  = link_to "Send Mail", sendmailer_path, class: "btn btn-primary"
   = link_to "Test Mail", testmail_path, class: "btn btn-success"
 %h4
   %strong Newsletters
@@ -13,8 +13,8 @@
     %td
       %center
         %a.link{href: "#{newsletter_path(newsletter)}" }
-          %div.tile.thumbnail
-            %img{src: "images/1.jpg"}
+          %div.thumbnail
+            %img{src: "images/newsletter.jpg"}
             %div.cap
               %h4
                 %center

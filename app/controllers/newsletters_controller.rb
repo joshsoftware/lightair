@@ -12,9 +12,7 @@ class NewslettersController < ApplicationController
     @newsletter = Newsletter.new
   end
 
-  def newsletters_params
-    params.require(:newsletter).permit(:id, :content, :sent_on, :users_count)
-  end
+
 
   def create 
     @newsletter = Newsletter.new(newsletters_params)
@@ -44,4 +42,8 @@ class NewslettersController < ApplicationController
     redirect_to newsletters_path
   end
 
+  private
+  def newsletters_params
+    params.require(:newsletter).permit(:id, :content, :sent_on, :users_count)
+  end
 end

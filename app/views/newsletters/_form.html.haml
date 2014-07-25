@@ -1,6 +1,12 @@
 = simple_form_for (@newsletter) do |news|
   .inputs
     = news.text_area :content, :placeholder => "Input here..", :class => "redactor", :rows => 20, :cols => 60
-    = news.input :sent_on
-    = news.input :users_count
+    = news.input :sent_on, input_html: { 'data-behaviour' => 'datepicker'}
     = news.button :submit
+
+  :javascript
+      $('[data-behaviour~=datepicker]').datepicker({
+        format: 'yyyy-mm-dd'
+      })
+
+

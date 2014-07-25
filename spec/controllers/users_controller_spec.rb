@@ -77,8 +77,19 @@ RSpec.describe UsersController, :type => :controller do
 
   context "GET sendmailer" do
     it "sends mails to user" do
-      get :sendmailer
-      expect(response).to redirect_to(users_path)
+      VCR.use_cassette 'controllers/user-mails', record: :new_episodes do
+        get :sendmailer
+        expect(response).to redirect_to(newsletters_path)
+      end
+    end
+  end
+
+  context "GET sendTest" do
+    it "sends Test mails to user" do
+      VCR.use_cassette 'controllers/user-mails', record: :new_episodes do
+        get :sendtest, email: {email_id: "pankajb@joshsoftware.com"}
+        expect(response).to redirect_to(newsletters_path)
+      end
     end
   end
 end

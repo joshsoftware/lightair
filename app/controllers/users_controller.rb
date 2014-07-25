@@ -17,30 +17,22 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(users_params)
-    # @news = Newsletter.last
-    
-    #respond_to do |format|
+    @user.sent_on = Array.new
     if @user.save
-      redirect_to users_path  
-        # UserMailer.welcome_message(@user,@news.content).deliver
-        # format.html { redirect_to(@user, notice: 'User was successfully created.')}
-        # format.json { render json: @user, status: :created, locaton: @user}
+      redirect_to users_path
     else
       render action: 'new'
-        # format.html {render action: 'new'}
-        # format.json {render json: @user.errors, status: :unprocessable_entity }
     end
-      #end
   end
 
   def testmail
   end
 
   def sendtest
-    @emails = params[:email][:email_id]
-    HardWorker.perform_async(false,@emails)
-    redirect_to users_path
+    emails = params[:email][:email_id].split(",")
+    Enqueue.perform_async(emails)
 
+    redirect_to newsletters_path
   end
   
   def subscribe
@@ -49,11 +41,12 @@ class UsersController < ApplicationController
   end
   
   def sendmailer
-    #@user = User.where(is_subscribed: 'true')
-    #@news = Newsletter.last
-    @users = User.where(is_subscribed: "true")
-    HardWorker.perform_async(true,@users)
-    redirect_to users_path
+
+
+    #@users = User.where(is_subscribed: "true")
+    HardWorker.perform_async(true)
+
+    redirect_to newsletters_path
   end
 
   def edit
