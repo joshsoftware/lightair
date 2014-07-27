@@ -28,7 +28,7 @@
             =@error
             )
       %td
-        =link_to 'Delete', spreadsheet_path(ss), method: :delete
+        =link_to 'Delete', spreadsheet_path(ss), method: :delete, class: "btn btn-mini btn-danger"
         -if ss['spreadsheet_title']
           |
           =link_to 'Add Users', spreadsheet_path(ss), method: :patch

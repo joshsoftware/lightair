@@ -21,4 +21,3 @@
 //= require redactor-rails/plugins
 //= require_tree .
 
-

@@ -37,11 +37,14 @@ class UsersController < ApplicationController
   end
 
   def sendtest
-    @emails = params[:email][:email_id]
-    HardWorker.perform_async(false,@emails)
-    redirect_to users_path
-
-  end
+    @emails = params[:email][:email_id].split(",")
+    #@news = Newsletter.first
+    @emails.each do |p|
+      #@emailid = User.where(email_id: p)[0] 
+      MyWorker.perform_async(p)
+    end
+    redirect_to newsletters_path
+    end
   
   def subscribe
     @user = User.find(params[:id])

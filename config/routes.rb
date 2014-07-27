@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   mount RedactorRails::Engine => '/redactor_rails'
   get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
@@ -11,6 +13,7 @@ Rails.application.routes.draw do
   resources :users, :newsletters, :home, :user_mailer, :spreadsheets
 
   root :to => 'newsletters#index'
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
