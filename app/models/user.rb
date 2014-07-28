@@ -6,6 +6,7 @@ class User
   field :is_subscribed, type: Boolean
   field :joined_on,     type: Date
   field :source,        type: String
+  field :sent_on,       type: Array
 
   validates :email_id, presence: true
   validates_format_of :email_id, with: /\A[a-z0-9]+([\w.+-]*[a-z0-9])*@([a-z]+[\w-]*\.)+[a-z]+\Z/i, on: :create

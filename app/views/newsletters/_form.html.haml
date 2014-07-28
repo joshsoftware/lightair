@@ -4,3 +4,12 @@
     = news.input :sent_on
     = news.input :users_count
     = news.button :submit, class: "btn btn-primary"
+    = news.input :sent_on, input_html: { 'data-behaviour' => 'datepicker'}
+    = news.button :submit
+
+  :javascript
+      $('[data-behaviour~=datepicker]').datepicker({
+        format: 'yyyy-mm-dd'
+      })
+
+

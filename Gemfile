@@ -104,3 +104,4 @@ gem 'rest_client'
 gem 'pry'
 gem 'select2-rails'
 gem 'sinatra', '>=1.3.0', :require => nil
+
