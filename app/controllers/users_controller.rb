@@ -19,6 +19,7 @@ class UsersController < ApplicationController
     @user = User.new(users_params)
     @user.sent_on = Array.new
     if @user.save
+      @user.update(is_subscribed: true, joined_on: Date.today, source: "Manual",sent_on: Array.new)
       redirect_to users_path
     else
       render action: 'new'
@@ -41,7 +42,6 @@ class UsersController < ApplicationController
   end
   
   def sendmailer
-
 
     #@users = User.where(is_subscribed: "true")
     HardWorker.perform_async(true)

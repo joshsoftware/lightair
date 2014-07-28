@@ -8,7 +8,7 @@
       = f.input :is_subscribed, :as => :select
       = f.input :joined_on, input_html: { 'data-behaviour' => 'datepicker'}
       = f.input :source
-      = f.button :submit, class: "btn btn-primary"
+      = f.button :submit, class: "btn btn-success"
 
 :javascript
   $('[data-behaviour~=datepicker]').datepicker({

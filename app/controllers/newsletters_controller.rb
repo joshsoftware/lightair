@@ -17,6 +17,7 @@ class NewslettersController < ApplicationController
   def create 
     @newsletter = Newsletter.new(newsletters_params)
     if @newsletter.save
+      @newsletter.update(sent_on: Date.today)
       redirect_to newsletters_path
     else
       render action: 'new'

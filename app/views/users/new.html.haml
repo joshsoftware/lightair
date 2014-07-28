@@ -1,1 +1,10 @@
-= render :partial => "form"
+.panel.panel-primary
+  .panel-heading
+    Edit User
+  .panel-body
+    = simple_form_for (@user), html: {role: 'form', class: 'form-horizontal'} do |f|
+      = f.input :email_id, input_html:{class: 'span2'}
+      = f.input :username
+      = f.button :submit, class: "btn btn-success"
+  
+

@@ -11,9 +11,6 @@ class User
   validates :email_id, presence: true
   validates_format_of :email_id, with: /\A[a-z0-9]+([\w.+-]*[a-z0-9])*@([a-z]+[\w-]*\.)+[a-z]+\Z/i, on: :create
   validates :username, presence: true
-  validates :is_subscribed, presence: true
-  validates :joined_on, presence: true
-  validates :source, presence: true
   validates :email_id, uniqueness: true
 
   belongs_to :newsletter, counter_cache: :users_count
