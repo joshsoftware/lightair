@@ -1,15 +1,18 @@
-= simple_form_for (@user) do |f|
-  .inputs
-    = f.input :email_id, class: "control-label"
-    = f.input :username
-    = f.input :is_subscribed, :as => :select
-    = f.input :joined_on, input_html: { 'data-behaviour' => 'datepicker'}
-    = f.input :source
-    = f.button :submit, class: "btn btn-primary"
+.panel.panel-primary
+  .panel-heading
+    New User
+  .panel-body
+    = simple_form_for (@user), html: {role: 'form', class: 'form-horizontal'} do |f|
+      = f.input :email_id, input_html:{class: 'span2'}
+      = f.input :username
+      = f.input :is_subscribed, :as => :select
+      = f.input :joined_on, input_html: { 'data-behaviour' => 'datepicker'}
+      = f.input :source
+      = f.button :submit, class: "btn btn-primary"
 
-  :javascript
-    $('[data-behaviour~=datepicker]').datepicker({
-      format: 'yyyy-mm-dd'
-    })
+:javascript
+  $('[data-behaviour~=datepicker]').datepicker({
+    format: 'yyyy-mm-dd'
+  })
   
 
