@@ -5,7 +5,6 @@ class Newsletter
     field :users_count,  type: Integer, default: 0
 
     validates :content, presence: true
-    validates :sent_on, presence: true
 
     has_many :users
 
