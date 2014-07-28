@@ -1,3 +1,21 @@
-// Place all the styles related to the newsletters controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+.table {
+  border-collapse: collapse;
+}
+.tile {
+  height: 200px;
+  width: 250px;
+}
+
+.link {
+  color: black;
+}
+
+.link:hover {
+  font-style: oblique; 
+  text-decoration: none;
+}
