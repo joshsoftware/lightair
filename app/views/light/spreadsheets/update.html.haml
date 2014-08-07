@@ -1,0 +1,35 @@
+%table.table.table-striped
+  %tr
+    %td{colspan: 3}
+      %center
+        %strong REPORT
+        %br
+      Following Email Ids were not added to database as they didn't satisfy our validations criteria.
+      %table.table.table-striped
+        %tr
+          %td It should start with
+          %td An alphabet or a number
+        %tr
+          %td It can contain
+          %td '_'
+        %tr
+          %td These Characters are not allowed
+          %td '.' '+' '-'
+        %tr
+          %td It should end with
+          %td An alphabet or a number
+
+  %tr
+    %td
+      %strong #
+    %td
+      %strong User Email Id
+  - index = 0
+  - @fails.each do |user|
+    %tr
+      %td
+        =index
+        -index = index + 1
+      %td
+        = user
+    %tr

@@ -1,0 +1,38 @@
+= @msg if @msg
+%h4
+  %a{href: "/auth/google"}
+    go
+  =link_to 'Add New Spreadsheet', main_app.user_omniauth_authorize_path(:google_oauth2), class: "btn btn-primary"
+
+%table.table.table-striped
+  %tr.info
+    %td
+      %strong #
+    %td
+      %strong
+        Spreadsheets (
+        =Light::Spreadsheet.count
+        )
+    %td
+      %strong Operations
+  - i = 0
+  - @spreadsheets.each do |ss|
+    %tr
+      %td
+        = i = i + 1
+      %td
+        -if ss['spreadsheet_title']
+          =ss['spreadsheet_title']
+        -else
+          =link_to 'Get Spreadsheet', new_spreadsheet_path(access_token: ss['access_token'])
+          -if @error
+            (
+            =@error
+            )
+      %td
+        =link_to 'Delete', spreadsheet_path(ss), method: :delete, class: "btn btn-mini btn-danger"
+        -if ss['spreadsheet_title']
+          |
+          =link_to 'Add Users', spreadsheet_path(ss), method: :patch
+
+

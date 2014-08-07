@@ -1,0 +1,4 @@
+light
+=====
+
+Newsletter Management Engine
