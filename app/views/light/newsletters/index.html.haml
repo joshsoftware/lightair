@@ -74,5 +74,9 @@
               %h4
                 %center
                   =newsletter.sent_on.strftime("%B %Y")
+      %center
+        %hr
+          = link_to "Edit", edit_newsletter_path(newsletter), class: "btn btn-mini btn-success"
+          = link_to "Delete", newsletter_path(newsletter), method: :delete, class: "btn btn-mini btn-danger"
     -count+=1
 
