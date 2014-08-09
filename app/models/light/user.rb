@@ -19,21 +19,21 @@ module Light
     def self.add_users_from_worksheet(worksheet, column = 1)
       fails = []
 
-    worksheet.rows.count.times do |i|
-      user = User.new(
+      worksheet.rows.count.times do |i|
+        user = new(
           email_id:       worksheet[i + 1, column],
           username:       worksheet[i + 1, column - 1],
           is_subscribed:  true,
           joined_on:      Date.today,
           source:         'Google Spreadsheet')
 
-      if user.save
-      else
-        fails << worksheet[i + 1, column]
+        if user.save
+        else
+          fails << worksheet[i + 1, column]
+        end
       end
+      fails.delete_at(0)
+      fails
     end
-    fails.delete_at(0)
-    fails
   end
-end
 end

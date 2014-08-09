@@ -17,7 +17,7 @@ module Light
     end
 
     def add_spreadsheet_credentials(credentials = {})
-      if Spreadsheet.where('spreadsheet_id' => credentials['id']).to_a[0]
+      if Light::Spreadsheet.where('spreadsheet_id' => credentials['id']).to_a[0]
         return false
       else
         self['spreadsheet_id']    = credentials['id']

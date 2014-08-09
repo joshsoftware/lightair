@@ -6,7 +6,7 @@ module Light
     def perform(email)
       date = Date.today.strftime("%Y%m")
       users = Light::User.where(:email_id.in => email, is_subscribed: true)#, :sent_on.nin => [date]).order_by([:email_id, :asc])
-      news = Newsletter.order_by([:sent_on, :desc]).first
+      news = Light::Newsletter.order_by([:sent_on, :desc]).first
       logger.debug users.count
       users.each do |a|
         Light::UserMailer.welcome_message(a.email_id, news.content, a.id, a.username).deliver

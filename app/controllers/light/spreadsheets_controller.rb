@@ -5,14 +5,14 @@ module Light
     include Google::Spreadsheets
 
     def index
-      @spreadsheets = Spreadsheet.all.to_a
+      @spreadsheets = Light::Spreadsheet.all.to_a
     end
 
     def new
       if params[:access_token]
-        spreadsheet = Spreadsheet.where(access_token: params['access_token'])[0]
+        spreadsheet = Light::Spreadsheet.where(access_token: params['access_token'])[0]
       else
-        spreadsheet = Spreadsheet.new
+        spreadsheet = Light::Spreadsheet.new
         spreadsheet.add_tokens(request.env['omniauth.auth'].fetch('credentials'))
       end
 
@@ -28,7 +28,7 @@ module Light
 
     def edit
       token = spreadsheet_params['token']
-      spreadsheet = Spreadsheet.where(access_token: token)[0]
+      spreadsheet = Light::Spreadsheet.where(access_token: token)[0]
 
       if spreadsheet && spreadsheet.add_spreadsheet_credentials(spreadsheet_params)
         spreadsheet.save
@@ -36,19 +36,19 @@ module Light
         @error = 'Already Present'
       end
 
-      @spreadsheets = Spreadsheet.all.to_a
+      @spreadsheets = Light::Spreadsheet.all.to_a
 
       render action: 'index'
     end
 
     def update
-      spreadsheet = Spreadsheet.find(params['id'])
+      spreadsheet = Light::Spreadsheet.find(params['id'])
       @worksheet  = worksheets(spreadsheet)
-      @fails = User.add_users_from_worksheet(@worksheet, 2)
+      @fails = Light::User.add_users_from_worksheet(@worksheet, 2)
     end
 
     def destroy
-      Spreadsheet.find(params['id']).delete
+      Light::Spreadsheet.find(params['id']).delete
       redirect_to spreadsheets_path
     end
 
@@ -56,7 +56,7 @@ module Light
       if params['message'].match('access_denied')
         @msg = 'Account integration Failed. User Refused to grant permissions'
       end
-      @spreadsheets = Spreadsheet.all.to_a
+      @spreadsheets = Light::Spreadsheet.all.to_a
       render action: 'index'
     end
 

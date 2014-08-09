@@ -4,21 +4,21 @@ module Light
   class NewslettersController < ApplicationController
 
     def index
-      @newsletters = Newsletter.order_by([:sent_on, :desc])
+      @newsletters = Light::Newsletter.order_by([:sent_on, :desc])
     end
 
     def show
-      @newsletter = Newsletter.find(params[:id])
+      @newsletter = Light::Newsletter.find(params[:id])
     end
 
     def new 
-      @newsletter = Newsletter.new
+      @newsletter = Light::Newsletter.new
     end
 
 
 
     def create 
-      @newsletter = Newsletter.new(newsletters_params)
+      @newsletter = Light::Newsletter.new(newsletters_params)
       if @newsletter.save
         @newsletter.update(sent_on: Date.today)
         redirect_to newsletters_path
@@ -28,11 +28,11 @@ module Light
     end
 
     def edit
-      @newsletter = Newsletter.find(params[:id])
+      @newsletter = Light::Newsletter.find(params[:id])
     end
 
     def update
-      @newsletter = Newsletter.find(params[:id])
+      @newsletter = Light::Newsletter.find(params[:id])
       if @newsletter.update_attributes(newsletters_params)
         redirect_to newsletters_path
       else
@@ -41,7 +41,7 @@ module Light
     end
 
     def destroy
-      @newsletter = Newsletter.find(params[:id])
+      @newsletter = Light::Newsletter.find(params[:id])
       @newsletter.destroy
       redirect_to newsletters_path
     end

@@ -3,7 +3,7 @@ module Light
     include Sidekiq::Worker
 
     def perform(email)
-      news = Newsletter.first
+      news = Light::Newsletter.first
       emailid = Light::User.where(email_id: email)[0]
       Light::UserMailer.welcome_message(emailid.email_id,news.content,emailid.id,emailid.username).deliver
     end
