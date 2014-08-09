@@ -3,7 +3,7 @@ module Light
     include Sidekiq::Worker
     sidekiq_options :queue => :lightair
 
-    def perform()
+    def perform
       #if check then
       date = Date.today.strftime("%Y%m")
       users = Light::User.where(is_subscribed: "true", :sent_on.nin => [date]).order_by([:email_id, :asc])

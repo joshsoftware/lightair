@@ -46,7 +46,7 @@ module Light
     def sendmailer
 
       #@users = User.where(is_subscribed: "true")
-      HardWorker.perform_async(true)
+      HardWorker.perform_async
 
       redirect_to newsletters_path
     end
