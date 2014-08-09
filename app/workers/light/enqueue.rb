@@ -5,7 +5,7 @@ module Light
   
     def perform(email)
       date = Date.today.strftime("%Y%m")
-      users = Light::User.where(:email_id.in => email, is_subscribed: true, :sent_on.nin => [date]).order_by([:email_id, :asc])
+      users = Light::User.where(:email_id.in => email, is_subscribed: true)#, :sent_on.nin => [date]).order_by([:email_id, :asc])
       news = Newsletter.order_by([:sent_on, :desc]).first
       logger.debug users.count
       users.each do |a|
@@ -14,7 +14,7 @@ module Light
         a.save
       end
 
-      users = User.where(:email_id.in => email, is_subscribed: 'true', :sent_on.in => [date]).order_by([:email_id, :asc])
+      users = Light::User.where(:email_id.in => email, is_subscribed: 'true', :sent_on.in => [date]).order_by([:email_id, :asc])
       users.each do |a|
         a.sent_on.pop
         a.save
