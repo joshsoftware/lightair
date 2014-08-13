@@ -10,7 +10,7 @@ module Light
     field :sent_on,       type: Array
 
     validates :email_id, presence: true
-    validates_format_of :email_id, with: /\A[a-z0-9]+([\w.+-]*[a-z0-9])*@([a-z]+[\w-]*\.)+[a-z]+\Z/i, on: :create
+    validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create
     validates :username, presence: true
     validates :email_id, uniqueness: true
 
