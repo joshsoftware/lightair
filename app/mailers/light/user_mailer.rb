@@ -16,7 +16,6 @@ module Light
 
       mail( to: email,
           category: "newuser",
-          subject: "Welcome #{name}",
           body: content.result(binding),
           content_type: "text/html" 
         )
