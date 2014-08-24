@@ -1,8 +1,6 @@
 require 'mongoid'
 require 'carrierwave/mongoid'
 require 'haml-rails'
-require 'simple_form'
-require 'bootstrap-sass'
 require 'bootstrap-datepicker-rails'
 require 'uglifier'
 require 'jquery-rails'
