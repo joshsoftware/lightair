@@ -48,7 +48,7 @@ module Light
 
     private
     def newsletters_params
-      params.require(:newsletter).permit(:id, :content, :sent_on, :users_count)
+      params.require(:newsletter).permit(:id, :subject, :content, :sent_on, :users_count)
     end
   end
 end
