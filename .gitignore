@@ -8,7 +8,9 @@ test/dummy/tmp/
 test/dummy/.sass-cache
 spec/dummy/config/environment.yml
 spec/dummy/config/secrets.yml
+spec/dummy/config/initializers/secret_token.rb
 spec/dummy/tmp/
+spec/dummy/log/
 spec/dummy/dump/
 spec/dummy/coverage/
 coverage/
