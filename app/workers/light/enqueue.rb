@@ -6,7 +6,7 @@ module Light
     def perform(email)
       date = Date.today.strftime("%Y%m")
       news = Light::Newsletter.order_by([:sent_on, :desc]).first
-      Light::UserMailer.welcome_message(email, news.content, 'testing', 'Test User').deliver
+      Light::UserMailer.welcome_message(email, news, 'testing', 'Test User').deliver
     end
   end
 end
