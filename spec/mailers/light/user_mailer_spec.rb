@@ -6,7 +6,7 @@ RSpec.describe UserMailer, :type => :mailer do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
-    UserMailer.welcome_message('kanhaiya@joshsoftware.com', FactoryGirl.create(:newsletter), '123', 'kanhaiya').deliver
+    UserMailer.welcome_message('kanhaiya@joshsoftware.com', FactoryGirl.create(:newsletter)).deliver
   end
 
   after(:each) do
