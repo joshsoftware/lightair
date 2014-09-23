@@ -8,7 +8,7 @@ module Light
     field :joined_on,     type: Date
     field :source,        type: String
     field :sent_on,       type: Array, default: []
-
+    
     validates :email_id, presence: true
     validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create
     validates :username, presence: true
@@ -34,6 +34,10 @@ module Light
       end
       fails.delete_at(0)
       fails
+    end
+
+    def self.subscribed_users
+      Light::User.all.select{|u| u.is_subscribed.eql?(true)}
     end
   end
 end
