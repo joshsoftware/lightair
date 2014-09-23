@@ -18,7 +18,6 @@ gem 'sendgrid'
 # Use mongoid to utilise mongodb
 gem 'mongoid'
 
-
 # The following gems for testing purpose in development and testing environment
 group :development, :test do
   # Rspec is used to write the test cases
@@ -55,6 +54,7 @@ gem 'pry'
 gem 'select2-rails'
 gem 'sinatra', '>=1.3.0', :require => nil
 gem 'therubyracer'
+gem 'sendgrid_toolkit'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or

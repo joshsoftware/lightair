@@ -45,5 +45,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'redis-namespace'
   s.add_dependency 'rest_client'
   s.add_dependency 'select2-rails'
-
+  s.add_dependency 'sendgrid_toolkit'
+  
 end
