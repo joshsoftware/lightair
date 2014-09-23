@@ -1,8 +1,14 @@
 require_dependency "light/application_controller"
 module Light
   class UsersController < ApplicationController
+    respond_to :js, :json, :html
+
     def index
       @users = Light::User.all
+      respond_with do |format|
+        format.json   { render json: {users: @users} }
+      end
+
     end
 
     def show
@@ -37,12 +43,12 @@ module Light
 
       redirect_to newsletters_path
     end
-  
+
     def subscribe
       @user = Light::User.find(params[:id])
       @user.update(is_subscribed: 'false')
     end
-  
+
     def sendmailer
 
       Light::HardWorker.perform_async
@@ -68,7 +74,7 @@ module Light
       @user.destroy
       redirect_to users_path
     end
-  
+
     private
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)

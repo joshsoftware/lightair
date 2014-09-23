@@ -1,34 +1,39 @@
 = render 'light/newsletters/top_navbar'
-%table.table.table-striped 
-  %tr
-    %td
-      %strong 
-        = "#"
-    %td
-      %strong
-        User's Email Id 
-    %td
-      %strong
-        Username
-    %td{colspan: 2}
-      %center
+%table#stream_table.table.table-striped 
+  %thead
+    %tr
+      %th
+        %strong 
+          = "#"
+      %th
+        %strong
+          User's Email Id 
+      %th{data: {sort: "username:asc"}}
+        %strong
+          Username
+      %th
         %strong
           Edit
-  -count = 0
-  - @users.each do |user|
-    -if user.is_subscribed == true
-      -str = :success
-    -else
-      -str = :warning
-    -count = count + 1
-    %tr{:class => str}
-      %td
-        =count
-      %td
-        = link_to user.email_id, user_path(user)
-      %td
-        = user.username
-      %td
-        = link_to "Edit", edit_user_path(user), class: "btn btn-mini btn-success"
-      %td
-        = link_to "Delete", user_path(user), method: :delete, class: "btn btn-mini btn-danger"
+      %th
+        %strong
+          Delete
+  %tbody
+
+    %script#template{:type => "x-tmpl-mustache"}
+      
+      {{#record}}
+      %tr{class: "{{str}}"}
+        %td {{index}}
+        %td
+          %a{ :href => "/newsletter/users/{{_id.$oid}}"} {{email_id}}
+        %td {{username}}
+        %td
+          %a{ :href => "/newsletter/users/{{_id.$oid}}/edit", :class => "btn btn-mini btn-success"} Edit
+
+        %td
+          %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: "delete"}, :class => "btn btn-mini btn-danger" } Delete
+      {{/record}}
+  
+
+:javascript
+  data = #{@users.to_json};
