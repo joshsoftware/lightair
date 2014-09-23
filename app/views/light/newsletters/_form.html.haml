@@ -1,4 +1,9 @@
 = simple_form_for @newsletter, :html => { :class => 'form-horizontal' } do |news|
+  %div{align: 'center'}
+    .label.label-important
+      %br
+      = "Please Replace unsubscribe link with #{HOST_URL}/unsubscribe/<%= @user_id %>"
+  %br
   = news.input :subject, :label => false, :input_html => { :class => 'span8', :placeholder => 'Enter subject here...' }
   = news.text_area :content, :placeholder => "Input here..", :class => "redactor", :rows => 20, :cols => 40
   = news.button :submit, class: "btn btn-primary"

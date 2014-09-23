@@ -9,7 +9,7 @@ module Light
       newsletter = Light::Newsletter.order_by([:sent_on, :desc]).first
       users.each do |user|
         if newsletter 
-          Light::UserMailer.welcome_message(user.email_id, newsletter).deliver
+          Light::UserMailer.welcome_message(user.email_id, newsletter, user.id).deliver
           user.update_attribute :sent_on, user.sent_on << date
         else
           logger.info "No NewsLetter present"

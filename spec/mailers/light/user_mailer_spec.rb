@@ -2,11 +2,14 @@ require "rails_helper"
 module Light
 
 RSpec.describe UserMailer, :type => :mailer do
+
+  let(:user) {create(:user, email_id: 'kanhaiya@joshsoftware.com')}
+  
   before(:each) do
     ActionMailer::Base.delivery_method = :test
     ActionMailer::Base.perform_deliveries = true
     ActionMailer::Base.deliveries = []
-    UserMailer.welcome_message('kanhaiya@joshsoftware.com', FactoryGirl.create(:newsletter)).deliver
+    UserMailer.welcome_message(user.email_id, FactoryGirl.create(:newsletter), user.id).deliver
   end
 
   after(:each) do
