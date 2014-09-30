@@ -17,7 +17,7 @@ require 'carrierwave'
 require 'mini_magick'
 require 'redis-namespace'
 require 'select2-rails'
-
+require 'sendgrid_toolkit'
 
 
 module Light
