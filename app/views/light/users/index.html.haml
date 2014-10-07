@@ -19,8 +19,7 @@
           Delete
   %tbody
 
-    %script#template_light{:type => "text/html"}
-      
+    %script#template{:type => "text/html"}
       {{#record}}
       %tr{class: "{{str}}"}
         %td {{index}}
@@ -29,7 +28,6 @@
         %td {{username}}
         %td
           %a{ :href => "/newsletter/users/{{_id.$oid}}/edit", :class => "btn btn-mini btn-success"} Edit
-
         %td
           %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: "delete"}, :class => "btn btn-mini btn-danger" } Delete
       {{/record}}

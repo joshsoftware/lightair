@@ -1,3 +1,7 @@
 %h2 
   %center
-  Unsubscribed successfully
+    Subscribed successfully!!
+    %br
+    To unsubscribe again
+    = link_to "CLICK HERE !!", main_app.users_unsubscribe_path(@user.id)
+

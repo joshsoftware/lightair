@@ -4,9 +4,11 @@ module Light
     respond_to :js, :json, :html
 
     def index
-      @users = Light::User.all
+      offset_val = params[:offset] || 0
+      limit_val = params[:limit] || 500
+      @users = Light::User.all.offset(offset_val).limit(limit_val)
       respond_with do |format|
-        format.json   { render json: {users: @users} }
+        format.json   { render json: @users }
       end
 
     end
@@ -44,15 +46,23 @@ module Light
       redirect_to newsletters_path
     end
 
+    def unsubscribe
+      @user = Light::User.find(params[:id])
+      unless(@user.is_subscribed)
+        @message = 'You have already unsubscribed!!'
+      else
+        @user.update(is_subscribed: 'false')
+        @message = 'Unsubscribed successfully!!'
+      end
+    end
+
     def subscribe
       @user = Light::User.find(params[:id])
-      @user.update(is_subscribed: 'false')
+      @user.update(is_subscribed: 'true')
     end
 
     def sendmailer
-
-      Light::HardWorker.perform_async
-
+      Light::UserWorker.perform_async
       redirect_to newsletters_path
     end
 
