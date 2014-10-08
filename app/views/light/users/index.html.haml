@@ -1,5 +1,5 @@
 = render 'light/newsletters/top_navbar'
-%table#stream_table.table.table-striped 
+%table#stream_table_light.table.table-striped 
   %thead
     %tr
       %th
@@ -19,8 +19,7 @@
           Delete
   %tbody
 
-    %script#template{:type => "x-tmpl-mustache"}
-      
+    %script#template{:type => "text/html"}
       {{#record}}
       %tr{class: "{{str}}"}
         %td {{index}}
@@ -29,7 +28,6 @@
         %td {{username}}
         %td
           %a{ :href => "/newsletter/users/{{_id.$oid}}/edit", :class => "btn btn-mini btn-success"} Edit
-
         %td
           %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: "delete"}, :class => "btn btn-mini btn-danger" } Delete
       {{/record}}

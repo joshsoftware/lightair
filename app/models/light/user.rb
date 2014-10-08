@@ -17,6 +17,8 @@ module Light
 
     belongs_to :newsletter, counter_cache: :users_count
 
+    scope :subscribed_users, -> { where is_subscribed: true}
+
     def self.add_users_from_worksheet(worksheet, column = 1)
       fails = []
 
@@ -35,10 +37,6 @@ module Light
       end
       fails.delete_at(0)
       fails
-    end
-
-    def self.subscribed_users
-      Light::User.all.select{|u| u.is_subscribed.eql?(true)}
     end
   end
 end
