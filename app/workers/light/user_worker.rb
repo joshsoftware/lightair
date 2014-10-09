@@ -7,7 +7,7 @@ module Light
       date = Date.today.strftime("%Y%m")
       number_of_subscribed_users = Light::User.where(is_subscribed: true, :sent_on.nin => [date]).count
       current_batch = 0
-      users_in_batch = 2
+      users_in_batch = 250
       newsletter = Light::Newsletter.order_by([:sent_on, :desc]).first
       if newsletter
         while number_of_subscribed_users > 0
