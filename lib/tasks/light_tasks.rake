@@ -6,12 +6,32 @@
 namespace :light do
 
   task :remove_bounced_emails => :environment do
+    
     bounces = SendgridToolkit::Bounces.new(ENV['NEWSLETTER_SENDGRID_USERNAME'], ENV['NEWSLETTER_SENDGRID_PASSWORD'])
-    date = Light::Newsletter.last.sent_on.strftime("%Y-%m-%d")
-    bounce_emails = bounces.retrieve :start_date =>  date, :end_date => date
-    bounce_emails = bounce_emails.parsed_response.map{|response| response['email']}
-    Light::User.where(:email_id.in => bounce_emails).update_all(is_subscribed: false, is_bounced: true)
-  end
+    invalid = SendgridToolkit::InvalidEmails.new(ENV['NEWSLETTER_SENDGRID_USERNAME'], ENV['NEWSLETTER_SENDGRID_PASSWORD'])
+    spam = SendgridToolkit::SpamReports.new(ENV['NEWSLETTER_SENDGRID_USERNAME'], ENV['NEWSLETTER_SENDGRID_PASSWORD'])
+    blocks = SendgridToolkit::Blocks.new(ENV['NEWSLETTER_SENDGRID_USERNAME'], ENV['NEWSLETTER_SENDGRID_PASSWORD'])
+    
+    bounce_emails = bounces.retrieve.parsed_response.map{|response| response['email']}
+    invalid_emails = invalid.retrieve.parsed_response.map{|response| response['email']}
+    spam_emails = spam.retrieve.parsed_response.map{|response| response['email']}
+    block_emails = blocks.retrieve.parsed_response.map{|response| response['email']}
+    
+    #unsubscribe users from our database
+    puts bounce_emails.count
+    puts invalid_emails.count
+    puts block_emails.count
+    puts spam_emails.count
+
+    Light::User.where(:email_id.in => bounce_emails).update_all(is_subscribed: false, sidekiq_status: 'Bounced')
+    Light::User.where(:email_id.in => invalid_emails).update_all(is_subscribed: false, sidekiq_status: 'Invalid')
+    Light::User.where(:email_id.in => spam_emails).update_all(is_subscribed: false, sidekiq_status: 'Spam')
+    Light::User.where(:email_id.in => block_emails).update_all(is_subscribed: false, sidekiq_status: 'Block')
+    #clean sendgrid... TODO
+    #bounces.delete
+    #invalid.delete
+    #spam.delete
+ end
 
 end
 

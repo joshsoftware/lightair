@@ -8,7 +8,7 @@ module Light
     field :joined_on,     type: Date
     field :source,        type: String
     field :sent_on,       type: Array, default: []
-    field :is_bounced,    type: Boolean
+    field :sidekiq_status
 
     validates :email_id, presence: true
     validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create
