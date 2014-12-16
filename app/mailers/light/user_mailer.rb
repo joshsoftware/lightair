@@ -11,6 +11,7 @@ module Light
       sendgrid_unique_args :key2 => "newvalue2", :key3 => "value3"
 
       @user_id = user_id
+      @newsletter_id = newsletter.slug
       content = ERB.new(CGI.unescapeHTML(newsletter.content))
       #headers['X-SMTPAPI'] = { :to => user.pluck(:email_id) }.to_json
 

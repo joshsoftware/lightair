@@ -10,7 +10,7 @@
       %center
         %a.link{href: "#{newsletter_path(newsletter)}" }
           %div.tile.thumbnail
-            %img{src: "/images/newsletter.jpg"}
+            = image_tag newsletter.get_image
             %div.cap
               %h4
                 %center

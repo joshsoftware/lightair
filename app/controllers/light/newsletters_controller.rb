@@ -15,12 +15,11 @@ module Light
       @newsletter = Newsletter.new
     end
 
-
-
     def create 
       @newsletter = Newsletter.new(newsletters_params)
       if @newsletter.save
         @newsletter.update(sent_on: Date.today)
+        Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
         redirect_to newsletters_path
       else
         render action: 'new'
@@ -34,6 +33,7 @@ module Light
     def update
       @newsletter = Newsletter.find(params[:id])
       if @newsletter.update_attributes(newsletters_params)
+        Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
         redirect_to newsletters_path
       else
         render action: 'edit'
@@ -46,7 +46,11 @@ module Light
       redirect_to newsletters_path
     end
 
+    def web_version
+      @newsletter = Newsletter.find(params[:id])
+    end
     private
+
     def newsletters_params
       params.require(:newsletter).permit(:id, :subject, :content, :sent_on, :users_count)
     end
