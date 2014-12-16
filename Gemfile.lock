@@ -184,6 +184,9 @@ GEM
     mongoid-grid_fs (2.1.0)
       mime-types (>= 1.0, < 3.0)
       mongoid (>= 3.0, < 5.0)
+    mongoid_slug (3.2.1)
+      mongoid (> 3.0)
+      stringex (~> 2.0)
     moped (2.0.0)
       bson (~> 2.2)
       connection_pool (~> 2.0)
@@ -332,6 +335,7 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (~> 2.8)
+    stringex (2.5.2)
     subexec (0.2.3)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -374,6 +378,7 @@ DEPENDENCIES
   mina_extensions
   mini_magick
   mongoid
+  mongoid_slug
   omniauth-google-oauth2
   pry
   redactor-rails
