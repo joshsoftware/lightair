@@ -15,8 +15,6 @@ module Light
     validates :username, presence: true
     validates :email_id, uniqueness: true
 
-    belongs_to :newsletter, counter_cache: :users_count
-
     scope :subscribed_users, -> { where is_subscribed: true}
 
     def self.add_users_from_worksheet(worksheet, column = 1)
