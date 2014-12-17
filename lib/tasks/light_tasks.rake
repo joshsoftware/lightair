@@ -27,10 +27,11 @@ namespace :light do
     Light::User.where(:email_id.in => invalid_emails).update_all(is_subscribed: false, sidekiq_status: 'Invalid')
     Light::User.where(:email_id.in => spam_emails).update_all(is_subscribed: false, sidekiq_status: 'Spam')
     Light::User.where(:email_id.in => block_emails).update_all(is_subscribed: false, sidekiq_status: 'Block')
-    #clean sendgrid... TODO
-    #bounces.delete
-    #invalid.delete
-    #spam.delete
+    #clean sendgrid... 
+    bounces.delete(delete_all: 1)
+    invalid.delete(delete_all: 1)
+    spam.delete(delete_all: 1)
+    blocks.delete(delete_all: 1)
  end
 
 end
