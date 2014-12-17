@@ -34,5 +34,13 @@ namespace :light do
     blocks.delete(delete_all: 1)
  end
 
+  task update_users_count: :environment do
+    Light::Newsletter.each do |newsletter|
+      date = newsletter.sent_on.strftime("%Y%m")
+      users_count = Light::User.where(:sent_on => date).count
+      newsletter.update_attribute(:users_count, users_count)
+    end
+  end
+
 end
 
