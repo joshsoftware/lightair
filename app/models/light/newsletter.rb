@@ -12,7 +12,7 @@ module Light
     validates :content, :subject, presence: true
     validates :subject, uniqueness: true
 
-    has_mongoid_attached_file :photo,:styles => {:original => ['1920x1680>', :png],:small  => ['220x180!', :png]}
+    has_mongoid_attached_file :photo,:styles => {:original => ['1920x1680>', :png],:small  => ['240x200!', :png]}
     validates_attachment_content_type :photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "application/pdf"]
 
     has_many :users
