@@ -6,6 +6,7 @@ module Light
     def perform
       date = Date.today.strftime("%Y%m")
       number_of_subscribed_users = Light::User.where(is_subscribed: true, :sent_on.nin => [date]).count
+      number_of_subscribed_users_count = number_of_subscribed_users
       current_batch = 0
       users_in_batch = 250
       newsletter = Light::Newsletter.order_by([:sent_on, :desc]).first
@@ -16,6 +17,7 @@ module Light
           number_of_subscribed_users -= users_in_batch
           Light::HardWorker.perform_async(user_ids, newsletter.id.to_s, date)
         end
+        newsletter.update_attribute(:users_count, number_of_subscribed_users_count)
       else
         logger.info = "No newsletter present"
       end

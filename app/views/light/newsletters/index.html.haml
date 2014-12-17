@@ -13,8 +13,8 @@
             = image_tag newsletter.get_image
             %div.cap
               %h4
-                %center
-                  =newsletter.sent_on.strftime("%B %Y")
+                = newsletter.sent_on.strftime("%B %Y")
+                = "(#{newsletter.users_count} users)"
       %center
         %hr
           = link_to "Edit", edit_newsletter_path(newsletter), class: "btn btn-mini btn-success"
