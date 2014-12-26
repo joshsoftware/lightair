@@ -7,7 +7,6 @@ FactoryGirl.define do
     u.joined_on     {Faker::Business.credit_card_expiry_date}
     u.source        {Faker::Name.name}
     u.username      {Faker::Name.name}
-    newsletter
   end
 end
 end
