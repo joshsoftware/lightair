@@ -18,11 +18,7 @@ module Light
     end
 
     def new
-      if params[:user]
-
-      else
-        @user = Light::User.new
-      end
+      @user = Light::User.new
     end
 
     def create
@@ -89,6 +85,5 @@ module Light
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
     end
-
   end
 end
