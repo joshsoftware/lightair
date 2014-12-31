@@ -48,7 +48,9 @@ module Light
 
     def web_version
       @newsletter = Newsletter.find(params[:id])
+      render layout: false
     end
+    
     private
 
     def newsletters_params
