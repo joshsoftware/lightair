@@ -1,0 +1,4 @@
+checkout:
+  post:
+    - cp spec/dummy/config/secrets.yml.ci spec/dummy/config/secrets.yml
+
