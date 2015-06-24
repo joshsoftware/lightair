@@ -36,5 +36,14 @@ module Light
       fails.delete_at(0)
       fails
     end
+
+    def self.import(file)
+      rows = CSV.read(file.path)
+      header = rows.delete_at(0)
+      return {error: "Header doesn't matches"} if header != ['Full Name', 'Email']
+      ImportWorker.perform_async(rows)
+      {success: 'You will get an update email.'}
+    end
+
   end
 end

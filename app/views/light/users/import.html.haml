@@ -1,0 +1,7 @@
+= render 'light/newsletters/top_navbar'
+
+Import users
+
+= form_tag users_import_path , multipart: true do |file|
+  = file_field_tag :file
+  = submit_tag 'Upload CSV'

@@ -4,6 +4,7 @@
       
     = drop_down "Add Users" do
       = menu_item "Add Manually", new_user_path
+      = menu_item "Import Users", users_import_path
       = menu_item "Google Spreadsheets", spreadsheets_path
 
     = menu_item "Show Users", users_path, ({:method => 'get'} if params[:controller] == 'light/users' && params[:action].in?(['new', 'create']))

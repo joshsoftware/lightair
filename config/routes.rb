@@ -8,6 +8,7 @@ Light::Engine.routes.draw do
   get '/auth/:provider/callback', to: 'spreadsheets#new',    as: 'google_spreadsheet'
   get '/auth/failure',            to: 'spreadsheets#failure'
 
+  match 'users/import', to: 'users#import', via: [:get, :post]
   resources :users, :newsletters, :user_mailer, :spreadsheets
 
   root :to => 'newsletters#index'

@@ -81,6 +81,14 @@ module Light
       redirect_to users_path
     end
 
+    def import
+      if request.post?
+        message = User.import(params[:file]).first
+        flash[message.first] = message.last
+      end
+      render action: :import
+    end
+
     private
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
