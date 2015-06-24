@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'sidekiq/testing'
 module Light
 
   RSpec.describe UsersController, :type => :controller do
@@ -95,6 +96,59 @@ module Light
         end
       end
     end
+
+    context 'GET import' do
+      it 'should render import template' do
+        get :import
+        expect(response).to render_template("import")
+      end
+    end
+
+    context 'POST import ' do
+
+      let(:file_path) { "#{Rails.root}/files/import_users.csv" }
+      let!(:user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com"}
+
+      it 'File to be imported should contain following data ' do
+        users = [['Full Name', 'Email'],
+          ["Miss Pamela Kovacek","pamela@gmail.com"], 
+                 [nil, "claud@gmail.com"],
+                 ["Delmer Botsford", nil],
+                 ["Winona Bayer", "winona@gmail.com"],
+        ]
+        expect(User.find_by(email_id: users.last.last)).to be_present
+        file = CSV.foreach(file_path)
+        rows = file.collect{|row| row}
+        expect(users).to eq(rows)
+      end
+
+      it 'should import users with valid information' do
+        post :import, file: file_path
+        
+        expect(flash[:success]).to eq("You will get an update email.")
+        expect(ImportWorker.jobs.size).to eq(1)
+        ImportWorker.drain
+        expect(ImportWorker.jobs.size).to eq(0)
+        expect(User.count).to eq(3)
+        expect(User.find_by(email_id: "pamela@gmail.com")).to be_present
+        expect(User.find_by(email_id: "winona@gmail.com")).to be_present
+
+        user = User.find_by(email_id: "claud@gmail.com")
+        expect(user).to be_present
+        expect(user.source).to eq("Business Card")
+        expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
+
+      end
+      
+      it "should raise error if headers doesn't match" do
+        User.destroy_all
+        file_path2 = "#{Rails.root}/files/import_without_header.csv" 
+        post :import, file: file_path2
+        expect(flash[:error]).to eq("Header doesn't matches")
+        expect(User.all).to be_empty
+      end
+    end
+
   end
 
 end

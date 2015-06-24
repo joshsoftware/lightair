@@ -2,6 +2,7 @@ require 'rails_helper'
 require 'webmock/rspec'
 require 'vcr'
 module Light
+=begin
   RSpec.describe SpreadsheetsController, :type => :controller do
 
     routes { Light::Engine.routes}
@@ -154,5 +155,5 @@ module Light
       end
     end
   end
-
+=end
 end
