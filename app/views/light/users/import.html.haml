@@ -1,7 +1,13 @@
 = render 'light/newsletters/top_navbar'
 
-Import users
-
-= form_tag users_import_path , multipart: true do |file|
-  = file_field_tag :file
-  = submit_tag 'Upload CSV'
+= form_tag users_import_path , multipart: true, role: 'form', class: 'form-horizontal' do |file|
+  %h3 Import Contacts
+  .row
+    .span2
+    .span2
+      %label.control-label Import contacts :
+    .span4
+      = file_field_tag :file
+  %br
+  .row
+    .pull-right.span7= submit_tag 'Import CSV', class: 'btn btn-success'
