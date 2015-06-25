@@ -4,7 +4,7 @@ module Light
 
     field :email_id,      type: String
     field :username,      type: String
-    field :is_subscribed, type: Boolean
+    field :is_subscribed, type: Boolean, default: true
     field :joined_on,     type: Date
     field :source,        type: String
     field :sent_on,       type: Array, default: []

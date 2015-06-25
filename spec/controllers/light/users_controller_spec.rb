@@ -106,8 +106,8 @@ module Light
 
     context 'POST import ' do
 
-      let(:file_path) { "#{Rails.root}/files/import_users.csv" }
-      let!(:user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com"}
+      let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/files/import_users.csv") }
+      let!(:existing_user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false }
 
       it 'File to be imported should contain following data ' do
         users = [['Full Name', 'Email'],
@@ -117,13 +117,12 @@ module Light
                  ["Winona Bayer", "winona@gmail.com"],
         ]
         expect(User.find_by(email_id: users.last.last)).to be_present
-        file = CSV.foreach(file_path)
-        rows = file.collect{|row| row}
+        rows = CSV.read(file.path)
         expect(users).to eq(rows)
       end
 
       it 'should import users with valid information' do
-        post :import, file: file_path
+        post :import, file: file
         
         expect(flash[:success]).to eq("You will get an update email.")
         expect(ImportWorker.jobs.size).to eq(1)
@@ -131,10 +130,14 @@ module Light
         expect(ImportWorker.jobs.size).to eq(0)
         expect(User.count).to eq(3)
         expect(User.find_by(email_id: "pamela@gmail.com")).to be_present
-        expect(User.find_by(email_id: "winona@gmail.com")).to be_present
+
+        existing_user.reload
+        expect(existing_user).to be_present
+        expect(existing_user.is_subscribed).to eq(false)
 
         user = User.find_by(email_id: "claud@gmail.com")
         expect(user).to be_present
+        expect(user.is_subscribed).to eq(true)
         expect(user.source).to eq("Business Card")
         expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
 
@@ -142,8 +145,8 @@ module Light
       
       it "should raise error if headers doesn't match" do
         User.destroy_all
-        file_path2 = "#{Rails.root}/files/import_without_header.csv" 
-        post :import, file: file_path2
+        file2 = Rack::Test::UploadedFile.new("#{Rails.root}/files/import_without_header.csv")
+        post :import, file: file2
         expect(flash[:error]).to eq("Header doesn't matches")
         expect(User.all).to be_empty
       end

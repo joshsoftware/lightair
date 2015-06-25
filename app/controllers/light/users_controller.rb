@@ -83,7 +83,7 @@ module Light
 
     def import
       if request.post?
-        message = User.import(params[:file]).first
+        message = Light::User.import(params[:file]).first
         flash[message.first] = message.last
       end
       render action: :import
