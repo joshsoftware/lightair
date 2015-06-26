@@ -19,8 +19,8 @@ module Light
            content_type: "text/html")
     end
 
-    def import_contacts_update(email, file_name)
-      attachments["failed_user_list.csv"] = file_name 
+    def import_contacts_update(email, file_path)
+      attachments["failed_user_list.csv"] = File.read(file_path)
       email = email || 'test@lightair.com'
       mail(to: email, subject: 'Imported contacts for newsletter.',
            body: 'Imported contacts successfully. Please find attachment for failed users.')
