@@ -124,7 +124,6 @@ module Light
       it 'should import users with valid information' do
         post :import, file: file
         
-        p flash
         expect(flash['success']).to eq("You will get an update email.")
         expect(ImportWorker.jobs.size).to eq(1)
         ImportWorker.drain
