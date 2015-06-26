@@ -39,7 +39,8 @@ module Light
 
     def self.import(file, email='')
       return {error: "Please select CSV file"} if (file.blank? or file.content_type != 'text/csv')
-      rows = CSV.read(file.path)
+      file = CSV.open(file.path, :row_sep => :auto, :col_sep => ",")
+      rows = file.read
       header = rows.delete_at(0)
       return {error: "Header doesn't matches"} if header != ['Full Name', 'Email']
       ImportWorker.perform_async(rows, email)
