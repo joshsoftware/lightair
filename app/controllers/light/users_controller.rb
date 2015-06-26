@@ -83,7 +83,8 @@ module Light
 
     def import
       if request.post?
-        message = Light::User.import(params[:file]).first
+        current_user = current_user || nil # Need this bcz current_user is not exists in engine
+        message = Light::User.import(params[:file], current_user.try(&:email)).first
         flash[message.first] = message.last
       end
       render action: :import

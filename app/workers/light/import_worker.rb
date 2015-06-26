@@ -3,10 +3,19 @@ module Light
     include Sidekiq::Worker
     sidekiq_options :queue => :lightair
 
-    def perform(rows, source = "Business Card")
-      rows.each do |row|
-        email = row[1]
-        User.create(username: (row[0] || email), email_id: email, source: source)
+    def perform(rows, email_id, source = "Business Card")
+      file_name = "#{Rails.root.to_s}/tmp/import_contacts_#{Time.now.to_i}.csv"
+      CSV.open(file_name, "wb") do |csv| #creates a tempfile csv
+        csv << ['Total number of users in the database', Light::User.count]
+        csv << ['Total number of rows in uploaded CSV (including blank)', rows.count]
+        csv << ["Email", "Name", "Error"] 
+        rows.each do |row|
+          email = row[1]
+          name = row[0]
+          user = Light::User.create(username: (name || email), email_id: email, source: source) if email.present? or name.present?
+          csv << [email, row[0], user.errors.messages] if user.present? and user.errors.present?
+        end
+        UserMailer.import_contacts_update(email_id, file_name).deliver
       end
     end
   end

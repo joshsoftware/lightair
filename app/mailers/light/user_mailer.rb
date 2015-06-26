@@ -1,5 +1,4 @@
 module Light
-
   class UserMailer < ActionMailer::Base
     include SendGrid
     sendgrid_category :use_subject_lines
@@ -18,6 +17,13 @@ module Light
       mail(to: email, category: "newuser", subject: newsletter.subject,
            body: content.result(binding),
            content_type: "text/html")
+    end
+
+    def import_contacts_update(email, file_name)
+      attachments["failed_user_list.csv"] = file_name 
+      email = email || 'test@lightair.com'
+      mail(to: email, subject: 'Imported contacts for newsletter.',
+           body: 'Imported contacts successfully. Please find attachment for failed users.')
     end
   end
 end
