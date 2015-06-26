@@ -106,7 +106,7 @@ module Light
 
     context 'POST import ' do
 
-      let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/files/import_users.csv") }
+      let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/files/import_users.csv", 'text/csv') }
       let!(:existing_user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false }
 
       it 'File to be imported should contain following data ' do
@@ -124,7 +124,7 @@ module Light
       it 'should import users with valid information' do
         post :import, file: file
         
-        expect(flash[:success]).to eq("You will get an update email.")
+        expect(flash['success']).to eq("You will get an update email.")
         expect(ImportWorker.jobs.size).to eq(1)
         ImportWorker.drain
         expect(ImportWorker.jobs.size).to eq(0)
@@ -142,13 +142,23 @@ module Light
         expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
 
       end
-      
-      it "should raise error if headers doesn't match" do
-        User.destroy_all
-        file2 = Rack::Test::UploadedFile.new("#{Rails.root}/files/import_without_header.csv")
-        post :import, file: file2
-        expect(flash[:error]).to eq("Header doesn't matches")
-        expect(User.all).to be_empty
+
+      context "should raise error if " do
+        it "headers doesn't match" do
+          User.destroy_all
+          file2 = Rack::Test::UploadedFile.new("#{Rails.root}/files/import_without_header.csv", 'text/csv')
+          post :import, file: file2
+          expect(flash['error']).to eq("Header doesn't matches")
+          expect(User.all).to be_empty
+        end
+
+        it "headers doesn't match" do
+          User.destroy_all
+          file2 = Rack::Test::UploadedFile.new("#{Rails.root}/files/contacts.txt")
+          post :import, file: file2
+          expect(flash[:error]).to eq("Please select CSV file")
+          expect(User.all).to be_empty
+        end
       end
     end
 
