@@ -15,6 +15,10 @@ module Light
     validates :username, presence: true
     validates :email_id, uniqueness: true
 
+    before_create do
+      self.joined_on = Date.today
+    end
+
     scope :subscribed_users, -> { where is_subscribed: true}
 
     def self.add_users_from_worksheet(worksheet, column = 1)
@@ -46,6 +50,5 @@ module Light
       ImportWorker.perform_async(rows, email)
       {success: 'You will get an update email.'}
     end
-
   end
 end
