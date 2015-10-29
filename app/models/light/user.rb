@@ -1,6 +1,7 @@
 module Light
   class User
     include Mongoid::Document
+    include Mongoid::Slug
 
     field :email_id,      type: String
     field :username,      type: String
@@ -14,6 +15,8 @@ module Light
     validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create
     validates :username, presence: true
     validates :email_id, uniqueness: true
+
+    slug :username
 
     before_create do
       self.joined_on = Date.today
