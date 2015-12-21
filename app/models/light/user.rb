@@ -3,6 +3,8 @@ module Light
     include Mongoid::Document
     include Mongoid::Slug
 
+    NEW_USER = "new user"
+
     field :email_id,      type: String
     field :username,      type: String
     field :is_subscribed, type: Boolean, default: true
@@ -23,6 +25,7 @@ module Light
     end
 
     scope :subscribed_users, -> { where is_subscribed: true}
+    scope :new_users, -> { where(is_subscribed: false, sidekiq_status: NEW_USER)}
 
     def self.add_users_from_worksheet(worksheet, column = 1)
       fails = []
@@ -52,6 +55,11 @@ module Light
       return {error: "Header doesn't matches"} if header != ['Full Name', 'Email']
       ImportWorker.perform_async(rows, email)
       {success: 'You will get an update email.'}
+    end
+
+    def self.users_for_opt_in_mail
+      date = Date.today.strftime("%Y%m")
+      self.new_users.where(:sent_on.nin => [date]).order_by([:email_id, :asc])
     end
   end
 end

@@ -4,6 +4,8 @@
       %br
       = "Please Replace unsubscribe link with #{LIGHT_HOST_URL}/unsubscribe/<%= @user_id %>"
   %br
-  = news.input :subject, :label => false, :input_html => { :class => 'span8', :placeholder => 'Enter subject here...' }
+  = news.input :subject, :label => "Subject", :input_html => { :class => 'span8', :placeholder => 'Enter subject here...' }
+  = news.input :newsletter_type, collection: Light::Newsletter::VALID_NEWSLETTER_TYPES.values ,
+    :label => "Type"
   = news.text_area :content, :placeholder => "Input here..", :class => "redactor", :rows => 20, :cols => 40
   = news.button :submit, class: "btn btn-primary"

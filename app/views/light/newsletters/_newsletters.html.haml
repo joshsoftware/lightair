@@ -1,0 +1,23 @@
+= render 'top_navbar'
+
+%table.table
+  -count=3
+  -@newsletters.each do |newsletter|
+    -if count > 2
+      -count=0
+      %tr
+    %td
+      %center
+        %a.link{href: "#{newsletter_path(newsletter)}" }
+          %div.tile.thumbnail
+            = image_tag newsletter.get_image
+            %div.cap
+              %h4
+                = newsletter.sent_on.strftime("%B %Y")
+                = "(#{newsletter.users_count} users)"
+      %center
+        %hr
+          = link_to "Edit", edit_newsletter_path(newsletter), class: "btn btn-mini btn-success", data: { no_turbolink: true }
+          = link_to "Delete", newsletter_path(newsletter), method: :delete, class: "btn btn-mini btn-danger"
+    -count+=1
+
