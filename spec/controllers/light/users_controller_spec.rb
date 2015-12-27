@@ -137,7 +137,8 @@ module Light
 
         user = User.find_by(email_id: "claud@gmail.com")
         expect(user).to be_present
-        expect(user.is_subscribed).to eq(true)
+        expect(user.is_subscribed).to eq(false)
+        expect(user.sidekiq_status).to eq('new user')
         expect(user.source).to eq("Business Card")
         expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
 
