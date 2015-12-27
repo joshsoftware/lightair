@@ -25,7 +25,7 @@ module Light
       @user = Light::User.new(users_params)
       @user.sent_on = Array.new
       if @user.save
-        @user.update(is_subscribed: true, joined_on: Date.today, source: "Manual",sent_on: Array.new)
+        @user.update(source: "Manual", sent_on: Array.new)
         redirect_to users_path
       else
         render action: 'new'

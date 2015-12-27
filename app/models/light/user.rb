@@ -7,7 +7,7 @@ module Light
 
     field :email_id,      type: String
     field :username,      type: String
-    field :is_subscribed, type: Boolean, default: true
+    field :is_subscribed, type: Boolean, default: false
     field :joined_on,     type: Date
     field :source,        type: String
     field :sent_on,       type: Array, default: []
@@ -22,6 +22,7 @@ module Light
 
     before_create do
       self.joined_on = Date.today
+      self.sidekiq_status = NEW_USER
     end
 
     scope :subscribed_users, -> { where is_subscribed: true}

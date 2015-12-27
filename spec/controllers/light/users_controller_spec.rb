@@ -30,11 +30,24 @@ module Light
     end
 
     context " POST create" do
-      let(:new_user) {FactoryGirl.attributes_for(:user)}
-      it "creates a new user" do
-        post :create, {user: new_user}
-        expect(response).to redirect_to(users_path)
+      context 'creates new user' do
+        before(:all) do
+          @create_params = {email_id: 'test@sub.com', username: 'test'}
+        end
+
+        it "redirects to users path" do
+          post :create, {user: @create_params}
+          expect(response).to redirect_to(users_path)
+        end
+
+        it "default status is new user and is_subscribed is false" do
+          post :create, {user: @create_params}
+          user = User.find_by(email_id: 'test@sub.com')
+          expect(user.sidekiq_status).to eq 'new user'
+          expect(user.is_subscribed).to eq false
+        end
       end
+
       it "not arise" do
         post :create, {user: {email_id: "",username: "kanhaiya", is_subscribed: "false"}}
         expect(response).to render_template("new")
@@ -111,7 +124,7 @@ module Light
 
       it 'File to be imported should contain following data ' do
         users = [['Full Name', 'Email'],
-          ["Miss Pamela Kovacek","pamela@gmail.com"], 
+                 ["Miss Pamela Kovacek","pamela@gmail.com"], 
                  [nil, "claud@gmail.com"],
                  ["Delmer Botsford", nil],
                  ["Winona Bayer", "winona@gmail.com"],
@@ -123,7 +136,7 @@ module Light
 
       it 'should import users with valid information' do
         post :import, file: file
-        
+
         expect(flash['success']).to eq("You will get an update email.")
         expect(ImportWorker.jobs.size).to eq(1)
         ImportWorker.drain
