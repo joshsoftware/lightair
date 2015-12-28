@@ -4,7 +4,7 @@ source "https://rubygems.org"
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
-ruby '2.1.0'
+ruby '2.2.4'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 
 # Use google_drive to read/write files or spreadsheets from google drive
