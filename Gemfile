@@ -66,4 +66,4 @@ gem 'mongoid_slug'
 gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem 'imgkit'
 
-
+gem 'responders', '~> 2.0'
