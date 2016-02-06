@@ -42,7 +42,9 @@ module Light
       file = CSV.open(file.path, :row_sep => :auto, :col_sep => ",")
       rows = file.read
       header = rows.delete_at(0)
-      return {error: "Header doesn't matches"} if header != ['Full Name', 'Email']
+      if header.first.strip.downcase != 'full name' and header[1].strip.downcase != 'email'
+        return {error: "Header doesn't matches"}
+      end
       ImportWorker.perform_async(rows, email)
       {success: 'You will get an update email.'}
     end
