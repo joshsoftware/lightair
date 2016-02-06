@@ -9,7 +9,19 @@ Light::Engine.routes.draw do
   get '/auth/failure',            to: 'spreadsheets#failure'
 
   match 'users/import', to: 'users#import', via: [:get, :post]
-  resources :users, :newsletters, :user_mailer, :spreadsheets
+  resources :newsletters do
+    collection do
+      get 'opt-in', as: 'opt_in'
+    end
+
+    member do
+      get 'test-opt-in' , as: 'test_opt_in'
+      post 'send-opt-in' , as: 'send_opt_in'
+      post 'send-opt-in-test' , as: 'send_opt_in_test'
+    end
+  end
+  
+  resources :users, :user_mailer, :spreadsheets
 
   root :to => 'newsletters#index'
 

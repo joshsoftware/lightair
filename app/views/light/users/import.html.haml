@@ -1,11 +1,11 @@
 = render 'light/newsletters/top_navbar'
 
 = form_tag users_import_path , multipart: true, role: 'form', class: 'form-horizontal' do |file|
-  %h3 Import Contacts
+  %h3 Import Opt-In Users
   .row
     .span2
     .span2
-      %label.control-label Import contacts :
+      %label.control-label Import Opt-in Users :
     .span4
       = file_field_tag :file
   %br

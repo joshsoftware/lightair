@@ -30,11 +30,24 @@ module Light
     end
 
     context " POST create" do
-      let(:new_user) {FactoryGirl.attributes_for(:user)}
-      it "creates a new user" do
-        post :create, {user: new_user}
-        expect(response).to redirect_to(users_path)
+      context 'creates new user' do
+        before(:all) do
+          @create_params = {email_id: 'test@sub.com', username: 'test'}
+        end
+
+        it "redirects to users path" do
+          post :create, {user: @create_params}
+          expect(response).to redirect_to(users_path)
+        end
+
+        it "default status is new user and is_subscribed is false" do
+          post :create, {user: @create_params}
+          user = User.find_by(email_id: 'test@sub.com')
+          expect(user.sidekiq_status).to eq 'new user'
+          expect(user.is_subscribed).to eq false
+        end
       end
+
       it "not arise" do
         post :create, {user: {email_id: "",username: "kanhaiya", is_subscribed: "false"}}
         expect(response).to render_template("new")
@@ -139,7 +152,8 @@ module Light
 
           user = User.find_by(email_id: "claud@gmail.com")
           expect(user).to be_present
-          expect(user.is_subscribed).to eq(true)
+          expect(user.is_subscribed).to eq(false)
+          expect(user.sidekiq_status).to eq('new user')
           expect(user.source).to eq("Business Card")
           expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
         end
@@ -171,7 +185,6 @@ module Light
         it 'contain extra columns in csv' do
           @file_path = "#{Rails.root}/files/import_with_extra_columns.csv"
         end
-
       end
 
       context "should raise error if " do

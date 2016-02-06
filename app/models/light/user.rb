@@ -1,10 +1,13 @@
 module Light
   class User
     include Mongoid::Document
+    include Mongoid::Slug
+
+    NEW_USER = "new user"
 
     field :email_id,      type: String
     field :username,      type: String
-    field :is_subscribed, type: Boolean, default: true
+    field :is_subscribed, type: Boolean, default: false
     field :joined_on,     type: Date
     field :source,        type: String
     field :sent_on,       type: Array, default: []
@@ -15,7 +18,15 @@ module Light
     validates :username, presence: true
     validates :email_id, uniqueness: true
 
+    slug :username
+
+    before_create do
+      self.joined_on = Date.today
+      self.sidekiq_status = NEW_USER
+    end
+
     scope :subscribed_users, -> { where is_subscribed: true}
+    scope :new_users, -> { where(is_subscribed: false, sidekiq_status: NEW_USER)}
 
     def self.add_users_from_worksheet(worksheet, column = 1)
       fails = []
@@ -49,5 +60,9 @@ module Light
       {success: 'You will get an update email.'}
     end
 
+    def self.users_for_opt_in_mail
+      date = Date.today.strftime("%Y%m")
+      self.new_users.where(:sent_on.nin => [date]).order_by([:email_id, :asc])
+    end
   end
 end
