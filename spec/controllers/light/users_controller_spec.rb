@@ -119,42 +119,72 @@ module Light
 
     context 'POST import ' do
 
-      let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/files/import_users.csv", 'text/csv') }
-      let!(:existing_user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false }
+      context 'data from file import_users.csv' do
 
-      it 'File to be imported should contain following data ' do
-        users = [['Full Name', 'Email'],
-                 ["Miss Pamela Kovacek","pamela@gmail.com"], 
-                 [nil, "claud@gmail.com"],
-                 ["Delmer Botsford", nil],
-                 ["Winona Bayer", "winona@gmail.com"],
-        ]
-        expect(User.find_by(email_id: users.last.last)).to be_present
-        rows = CSV.read(file.path)
-        expect(users).to eq(rows)
+        let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/files/import_users.csv", 'text/csv') }
+        let!(:existing_user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false }
+
+        it 'File to be imported should contain following data ' do
+          users = [['Full Name', 'Email'],
+                   ["Miss Pamela Kovacek","pamela@gmail.com"],
+                   [nil, "claud@gmail.com"],
+                   ["Delmer Botsford", nil],
+                   ["Winona Bayer", "winona@gmail.com"],
+          ]
+          expect(User.find_by(email_id: users.last.last)).to be_present
+          rows = CSV.read(file.path)
+          expect(users).to eq(rows)
+        end
+
+        it 'should import users with valid information' do
+          post :import, file: file
+
+          expect(flash['success']).to eq("You will get an update email.")
+          expect(ImportWorker.jobs.size).to eq(1)
+          ImportWorker.drain
+          expect(ImportWorker.jobs.size).to eq(0)
+          expect(User.count).to eq(3)
+          expect(User.find_by(email_id: "pamela@gmail.com")).to be_present
+
+          existing_user.reload
+          expect(existing_user).to be_present
+          expect(existing_user.is_subscribed).to eq(false)
+
+          user = User.find_by(email_id: "claud@gmail.com")
+          expect(user).to be_present
+          expect(user.is_subscribed).to eq(false)
+          expect(user.sidekiq_status).to eq('new user')
+          expect(user.source).to eq("Business Card")
+          expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
+        end
+
       end
+      context 'should return success if' do
 
-      it 'should import users with valid information' do
-        post :import, file: file
+        after do
+          create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false
+          file  = Rack::Test::UploadedFile.new(@file_path, 'text/csv')
+          post :import, file: file
 
-        expect(flash['success']).to eq("You will get an update email.")
-        expect(ImportWorker.jobs.size).to eq(1)
-        ImportWorker.drain
-        expect(ImportWorker.jobs.size).to eq(0)
-        expect(User.count).to eq(3)
-        expect(User.find_by(email_id: "pamela@gmail.com")).to be_present
+          expect(flash['success']).to eq("You will get an update email.")
+          expect(ImportWorker.jobs.size).to eq(1)
+          ImportWorker.drain
+          expect(ImportWorker.jobs.size).to eq(0)
+          expect(User.count).to eq(3)
+          expect(User.find_by(email_id: "pamela@gmail.com")).to be_present
+        end
 
-        existing_user.reload
-        expect(existing_user).to be_present
-        expect(existing_user.is_subscribed).to eq(false)
+        it 'header contains spaces before or after name' do
+          @file_path = "#{Rails.root}/files/import_with_spaces_in_header.csv"
+        end
 
-        user = User.find_by(email_id: "claud@gmail.com")
-        expect(user).to be_present
-        expect(user.is_subscribed).to eq(false)
-        expect(user.sidekiq_status).to eq('new user')
-        expect(user.source).to eq("Business Card")
-        expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
+        it 'header mismatch the letter case i.e. "full name" istead of Full Name' do
+          @file_path = "#{Rails.root}/files/import_header_case_insensitive.csv"
+        end
 
+        it 'contain extra columns in csv' do
+          @file_path = "#{Rails.root}/files/import_with_extra_columns.csv"
+        end
       end
 
       context "should raise error if " do
