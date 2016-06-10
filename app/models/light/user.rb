@@ -22,7 +22,7 @@ module Light
 
     before_create do
       self.joined_on = Date.today
-      self.sidekiq_status = NEW_USER
+      self.sidekiq_status = NEW_USER if self.sidekiq_status.blank?
     end
 
     scope :subscribed_users, -> { where is_subscribed: true}

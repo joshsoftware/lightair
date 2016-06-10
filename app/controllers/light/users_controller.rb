@@ -10,7 +10,6 @@ module Light
       respond_with do |format|
         format.json   { render json: @users }
       end
-
     end
 
     def show
@@ -90,6 +89,31 @@ module Light
       render action: :import
     end
 
+    def auto_opt_in
+      @user = Light::User.new
+      @newsletters  = Light::Newsletter.all.desc(:sent_on)
+    end
+
+    def opt_in
+      @user = Light::User.where(email_id: params[:email]).first
+      if @user.present?
+        if @user.is_subscribed.eql?(false)
+          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug).deliver
+          #send email
+        end
+      else
+        u_name = params[:username].blank? ? params[:email] : params[:username]
+        @user=Light::User.new(username: u_name, email_id: params[:email], sidekiq_status: 'web subscription request')
+        if @user.save!
+          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug).deliver
+        end
+      end
+      redirect_to main_app.users_thank_you_path
+    end
+
+    def thank_you
+
+    end
     private
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)

@@ -1,0 +1,29 @@
+= form_tag '/opt_in' , role: 'form', class: 'form-horizontal' do |file|
+  .well
+    %center
+      %h4 Get Monthy newsletter from Josh!!
+  .row
+    %center= email_field_tag :email, nil, {style: 'width: 45%; height: 10%;', placeholder: 'Enter your email. e.g. email@email.com'}
+  %br
+  .row
+    %center= submit_tag 'Subscribe me', class: 'btn btn-success'
+
+.well
+  %center 
+    %h4 Our previous newsletters!!
+%table.table
+  -count=3
+  -@newsletters.each do |newsletter|
+    -if count > 2
+      -count=0
+      %tr
+    %td
+      %center
+        %a.link{href: "http://localhost:3000/web-version/#{newsletter.slug}" }
+          %div.tile.thumbnail
+            = image_tag newsletter.get_image
+            %div.cap
+              %h4
+                = newsletter.sent_on.strftime("%B %Y")
+    -count+=1
+

@@ -25,5 +25,10 @@ module Light
       mail(to: email, subject: 'Imported contacts for newsletter.',
            body: 'Imported contacts successfully. Please find attachment for failed users.')
     end
+
+    def auto_opt_in(email, user_id)
+      @user_id = user_id
+      mail(to: email, category: "newuser", subject: 'Josh Software Newsletter: Please confirm subscription.')
+    end
   end
 end
