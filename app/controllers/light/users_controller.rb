@@ -98,22 +98,30 @@ module Light
       @user = Light::User.where(email_id: params[:email]).first
       if @user.present?
         if @user.is_subscribed.eql?(false)
-          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug).deliver
+          @user.update_attributes(token: Devise.friendly_token)
+          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
           #send email
         end
       else
         u_name = params[:username].blank? ? params[:email] : params[:username]
-        @user=Light::User.new(username: u_name, email_id: params[:email], sidekiq_status: 'web subscription request')
-        if @user.save!
-          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug).deliver
+        @user=Light::User.new(username: u_name, 
+                              email_id: params[:email], 
+                              sidekiq_status: 'web subscription request',
+                              token: Devise.friendly_token)
+        if @user.save
+          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
         end
       end
-      redirect_to main_app.users_thank_you_path
+      respond_to do |format| 
+        format.json { head :no_content }
+        format.html {redirect_to main_app.users_thank_you_path}
+      end
     end
 
     def thank_you
 
     end
+    
     private
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)

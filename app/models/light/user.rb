@@ -12,6 +12,7 @@ module Light
     field :source,        type: String
     field :sent_on,       type: Array, default: []
     field :sidekiq_status
+    field :token
 
     validates :email_id, presence: true
     validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create

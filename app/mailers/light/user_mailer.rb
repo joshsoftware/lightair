@@ -26,8 +26,9 @@ module Light
            body: 'Imported contacts successfully. Please find attachment for failed users.')
     end
 
-    def auto_opt_in(email, user_id)
+    def auto_opt_in(email, user_id, token)
       @user_id = user_id
+      @token = token
       mail(to: email, category: "newuser", subject: 'Josh Software Newsletter: Please confirm subscription.')
     end
   end
