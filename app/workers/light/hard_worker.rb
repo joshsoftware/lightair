@@ -10,7 +10,11 @@ module Light
         if user.present?
           Light::UserMailer.welcome_message(user.email_id, newsletter, user.slug).deliver
           sent_on = user.sent_on << date
-          user.update_attributes(sent_on: sent_on, sidekiq_status: status)
+          if status.present? && status.include?('Opt in')
+            user.update_attributes(sent_on: sent_on, sidekiq_status: status, opt_in_mail_sent_at: DateTime.now)
+          else
+            user.update_attributes(sent_on: sent_on, sidekiq_status: status)
+          end
         end
       end
     end

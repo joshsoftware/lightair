@@ -2,6 +2,7 @@ module Light
   class User
     include Mongoid::Document
     include Mongoid::Slug
+    include Mongoid::History::Trackable
 
     NEW_USER = "new user"
 
@@ -13,6 +14,10 @@ module Light
     field :sent_on,       type: Array, default: []
     field :sidekiq_status
     field :token
+    field :opt_in_mail_sent_at, type: DateTime
+    field :subscribed_at, type: DateTime
+    field :remote_ip
+    field :user_agent, type: String
 
     validates :email_id, presence: true
     validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create
@@ -21,9 +26,11 @@ module Light
 
     slug :username
 
+    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip, :user_agent, :is_subscribed]
     before_create do
       self.joined_on = Date.today
       self.sidekiq_status = NEW_USER if self.sidekiq_status.blank?
+      self.token = Devise.friendly_token
     end
 
     scope :subscribed_users, -> { where is_subscribed: true}

@@ -2,6 +2,7 @@ require_dependency "light/application_controller"
 module Light
   class UsersController < ApplicationController
     respond_to :js, :json, :html
+    before_filter :user_with_token, only: [:remove]
 
     def index
       offset_val = params[:offset] || 0
@@ -53,7 +54,7 @@ module Light
 
     def subscribe
       @user = Light::User.find(params[:id])
-      @user.update(is_subscribed: 'true')
+      @user.update(is_subscribed: 'true', subscribed_at: DateTime.now, remote_ip: request.remote_ip, user_agent: request.env['HTTP_USER_AGENT'])
     end
 
     def sendmailer
@@ -80,6 +81,10 @@ module Light
       redirect_to users_path
     end
 
+    def remove
+      @user.destroy
+    end
+
     def import
       if request.post?
         current_user = current_user || nil # Need this bcz current_user is not exists in engine
@@ -98,7 +103,6 @@ module Light
       @user = Light::User.where(email_id: params[:email]).first
       if @user.present?
         if @user.is_subscribed.eql?(false)
-          @user.update_attributes(token: Devise.friendly_token)
           Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
           #send email
         end
@@ -106,8 +110,7 @@ module Light
         u_name = params[:username].blank? ? params[:email] : params[:username]
         @user=Light::User.new(username: u_name, 
                               email_id: params[:email], 
-                              sidekiq_status: 'web subscription request',
-                              token: Devise.friendly_token)
+                              sidekiq_status: 'web subscription request')
         if @user.save
           Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
         end
@@ -125,6 +128,10 @@ module Light
     private
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
+    end
+
+    def user_with_token
+      @user = User.find_by(token: params[:token])
     end
   end
 end

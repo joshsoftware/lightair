@@ -49,7 +49,7 @@ gem 'redis-rails'
 gem 'redis-namespace'
 gem 'mina'
 gem 'mina_extensions'
-gem 'rest_client'
+gem 'rest-client'
 gem 'pry'
 gem 'select2-rails'
 gem 'sinatra', '>=1.3.0', :require => nil
@@ -67,3 +67,4 @@ gem "mongoid-paperclip", :require => "mongoid_paperclip"
 gem 'imgkit'
 
 gem 'responders', '~> 2.0'
+gem 'mongoid-history', github: 'aq1018/mongoid-history'
