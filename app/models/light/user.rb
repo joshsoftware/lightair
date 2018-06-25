@@ -18,6 +18,7 @@ module Light
     field :subscribed_at, type: DateTime
     field :remote_ip
     field :user_agent, type: String
+    field :is_blocked, type: Boolean, default: false
 
     validates :email_id, presence: true
     validates_format_of :email_id, with: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/i, on: :create
@@ -31,6 +32,9 @@ module Light
       self.joined_on = Date.today
       self.sidekiq_status = NEW_USER if self.sidekiq_status.blank?
       self.token = Devise.friendly_token
+      while User.where(token: self.token).present?
+        self.token = Devise.friendly_token
+      end
     end
 
     scope :subscribed_users, -> { where is_subscribed: true}
