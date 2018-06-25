@@ -82,7 +82,12 @@ module Light
     end
 
     def remove
-      @user.destroy
+      if @user.present?
+        @user.destroy
+        @messgae = "We have removed you from our database!"
+      else
+        @message = "No user with this token exist!"
+      end
     end
 
     def import
@@ -131,7 +136,7 @@ module Light
     end
 
     def user_with_token
-      @user = User.find_by(token: params[:token])
+      @user = Light::User.where(token: params[:token]).first
     end
   end
 end

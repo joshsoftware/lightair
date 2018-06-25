@@ -4,6 +4,7 @@ Light::Engine.routes.draw do
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
   get '/users/testmail', to: 'users#testmail', as: 'testmail'
   post '/users/sendtest', to: 'users#sendtest', as: 'sendtest'
+  get '/users/remove', to: 'users#remove', as: 'remove'
 
   get '/auth/:provider/callback', to: 'spreadsheets#new',    as: 'google_spreadsheet'
   get '/auth/failure',            to: 'spreadsheets#failure'
