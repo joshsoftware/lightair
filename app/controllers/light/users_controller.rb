@@ -2,7 +2,7 @@ require_dependency "light/application_controller"
 module Light
   class UsersController < ApplicationController
     respond_to :js, :json, :html
-    before_filter :user_with_token, only: [:remove]
+    before_filter :user_with_token, only: [:remove, :unsubscribe, :subscribe]
 
     def index
       offset_val = params[:offset] || 0
@@ -43,7 +43,6 @@ module Light
     end
 
     def unsubscribe
-      @user = Light::User.find(params[:id])
       unless(@user.is_subscribed)
         @message = 'You have already unsubscribed!!'
       else
@@ -53,7 +52,6 @@ module Light
     end
 
     def subscribe
-      @user = Light::User.find(params[:id])
       @user.update(is_subscribed: 'true', subscribed_at: DateTime.now, remote_ip: request.remote_ip, user_agent: request.env['HTTP_USER_AGENT'])
     end
 

@@ -74,7 +74,7 @@ module Light
 
     def self.users_for_opt_in_mail
       date = Date.today.strftime("%Y%m")
-      self.new_users.where(:sent_on.nin => [date]).order_by([:email_id, :asc])
+      self.new_users.where(:sent_on.nin => [date], is_blocked: false).order_by([:email_id, :asc])
     end
   end
 end
