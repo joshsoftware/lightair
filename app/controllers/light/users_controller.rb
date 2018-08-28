@@ -82,9 +82,9 @@ module Light
     def remove
       if @user.present?
         @user.destroy
-        @messgae = "We have removed you from our database!"
+        @message = "We have removed you from our database!"
       else
-        @message = "No user with this token exist!"
+        @message = "No user with this token exists!"
       end
     end
 
