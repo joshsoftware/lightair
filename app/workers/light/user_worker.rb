@@ -17,7 +17,7 @@ module Light
       #  order_by([:sent_on, :desc]).first
       if newsletter
         while number_of_subscribed_users > 0
-          user_ids = Light::User.where(is_subscribed: true, :sent_on.nin => [date], , is_blocked: {"$ne" => true}).order_by([:email_id, :asc]).limit(users_in_batch).skip(users_in_batch*current_batch).collect { |user| user.id.to_s }
+          user_ids = Light::User.where(is_subscribed: true, :sent_on.nin => [date] , is_blocked: {"$ne" => true}).order_by([:email_id, :asc]).limit(users_in_batch).skip(users_in_batch*current_batch).collect { |user| user.id.to_s }
           #user_ids  = Light::User.users_for_opt_in_mail.order_by([:email_id, :asc]).limit(users_in_batch).skip(users_in_batch*current_batch).collect { |user| user.id.to_s }
           current_batch += 1
           number_of_subscribed_users -= users_in_batch
