@@ -46,6 +46,6 @@ Gem::Specification.new do |s|
   s.add_dependency 'rest-client'
   s.add_dependency 'select2-rails'
   s.add_dependency 'sendgrid_toolkit'
-  
+  s.add_dependency 'letter_opener'
   s.add_dependency 'mongoid-history'
 end

@@ -39,6 +39,7 @@ group :test do
   gem 'vcr'
 end
 
+gem 'letter_opener', :group => [:development]
 gem 'simple_form'
 # Use to add redactor editor
 gem 'redactor-rails'
