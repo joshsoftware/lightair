@@ -9,10 +9,6 @@ RSpec.describe User, :type => :model do
     expect(@user.email_id).to be_present
   end
 
-  it "validates presence of subcription" do
-    expect(@user.is_subscribed).to be_present
-  end
-
   it "validates presence of joined date" do
     expect(@user.joined_on).to be_present
   end

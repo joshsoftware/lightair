@@ -40,16 +40,15 @@ module Light
           expect(response).to redirect_to(users_path)
         end
 
-        it "default status is new user and is_subscribed is false" do
+        it "default status is new user" do
           post :create, {user: @create_params}
           user = User.find_by(email_id: 'test@sub.com')
           expect(user.sidekiq_status).to eq 'new user'
-          expect(user.is_subscribed).to eq false
         end
       end
 
       it "not arise" do
-        post :create, {user: {email_id: "",username: "kanhaiya", is_subscribed: "false"}}
+        post :create, {user: {email_id: "",username: "kanhaiya"}}
         expect(response).to render_template("new")
       end
     end
@@ -122,7 +121,7 @@ module Light
       context 'data from file import_users.csv' do
 
         let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/files/import_users.csv", 'text/csv') }
-        let!(:existing_user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false }
+        let!(:existing_user) {create :user, username: "Winona Bayer", email_id: "winona@gmail.com", : false }
 
         it 'File to be imported should contain following data ' do
           users = [['Full Name', 'Email'],
@@ -148,11 +147,9 @@ module Light
 
           existing_user.reload
           expect(existing_user).to be_present
-          expect(existing_user.is_subscribed).to eq(false)
 
           user = User.find_by(email_id: "claud@gmail.com")
           expect(user).to be_present
-          expect(user.is_subscribed).to eq(false)
           expect(user.sidekiq_status).to eq('new user')
           expect(user.source).to eq("Business Card")
           expect(user.username).to eq(user.email_id) # Since username is empty we are storing email id in username
@@ -162,7 +159,7 @@ module Light
       context 'should return success if' do
 
         after do
-          create :user, username: "Winona Bayer", email_id: "winona@gmail.com", is_subscribed: false
+          create :user, username: "Winona Bayer", email_id: "winona@gmail.com"
           file  = Rack::Test::UploadedFile.new(@file_path, 'text/csv')
           post :import, file: file
 
