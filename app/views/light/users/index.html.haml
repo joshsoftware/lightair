@@ -1,37 +1,67 @@
 = render 'light/newsletters/top_navbar'
-%table#stream_table_light.table.table-striped 
-  %thead
-    %tr
-      %th
-        %strong 
-          = "#"
-      %th
-        %strong
-          User's Email Id 
-      %th{data: {sort: "username:asc"}}
-        %strong
-          Username
-      %th
-        %strong
-          Edit
-      %th
-        %strong
-          Delete
-  %tbody
+%nav.navbar.navbar-inverse
+  .container-fluid
+    .navbar-header
+    %ul.nav.navbar-nav
+      %li.nav-item 
+        %label Per Page:
+        %span#users_per_page.content
+      %li.nav-item
+        %label.sr-only{:for => 'searchbox'} Search
+        %input#searchbox.form-control{:autocomplete => 'off', :placeholder => 'Search', :type => 'text'}/
+        %span.glyphicon.glyphicon-search.search-icon
 
-    %script#template{:type => "text/html"}
-      {{#record}}
-      %tr{class: "{{str}}"}
-        %td {{index}}
-        %td
-          %a{ :href => "/newsletter/users/{{_id.$oid}}"} {{email_id}}
-        %td {{username}}
-        %td
-          %a{ :href => "/newsletter/users/{{_id.$oid}}/edit", :class => "btn btn-mini btn-success"} Edit
-        %td
-          %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: "delete"}, :class => "btn btn-mini btn-danger" } Delete
-      {{/record}}
-  
+      %li.nav-item
+        %label Status
+        %select.form-control#user_status
+          %option{:value => 'Subscribed'} Subscribed: #{Light::User.subscribed_users.count}
+          %option{:value => 'Unsubscribed'} Unsubscribed: #{Light::User.unsubscribed_users.count}
+          %option{:value => 'new user'} New User: #{Light::User.new_users.count}
+          %option{:value => 'Block'} Blocked: #{Light::User.blocked_users.count}
+          %option{:value => 'Invalid'} Invalid: #{Light::User.invalid_users.count}
+          %option{:value => 'Bounced'} Bounced: #{Light::User.bounced_users.count}
+          %option{:value => 'Spam'} Spam: #{Light::User.spam_users.count}
+          %option{:value => 'Opt in mail sent'} Opt in Mail Sent: #{Light::User.opt_in_users.count}
+
+    %ul.nav.navbar-nav.pull-right
+      %li
+        %h5= raw ("Subscribers: #{badge(Light::User.subscribed_users.count)}")
+
+      %li      
+        %h5= raw ("New users: #{badge(Light::User.new_users.count)}")
+            
+.row
+  .content.col-md-12
+    %div
+      %table.table.table-striped.table-hover.table-new#users
+        %thead
+          %tr
+            %th.text-center
+              %strong
+                Email Id 
+            %th.text-center
+              %strong
+                Name
+            %th.text-center
+              %strong
+                Actions
+        %tbody
+          %script#user-template{:type => "text/html"}
+            %tr
+              %td.text-center= '{{email_id}}'
+              %td.text-center= '{{username}}'
+              %td.text-center
+                %a{ :href => "/newsletter/users/{{_id.$oid}}/edit", :class => 'btn btn-sm btn-success'} Edit
+
+                %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: 'delete'}, :class => 'btn btn-sm btn-danger' } Delete
+
+      .col-lg-12.padding_none.text-center
+        #user_pagination.col-lg-12
+        .col-lg-6.content
 
 :javascript
-  data = #{@users.to_json};
+  var users_data = #{@users.to_json}
+  var total_count = #{@users.count}
+  $('#searchbox').css('height',30)
+  $('.per-page').css('width',90)
+  initialize_filterjs_table('#users tbody', users_data, '#user-template', '', [], '#user_pagination', '#users_per_page')
