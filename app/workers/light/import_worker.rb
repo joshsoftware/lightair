@@ -13,7 +13,7 @@ module Light
           email = "#{row[1]}"
           name = "#{row[0] || row[1]}"
           user = Light::User.create(username: name, email_id: email, source: source,
-                                    is_subscribed: false, sidekiq_status: Light::User::NEW_USER) if email.present? or name.present?
+                                    sidekiq_status: Light::User::NEW_USER) if email.present? or name.present?
           csv << [email, row[0], user.errors.messages] if user.present? and user.errors.present?
         end
         UserMailer.import_contacts_update(email_id, file_path).deliver

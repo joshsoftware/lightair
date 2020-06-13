@@ -43,16 +43,16 @@ module Light
     end
 
     def unsubscribe
-      unless(@user.is_subscribed)
+      unless(@user.sidekiq_status == 'Subscribed')
         @message = 'You have already unsubscribed!!'
       else
-        @user.update(is_subscribed: 'false')
+        @user.update(sidekiq_status: 'Unsubscribed')
         @message = 'Unsubscribed successfully!!'
       end
     end
 
     def subscribe
-      @user.update(is_subscribed: 'true', subscribed_at: DateTime.now, remote_ip: request.remote_ip, user_agent: request.env['HTTP_USER_AGENT'])
+      @user.update(sidekiq_status: 'Subscribed', subscribed_at: DateTime.now, remote_ip: request.remote_ip, user_agent: request.env['HTTP_USER_AGENT'])
     end
 
     def sendmailer
@@ -105,7 +105,7 @@ module Light
     def opt_in
       @user = Light::User.where(email_id: params[:email]).first
       if @user.present?
-        if @user.is_subscribed.eql?(false)
+        if @user.sidekiq_status.eql?('Unsubscribed')
           Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
           #send email
         end
@@ -130,7 +130,7 @@ module Light
     
     private
     def users_params
-      params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
+      params.require(:user).permit(:id, :email_id, :sidekiq_status, :joined_on, :source, :username)
     end
 
     def user_with_token
