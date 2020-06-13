@@ -9,9 +9,6 @@
       = menu_item "Google Spreadsheets", spreadsheets_path
 
     = menu_item "Show Users", users_path, ({:method => 'get'} if params[:controller] == 'light/users' && params[:action].in?(['new', 'create']))
-    = menu_item raw ("Subscribers: #{badge(Light::User.subscribed_users.count)}")
-    = menu_item raw ("New users: #{badge(Light::User.new_users.count)}")
-  
   = menu_group :pull => :right do
     = content_tag :a, "Send Mail", :href => sendmailer_path, :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}
     = content_tag :a, "Test Mail", :href => testmail_path, :class => "btn btn-success"

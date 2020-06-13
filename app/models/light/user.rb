@@ -39,8 +39,14 @@ module Light
       end
     end
 
-    scope :subscribed_users, -> { where is_subscribed: true}
-    scope :new_users, -> { where(is_subscribed: false, sidekiq_status: NEW_USER)}
+    scope :subscribed_users, -> { where is_subscribed: true }
+    scope :unsubscribed_users, -> { where is_subscribed: false }
+    scope :new_users, -> { where(is_subscribed: false, sidekiq_status: NEW_USER) }
+    scope :blocked_users, -> { where(is_subscribed: false, sidekiq_status: 'Block') }
+    scope :bounced_users, -> { where(is_subscribed: false, sidekiq_status: 'Bounced') }
+    scope :spam_users, -> { where(is_subscribed: false, sidekiq_status: 'Spam') }
+    scope :invalid_users, -> { where(is_subscribed: false, sidekiq_status: 'Invalid') }
+    scope :opt_in_users, -> { where(is_subscribed: false, sidekiq_status: 'Opt in mail sent') }
 
     def self.add_users_from_worksheet(worksheet, column = 1)
       fails = []
