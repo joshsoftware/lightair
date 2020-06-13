@@ -39,8 +39,8 @@ module Light
       end
     end
 
-    scope :subscribed_users, -> { where is_subscribed: true }
-    scope :unsubscribed_users, -> { where is_subscribed: false }
+    scope :subscribed_users, -> { where(is_subscribed: true, sidekiq_status: 'Subscribed') }
+    scope :unsubscribed_users, -> { where(is_subscribed: false, sidekiq_status: 'Unsubscribed') }
     scope :new_users, -> { where(is_subscribed: false, sidekiq_status: NEW_USER) }
     scope :blocked_users, -> { where(is_subscribed: false, sidekiq_status: 'Block') }
     scope :bounced_users, -> { where(is_subscribed: false, sidekiq_status: 'Bounced') }

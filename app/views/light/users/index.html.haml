@@ -24,10 +24,10 @@
           %option{:value => 'Opt in mail sent'} Opt in Mail Sent: #{Light::User.opt_in_users.count}
 
     %ul.nav.navbar-nav.pull-right
-      %li
-        %h5= raw ("Subscribers: #{badge(Light::User.subscribed_users.count)}")
+      %li.badge-users-count
+        %h5= raw ("Subscribed users: #{badge(Light::User.subscribed_users.count)}")
 
-      %li      
+      %li.badge-users-count
         %h5= raw ("New users: #{badge(Light::User.new_users.count)}")
             
 .row
@@ -55,13 +55,13 @@
 
                 %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: 'delete'}, :class => 'btn btn-sm btn-danger' } Delete
 
-      .col-lg-12.padding_none.text-center
+      .col-lg-12.padding_none.pull-right
         #user_pagination.col-lg-12
         .col-lg-6.content
 
 :javascript
   var users_data = #{@users.to_json}
   var total_count = #{@users.count}
-  $('#searchbox').css('height',30)
-  $('.per-page').css('width',90)
   initialize_filterjs_table('#users tbody', users_data, '#user-template', '', [], '#user_pagination', '#users_per_page')
+  $('.per-page').css('width',90)
+  $('.per-page').css('height',30)

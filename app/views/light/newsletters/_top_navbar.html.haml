@@ -1,4 +1,4 @@
-= nav_bar :brand => "Newsletters", :responsive => true, :static => :top, :fluid => :true do
+= nav_bar :brand => 'Newsletters', :responsive => true, :static => :top, :fluid => :true do
   = menu_group do
     = menu_item "Add Newsletter", new_newsletter_path
     = menu_item "Opt in letters", opt_in_newsletters_path
@@ -10,6 +10,7 @@
 
     = menu_item "Show Users", users_path, ({:method => 'get'} if params[:controller] == 'light/users' && params[:action].in?(['new', 'create']))
   = menu_group :pull => :right do
-    = content_tag :a, "Send Mail", :href => sendmailer_path, :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}
-    = content_tag :a, "Test Mail", :href => testmail_path, :class => "btn btn-success"
+    .btn-mail
+      = content_tag :a, "Send Mail", :href => sendmailer_path, :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}
+      = content_tag :a, "Test Mail", :href => testmail_path, :class => 'btn btn-success'
 %br

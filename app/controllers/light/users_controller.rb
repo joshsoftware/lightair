@@ -111,19 +111,16 @@ module Light
     def opt_in
       @user = Light::User.where(email_id: params[:email]).first
       if @user.present?
-        if @user.is_subscribed.eql?(false)
-          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
-          #send email
-        end
+        @user.update_attributes(is_subscribed: true,
+                                sidekiq_status: 'Subscribed',
+                                subscribed_at: DateTime.now)
       else
         u_name = params[:username].blank? ? params[:email] : params[:username]
-        @user= Light::User.new(username: u_name, 
-                               email_id: params[:email],
-                               source: 'web subscription request',
-                               sidekiq_status: 'new user')
-        if @user.save
-          Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
-        end
+        @user = Light::User.new(username: u_name, 
+                                email_id: params[:email],
+                                source: 'web subscription request',
+                                subscribed_at: DateTime.now,
+                                sidekiq_status: 'Subscribed')
       end
       respond_to do |format| 
         format.json { head :no_content }
