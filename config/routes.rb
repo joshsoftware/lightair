@@ -13,12 +13,16 @@ Light::Engine.routes.draw do
   resources :newsletters do
     collection do
       get 'opt-in', as: 'opt_in'
+      get 'opt-out', as: 'opt_out'
     end
 
     member do
       get 'test-opt-in' , as: 'test_opt_in'
       post 'send-opt-in' , as: 'send_opt_in'
       post 'send-opt-in-test' , as: 'send_opt_in_test'
+      get 'test-opt-out' , as: 'test_opt_out'
+      post 'send-opt-out' , as: 'send_opt_out'
+      post 'send-opt-out-test' , as: 'send_opt_out_test'
     end
   end
   

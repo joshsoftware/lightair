@@ -9,7 +9,7 @@ module Light
       limit_val = params[:limit] || 500
       @users = Light::User.all.offset(offset_val).limit(limit_val)
       respond_with do |format|
-        format.json   { render json: @users }
+        format.json { render json: @users }
       end
     end
 
@@ -25,7 +25,7 @@ module Light
       @user = Light::User.new(users_params)
       @user.sent_on = Array.new
       if @user.save
-        @user.update(source: "Manual", sent_on: Array.new)
+        @user.update(source: 'Manual', sent_on: Array.new, sidekiq_status: 'new user' )
         redirect_to users_path
       else
         render action: 'new'
@@ -46,13 +46,19 @@ module Light
       unless(@user.is_subscribed)
         @message = 'You have already unsubscribed!!'
       else
-        @user.update(is_subscribed: 'false')
+        @user.update(is_subscribed: 'false',
+                     unsubscribed_at: DateTime.now,
+                     sidekiq_status: 'Unsubscribed')
         @message = 'Unsubscribed successfully!!'
       end
     end
 
     def subscribe
-      @user.update(is_subscribed: 'true', subscribed_at: DateTime.now, remote_ip: request.remote_ip, user_agent: request.env['HTTP_USER_AGENT'])
+      @user.update(is_subscribed: 'true',
+                   sidekiq_status: 'Subscribed',
+                   subscribed_at: DateTime.now,
+                   remote_ip: request.remote_ip,
+                   user_agent: request.env['HTTP_USER_AGENT'])
     end
 
     def sendmailer
@@ -111,9 +117,10 @@ module Light
         end
       else
         u_name = params[:username].blank? ? params[:email] : params[:username]
-        @user=Light::User.new(username: u_name, 
-                              email_id: params[:email], 
-                              sidekiq_status: 'web subscription request')
+        @user= Light::User.new(username: u_name, 
+                               email_id: params[:email],
+                               source: 'web subscription request',
+                               sidekiq_status: 'new user')
         if @user.save
           Light::UserMailer.auto_opt_in(@user.email_id, @user.slug, @user.token).deliver
         end

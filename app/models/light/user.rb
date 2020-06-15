@@ -16,6 +16,7 @@ module Light
     field :token
     field :opt_in_mail_sent_at, type: DateTime
     field :subscribed_at, type: DateTime
+    field :unsubscribed_at, type: DateTime
     field :remote_ip
     field :user_agent, type: String
     field :is_blocked, type: Boolean, default: false
@@ -27,7 +28,8 @@ module Light
 
     slug :username
 
-    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip, :user_agent, :is_subscribed]
+    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip, 
+                       :user_agent, :is_subscribed, :unsubscribed_at]
     before_create do
       self.joined_on = Date.today
       self.sidekiq_status = NEW_USER if self.sidekiq_status.blank?
@@ -73,6 +75,11 @@ module Light
     end
 
     def self.users_for_opt_in_mail
+      date = Date.today.strftime("%Y%m")
+      self.new_users.where(:sent_on.nin => [date], is_blocked: false).order_by([:email_id, :asc])
+    end
+
+    def self.users_for_opt_out_mail
       date = Date.today.strftime("%Y%m")
       self.new_users.where(:sent_on.nin => [date], is_blocked: false).order_by([:email_id, :asc])
     end
