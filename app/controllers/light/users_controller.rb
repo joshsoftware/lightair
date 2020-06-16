@@ -6,7 +6,7 @@ module Light
 
     def index
       offset_val = params[:offset] || 0
-      limit_val = params[:limit] || 500
+      limit_val = params[:limit] || 1000
       @users = Light::User.all.offset(offset_val).limit(limit_val)
       respond_with do |format|
         format.json { render json: @users }
@@ -116,13 +116,13 @@ module Light
                                 subscribed_at: DateTime.now)
       else
         u_name = params[:username].blank? ? params[:email] : params[:username]
-        @user = Light::User.new(username: u_name, 
+        @user = Light::User.new(username: u_name,
                                 email_id: params[:email],
                                 source: 'web subscription request',
                                 subscribed_at: DateTime.now,
                                 sidekiq_status: 'Subscribed')
       end
-      respond_to do |format| 
+      respond_to do |format|
         format.json { head :no_content }
         format.html {redirect_to main_app.users_thank_you_path}
       end
@@ -131,7 +131,7 @@ module Light
     def thank_you
 
     end
-    
+
     private
     def users_params
       params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)

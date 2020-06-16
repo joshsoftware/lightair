@@ -1,9 +1,9 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-  
+
 window.initialize_filterjs_table = (div, data, template, data_url, search_fields, pagination_container = '#pagination', per_page_container = '#per_page', pagination_values = [ 10, 20, 25 ]) ->
-  batch_size = 500
+  batch_size = 2000
 
   mustache_template = $(template).html();
   view = (data) ->
@@ -13,9 +13,9 @@ window.initialize_filterjs_table = (div, data, template, data_url, search_fields
     template: template
     view: view
     criterias: [{
-      field: 'sidekiq_status', 
-      ele: '#user_status', 
-      event: 'change', 
+      field: 'sidekiq_status',
+      ele: '#user_status',
+      event: 'change',
       selector: 'select'}],
     search:
       ele: '#searchbox'
@@ -33,5 +33,6 @@ window.initialize_filterjs_table = (div, data, template, data_url, search_fields
     batch_size: batch_size
   fjs.addCallback 'beforeAddRecords', ->
     if (@recordsCount + batch_size)  >= total_count
+      hideSpinner()
       @stopStreaming()
     return

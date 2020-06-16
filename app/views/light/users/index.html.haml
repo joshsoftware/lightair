@@ -3,7 +3,7 @@
   .container-fluid
     .navbar-header
     %ul.nav.navbar-nav
-      %li.nav-item 
+      %li.nav-item
         %label Per Page:
         %span#users_per_page.content
       %li.nav-item
@@ -29,7 +29,7 @@
 
       %li.badge-users-count
         %h5= raw ("New users: #{badge(Light::User.new_users.count)}")
-            
+
 .row
   .content.col-md-12
     %div
@@ -38,7 +38,7 @@
           %tr
             %th.text-center
               %strong
-                Email Id 
+                Email Id
             %th.text-center
               %strong
                 Name
@@ -60,6 +60,7 @@
         .col-lg-6.content
 
 :javascript
+  showSpinner()
   var users_data = #{@users.to_json}
   var total_count = #{@users.count}
   initialize_filterjs_table('#users tbody', users_data, '#user-template', '', [], '#user_pagination', '#users_per_page')
