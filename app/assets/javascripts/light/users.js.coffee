@@ -2,7 +2,7 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-window.initialize_filterjs_table = (div, data, template, data_url, search_fields, pagination_container = '#pagination', per_page_container = '#per_page', pagination_values = [ 10, 20, 25 ]) ->
+@initialize_filterjs_table = (div, data, template, data_url, search_fields, pagination_container = '#pagination', per_page_container = '#per_page', pagination_values = [ 10, 20, 25 ]) ->
   batch_size = 2000
 
   mustache_template = $(template).html();
