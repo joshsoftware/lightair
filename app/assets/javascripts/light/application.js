@@ -16,9 +16,7 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require select2
-//= require filter
-//= require json_query
-// require bootstrap-datepicker-rails
+//= require bootstrap-datepicker-rails
 //= require redactor-rails
 //= require redactor-rails/plugins
 //= require_tree .
