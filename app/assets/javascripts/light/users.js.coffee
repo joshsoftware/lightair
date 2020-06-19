@@ -2,32 +2,37 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
-custom_function = ->
-  template = Mustache.compile($.trim($("#template").html()))
-  view_light = (record, index) ->
-    
-    if record.is_subscribed is true
-      record.str = "success"
-    else
-      record.str = "warning"
-    template
-      record: record
-      index: index
+@initialize_filterjs_table = (div, data, template, data_url, search_fields, pagination_container = '#pagination', per_page_container = '#per_page', pagination_values = [ 10, 20, 25 ]) ->
+  batch_size = 2000
 
-  if($("#stream_table_light").length)
-    console.log data
-    opts = {
-      view: view_light
-      data_url: '/newsletter/users.json'
-      stream_after: 1
-      fetch_data_limit: 500
-      auto_sorting: true
-    }
-    $("#stream_table_light").stream_table(opts, data)
+  mustache_template = $(template).html();
+  view = (data) ->
+    Mustache.to_html(mustache_template, data)
 
-    $(".st_search").css("height",27)
-    $(".st_search").css("margin-right",10)
-
-$(document).ready(custom_function)
-$(document).on 'page:load', custom_function
-
+  fjs = FilterJS(data, div,
+    template: template
+    view: view
+    criterias: [{
+      field: 'sidekiq_status',
+      ele: '#user_status',
+      event: 'change',
+      selector: 'select'}],
+    search:
+      ele: '#searchbox'
+      fields: ['username', 'email_id']
+      start_length: 1
+    pagination:
+      container: pagination_container
+      visiblePages: 5
+      perPage:
+        values: pagination_values
+        container: per_page_container)
+  fjs.setStreaming
+    data_url: '/newsletter/users.json'
+    stream_after: 1
+    batch_size: batch_size
+  fjs.addCallback 'beforeAddRecords', ->
+    if (@recordsCount + batch_size)  >= total_count
+      hideSpinner()
+      @stopStreaming()
+    return

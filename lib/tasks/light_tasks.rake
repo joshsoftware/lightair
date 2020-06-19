@@ -23,10 +23,10 @@ namespace :light do
     puts block_emails.count
     puts spam_emails.count
 
-    Light::User.where(:email_id.in => bounce_emails).update_all(is_subscribed: false, sidekiq_status: 'Bounced')
-    Light::User.where(:email_id.in => invalid_emails).update_all(is_subscribed: false, sidekiq_status: 'Invalid')
-    Light::User.where(:email_id.in => spam_emails).update_all(is_subscribed: false, sidekiq_status: 'Spam')
-    Light::User.where(:email_id.in => block_emails).update_all(is_subscribed: false, sidekiq_status: 'Block')
+    Light::User.where(:email_id.in => bounce_emails).update_all(is_subscribed: false, sidekiq_status: 'Bounced', unsubscribed_at: DateTime.now)
+    Light::User.where(:email_id.in => invalid_emails).update_all(is_subscribed: false, sidekiq_status: 'Invalid', unsubscribed_at: DateTime.now)
+    Light::User.where(:email_id.in => spam_emails).update_all(is_subscribed: false, sidekiq_status: 'Spam', unsubscribed_at: DateTime.now)
+    Light::User.where(:email_id.in => block_emails).update_all(is_subscribed: false, sidekiq_status: 'Block', unsubscribed_at: DateTime.now)
     #clean sendgrid... 
     bounces.delete(delete_all: 1)
     invalid.delete(delete_all: 1)

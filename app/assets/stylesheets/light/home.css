@@ -2,3 +2,25 @@
   Place all the styles related to the matching controller here.
   They will automatically be included in application.css.
 */
+
+.badge-users-count {
+  margin-top: 10px;
+}
+
+.btn-mail {
+  margin-top: 5px;
+}
+
+#users_per_page {
+  width: 50px;
+  height: 30px;
+}
+
+#searchbox {
+  height: 30px;
+}
+
+.brand {
+  font-weight: bold !important;
+  margin-top: 5px !important;
+}

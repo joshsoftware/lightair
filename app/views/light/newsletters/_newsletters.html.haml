@@ -10,7 +10,8 @@
       %center
         %a.link{href: "#{newsletter_path(newsletter)}" }
           %div.tile.thumbnail
-            = image_tag newsletter.get_image
+            - if Rails.env.production?
+              = image_tag newsletter.get_image
             %div.cap
               %h4
                 = newsletter.sent_on.strftime("%B %Y")
