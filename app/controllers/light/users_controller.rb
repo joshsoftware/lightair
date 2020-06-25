@@ -43,22 +43,27 @@ module Light
     end
 
     def unsubscribe
-      unless(@user.is_subscribed)
-        @message = 'You have already unsubscribed!!'
-      else
+      if @user.present? && @user.sidekiq_status == 'Subscribed'
         @user.update(is_subscribed: 'false',
-                     unsubscribed_at: DateTime.now,
-                     sidekiq_status: 'Unsubscribed')
+                    unsubscribed_at: DateTime.now,
+                    sidekiq_status: 'Unsubscribed')
         @message = 'Unsubscribed successfully!!'
+      else
+        @message = response_message('unsubscribed')
       end
     end
 
     def subscribe
-      @user.update(is_subscribed: 'true',
-                   sidekiq_status: 'Subscribed',
-                   subscribed_at: DateTime.now,
-                   remote_ip: request.remote_ip,
-                   user_agent: request.env['HTTP_USER_AGENT'])
+      if @user.present? && @user.sidekiq_status == 'Unsubscribed'
+        @user.update(is_subscribed: 'true',
+                    sidekiq_status: 'Subscribed',
+                    subscribed_at: DateTime.now,
+                    remote_ip: request.remote_ip,
+                    user_agent: request.env['HTTP_USER_AGENT'])
+        @message = 'Subscribed successfully!!'
+      else
+        @message = response_message('subscribed')
+      end
     end
 
     def sendmailer
@@ -139,6 +144,22 @@ module Light
 
     def user_with_token
       @user = Light::User.where(token: params[:token]).first
+    end
+
+    def dummy_token?
+      params[:token] == 'test_user_dummy_id'
+    end
+
+    def response_message(status)
+      if dummy_token?
+        "#{status.capitalize} successfully!!"
+      elsif @user.nil?
+        "Hey, it seems request you are trying to access is invalid. If you have any " + 
+        "concerns about our newsletter's subscription, kindly get in touch with " +
+        "<a href='mailto:hr@joshsoftware.com' class='email'>hr@joshsoftware.com</a>"
+      else
+        "You have already #{status}!!"
+      end
     end
   end
 end
