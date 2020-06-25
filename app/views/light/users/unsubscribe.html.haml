@@ -1,6 +1,7 @@
 %h2 
   %center
-    = @message
+    = @message.html_safe
     %br
-    Would you like to subscribe again?
-    = link_to "CLICK HERE !!", main_app.users_subscribe_path(token: @user.token)
+    - if @user.present? || dummy_token?
+      Would you like to subscribe again?
+      = link_to "CLICK HERE !!", main_app.users_subscribe_path(token: @user.try(:token) || params[:token])
