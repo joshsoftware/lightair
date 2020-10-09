@@ -72,7 +72,7 @@ module Light
     end
 
     def send_opt_in
-      Light::OptInWorker.perform_async(@newsletter.id.to_s)
+      Light::OptInWorker.perform_async(params[:template_type], @newsletter.id.to_s)
       redirect_to opt_in_newsletters_path
     end
     
@@ -86,7 +86,7 @@ module Light
     end
 
     def send_opt_out
-      Light::OptOutWorker.perform_async(@newsletter.id.to_s)
+      Light::OptOutWorker.perform_async(params[:template_type], @newsletter.id.to_s)
       redirect_to opt_out_newsletters_path
     end
     

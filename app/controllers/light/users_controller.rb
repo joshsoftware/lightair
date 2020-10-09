@@ -67,7 +67,7 @@ module Light
     end
 
     def sendmailer
-      Light::UserWorker.perform_async
+      Light::UserWorker.perform_async(params[:template_type])
       redirect_to newsletters_path
     end
 
