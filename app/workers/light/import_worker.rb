@@ -16,8 +16,8 @@ module Light
                                     is_subscribed: false, sidekiq_status: Light::User::NEW_USER) if email.present? or name.present?
           csv << [email, row[0], user.errors.messages] if user.present? and user.errors.present?
         end
-        UserMailer.import_contacts_update(email_id, file_path).deliver
       end
+      UserMailer.delay_for(30.seconds).import_contacts_update(email_id, file_path)
     end
   end
 end

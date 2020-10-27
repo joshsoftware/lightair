@@ -69,7 +69,8 @@ module Light
     end
 
     def self.import(file, email='')
-      return {error: "Please select CSV file"} if (file.blank? or file.content_type != 'text/csv')
+      mime_types = ['application/vnd.ms-excel', 'text/csv']
+      return {error: "Please select CSV file"} unless (file.present? && mime_types.include?(file.content_type) )
       file = CSV.open(file.path, :row_sep => :auto, :col_sep => ",")
       rows = file.read
       header = rows.delete_at(0)
