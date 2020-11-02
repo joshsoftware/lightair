@@ -51,9 +51,9 @@
               %td.text-center= '{{email_id}}'
               %td.text-center= '{{username}}'
               %td.text-center
-                %a{ :href => "/newsletter/users/{{_id.$oid}}/edit", :class => 'btn btn-sm btn-success'} Edit
+                %a{ :href => "/newsletter/users/{{id}}/edit", :class => 'btn btn-sm btn-success'} Edit
 
-                %a{ :href => "/newsletter/users/{{_id.$oid}}", data:{ :confirm => 'Are you sure?', method: 'delete'}, :class => 'btn btn-sm btn-danger' } Delete
+                %a{ :href => "/newsletter/users/{{id}}", data:{ :confirm => 'Are you sure?', method: 'delete'}, :class => 'btn btn-sm btn-danger' } Delete
 
       .col-lg-12.padding_none.pull-right
         #user_pagination.col-lg-12

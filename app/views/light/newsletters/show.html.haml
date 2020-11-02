@@ -1,11 +1,9 @@
 = render 'top_navbar'
+%h2.text-center
+  = @newsletter.subject
+  = link_to '', edit_newsletter_path(@newsletter), class: 'icon-edit pull-right', data: { no_turbolink: true }
 = raw @newsletter.content
-- if @newsletter.opt_in?
-  = link_to "Send Opt-In Mail", send_opt_in_newsletter_path(@newsletter),
+%center
+  = link_to 'Send Mail', send_newsletter_path(@newsletter),
     :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
-  = link_to "Send Opt-In Test Mail", test_opt_in_newsletter_path(@newsletter), :class => "btn btn-success"
-
-- elsif @newsletter.opt_out?
-  = link_to "Send Opt-Out Mail", send_opt_out_newsletter_path(@newsletter),
-    :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
-  = link_to "Send Opt-Out Test Mail", test_opt_out_newsletter_path(@newsletter), :class => "btn btn-success"
+  = link_to 'Send Test Mail', test_mail_newsletter_path(@newsletter), :class => 'btn btn-success'

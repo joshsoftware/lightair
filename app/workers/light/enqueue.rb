@@ -5,9 +5,9 @@ module Light
 
     def perform(email)
       date = Date.today.strftime("%Y%m")
-      news = Light::Newsletter.where(newsletter_type: Light::Newsletter::VALID_NEWSLETTER_TYPES[:MONTHLY]).
+      news = Light::Newsletter.where(newsletter_type: Light::Newsletter::NEWSLETTER_TYPES[:MONTHLY]).
         order_by([:sent_on, :desc]).first
-      Light::UserMailer.welcome_message(email, news, 'test_user_dummy_id').deliver if news
+      Light::UserMailer.welcome_message(email, news, 'test_user_dummy_id').deliver_now if news
     end
   end
 end

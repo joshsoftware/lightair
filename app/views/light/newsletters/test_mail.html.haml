@@ -1,0 +1,18 @@
+= render 'top_navbar'
+%center
+  .panel.panel-primary
+  .panel-heading 
+    %h2
+      = @newsletter.subject
+      Test Mail
+  .panel-body
+    = simple_form_for :email, as: :post, url: send_test_mail_newsletter_path(@newsletter), html: {role: 'form', class: 'form-horizontal'} do |f|
+      %table
+        %tr
+          %td
+            = f.label :email_id
+            = f.input :email_id, input_html: { placeholder: 'For multiple email ids - separate them by comma', class: 'span4 required'},
+              as: :text, label: false, autofocus: true
+        %tr
+          %td
+            = f.button :submit, "Sent Test Mail", class: "btn btn-success span4 pull-right"
