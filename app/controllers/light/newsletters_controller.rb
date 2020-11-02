@@ -3,19 +3,11 @@ require_dependency "light/application_controller"
 module Light
   class NewslettersController < ApplicationController
 
-    before_filter :load_newsletter, only: [:send_opt_in, :send_opt_in_test, :test_opt_in,
-                                           :send_opt_out, :send_opt_out_test, :test_opt_out]
+    before_filter :load_newsletter, only: [:send_newsletter, :send_test_mail, :test_mail]
 
     def index
-      @newsletters = Newsletter.monthly_letters.order_by([:sent_on, :desc])
-    end
-
-    def opt_in
-      @newsletters = Newsletter.opt_in_letters.order_by([:sent_on, :desc])
-    end
-
-    def opt_out
-      @newsletters = Newsletter.opt_out_letters.order_by([:sent_on, :desc])
+      type = params[:type].present? ? params[:type] : "Monthly Newsletter" 
+      @newsletters = Newsletter.where(newsletter_type: type).order_by([:sent_on, :desc])
     end
 
     def show
@@ -62,32 +54,31 @@ module Light
       render layout: false
     end
 
-    def test_opt_in
+    def send_newsletter
+      type = @newsletter.newsletter_type
+
+      case type
+      when "Opt-In Letter"
+        Light::OptInWorker.perform_async(@newsletter.id.to_s)
+        redirect_to newsletters_path
+      when "Opt-Out Letter"
+        Light::OptOutWorker.perform_async(@newsletter.id.to_s)
+        redirect_to newsletters_path
+      else
+        Light::UserWorker.perform_async(@newsletter.id.to_s)
+        redirect_to newsletters_path
+      end
+
     end
 
-    def send_opt_in_test
+    def send_test_mail
+      type = @newsletter.newsletter_type
       emails = params[:email][:email_id].split(",")
       Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
       redirect_to newsletter_path(@newsletter)
     end
 
-    def send_opt_in
-      Light::OptInWorker.perform_async(@newsletter.id.to_s)
-      redirect_to opt_in_newsletters_path
-    end
-    
-    def test_opt_out
-    end
-
-    def send_opt_out_test
-      emails = params[:email][:email_id].split(",")
-      Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
-      redirect_to newsletter_path(@newsletter)
-    end
-
-    def send_opt_out
-      Light::OptOutWorker.perform_async(@newsletter.id.to_s)
-      redirect_to opt_out_newsletters_path
+    def test_mail
     end
     
     private

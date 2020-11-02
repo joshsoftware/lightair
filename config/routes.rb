@@ -1,9 +1,6 @@
 Light::Engine.routes.draw do
   mount RedactorRails::Engine => '/redactor_rails'
-  get '/users/sendmailer', to: 'users#sendmailer', as: 'sendmailer'
   get '/users/subscribe', to: 'users#subscribe', as: 'subscribe'
-  get '/users/testmail', to: 'users#testmail', as: 'testmail'
-  post '/users/sendtest', to: 'users#sendtest', as: 'sendtest'
   get '/users/remove', to: 'users#remove', as: 'remove'
 
   get '/auth/:provider/callback', to: 'spreadsheets#new',    as: 'google_spreadsheet'
@@ -17,12 +14,9 @@ Light::Engine.routes.draw do
     end
 
     member do
-      get 'test-opt-in' , as: 'test_opt_in'
-      post 'send-opt-in' , as: 'send_opt_in'
-      post 'send-opt-in-test' , as: 'send_opt_in_test'
-      get 'test-opt-out' , as: 'test_opt_out'
-      post 'send-opt-out' , as: 'send_opt_out'
-      post 'send-opt-out-test' , as: 'send_opt_out_test'
+      get 'test' , to: 'newsletters#test_mail' , as: 'test_mail'
+      post 'send' , to: 'newsletters#send_newsletter', as: 'send'
+      post 'sendtest' , to: 'newsletters#send_test_mail', as: 'send_test_mail'
     end
   end
   

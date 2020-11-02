@@ -32,16 +32,6 @@ module Light
       end
     end
 
-    def testmail
-    end
-
-    def sendtest
-      emails = params[:email][:email_id].split(",")
-      Light::Enqueue.perform_async(emails)
-
-      redirect_to newsletters_path
-    end
-
     def unsubscribe
       if @user.present? && @user.sidekiq_status == 'Subscribed'
         @user.update(is_subscribed: 'false',
@@ -64,11 +54,6 @@ module Light
       else
         @message = response_message('subscribed')
       end
-    end
-
-    def sendmailer
-      Light::UserWorker.perform_async
-      redirect_to newsletters_path
     end
 
     def edit

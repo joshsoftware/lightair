@@ -18,7 +18,9 @@
                 = "(#{newsletter.users_count} users)"
       %center
         %hr
-          = link_to "Edit", edit_newsletter_path(newsletter), class: "btn btn-mini btn-success", data: { no_turbolink: true }
-          = link_to "Delete", newsletter_path(newsletter), method: :delete, class: "btn btn-mini btn-danger"
+          = link_to "", edit_newsletter_path(newsletter), class: "btn btn-lg icon-edit", data: { no_turbolink: true }
+          = link_to "", newsletter_path(newsletter), method: :delete, class: "btn btn-lg icon-trash"
+          = link_to "Send Mail", send_newsletter_path(newsletter), method: :post, :class => 'btn btn-mini btn-danger', :data => { :confirm => 'Are you sure ?'}
+          = link_to "Test Mail", test_mail_newsletter_path(newsletter), :class => 'btn btn-mini btn-success'
     -count+=1
 

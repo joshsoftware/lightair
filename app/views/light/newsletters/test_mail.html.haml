@@ -2,6 +2,6 @@
   .panel-heading 
     Test Mail
   .panel-body
-    = form_for :email, as: :post, url: send_opt_out_test_newsletter_path(@newsletter) do |f|
+    = form_for :email, as: :post, url: send_test_mail_newsletter_path(@newsletter) do |f|
       = f.text_area :email_id
       = f.button :submit, class: "btn btn-success"
