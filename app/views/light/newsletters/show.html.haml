@@ -1,11 +1,19 @@
 = render 'top_navbar'
+%h2.text-center
+  = @newsletter.subject
 = raw @newsletter.content
-- if @newsletter.opt_in?
-  = link_to "Send Opt-In Mail", send_newsletter_path(@newsletter),
-    :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
-  = link_to "Send Opt-In Test Mail", test_mail_newsletter_path(@newsletter), :class => "btn btn-success"
+%center
+  - if @newsletter.opt_in?
+    = link_to "Send Opt-In Mail", send_newsletter_path(@newsletter),
+      :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
+    = link_to "Send Opt-In Test Mail", test_mail_newsletter_path(@newsletter), :class => "btn btn-success"
 
-- elsif @newsletter.opt_out?
-  = link_to "Send Opt-Out Mail", send_newsletter_path(@newsletter),
-    :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
-  = link_to "Send Opt-Out Test Mail", test_mail_newsletter_path(@newsletter), :class => "btn btn-success"
+  - elsif @newsletter.opt_out?
+    = link_to "Send Opt-Out Mail", send_newsletter_path(@newsletter),
+      :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
+    = link_to "Send Opt-Out Test Mail", test_mail_newsletter_path(@newsletter), :class => "btn btn-success"
+
+  - else
+    = link_to "Send Mail", send_newsletter_path(@newsletter),
+      :class => 'btn btn-danger', :data => { :confirm => 'Are you sure ?'}, method: :post
+    = link_to "Send Test Mail", test_mail_newsletter_path(@newsletter), :class => "btn btn-success"

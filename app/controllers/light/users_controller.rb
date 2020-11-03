@@ -3,6 +3,7 @@ module Light
   class UsersController < ApplicationController
     respond_to :js, :json, :html
     before_filter :user_with_token, only: [:remove, :unsubscribe, :subscribe]
+    before_filter :load_user, only: [:show, :edit, :update, :destroy]
 
     def index
       offset_val = params[:offset] || 0
@@ -14,7 +15,6 @@ module Light
     end
 
     def show
-      @user = Light::User.find(params[:id])
     end
 
     def new
@@ -26,8 +26,10 @@ module Light
       @user.sent_on = Array.new
       if @user.save
         @user.update(source: 'Manual', sent_on: Array.new, sidekiq_status: 'new user' )
+        flash[:success] = "User created successfully"
         redirect_to users_path
       else
+        flash[:error] = "Error while creating user"
         render action: 'new'
       end
     end
@@ -57,21 +59,24 @@ module Light
     end
 
     def edit
-      @user = Light::User.find(params[:id])
     end
 
     def update
-      @user = Light::User.find(params[:id])
       if @user.update_attributes(users_params)
+        flash[:success] = "User info updated successfully"
         redirect_to users_path
       else
+        flash[:error] = "Error while updating user"
         render action: 'edit'
       end
     end
 
     def destroy
-      @user = Light::User.find(params[:id])
-      @user.destroy
+      if @user.destroy
+        flash[:success] = "User deleted successfully"
+      else
+        flash[:error] = "Error while deleting user"
+      end
       redirect_to users_path
     end
 
@@ -145,6 +150,10 @@ module Light
       else
         "You have already #{status}!!"
       end
+    end
+
+    def load_user
+      @user = Light::User.find(params[:id])
     end
   end
 end

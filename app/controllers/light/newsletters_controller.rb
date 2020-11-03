@@ -3,7 +3,8 @@ require_dependency "light/application_controller"
 module Light
   class NewslettersController < ApplicationController
 
-    before_filter :load_newsletter, only: [:send_newsletter, :send_test_mail, :test_mail]
+    before_filter :load_newsletter, only: [:send_newsletter, :send_test_mail, :test_mail,
+                                           :show, :edit, :update, :destroy, :web_version]
 
     def index
       type = params[:type].present? ? params[:type] : "Monthly Newsletter" 
@@ -11,7 +12,6 @@ module Light
     end
 
     def show
-      @newsletter = Newsletter.find(params[:id])
     end
 
     def new 
@@ -23,34 +23,39 @@ module Light
       if @newsletter.save
         @newsletter.update(sent_on: Date.today)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
+        flash[:success] = "#{@newsletter.newsletter_type} newsletter created successfully"
         redirect_to newsletters_path
       else
+        flash[:error] = "Error while creating newsletter"
         render action: 'new'
       end
     end
 
     def edit
-      @newsletter = Newsletter.find(params[:id])
     end
 
     def update
-      @newsletter = Newsletter.find(params[:id])
       if @newsletter.update_attributes(newsletters_params)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
+        flash[:success] = "#{@newsletter.newsletter_type} newsletter updated successfully"
         redirect_to newsletters_path
       else
+        flash[:error] = "Error while updating newsletter"
         render action: 'edit'
       end
     end
 
     def destroy
-      @newsletter = Newsletter.find(params[:id])
-      @newsletter.destroy
+      type = @newsletter.newsletter_type
+      if @newsletter.destroy
+        flash[:success] = "#{type} newsletter deleted successfully"
+      else
+        flash[:error] = "Error while deleting newsletter"
+      end
       redirect_to newsletters_path
     end
 
     def web_version
-      @newsletter = Newsletter.find(params[:id])
       render layout: false
     end
 
@@ -60,12 +65,15 @@ module Light
       case type
       when "Opt-In Letter"
         Light::OptInWorker.perform_async(@newsletter.id.to_s)
+        flash[:notice] = "Sent Opt-In newsletter successfully"
         redirect_to newsletters_path
       when "Opt-Out Letter"
         Light::OptOutWorker.perform_async(@newsletter.id.to_s)
+        flash[:notice] = "Sent Opt-Out newsletter successfully"
         redirect_to newsletters_path
       else
         Light::UserWorker.perform_async(@newsletter.id.to_s)
+        flash[:notice] = "Sent Monthly newsletter successfully"
         redirect_to newsletters_path
       end
 
@@ -75,6 +83,7 @@ module Light
       type = @newsletter.newsletter_type
       emails = params[:email][:email_id].split(",")
       Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
+      flash[:notice] = "Sent #{type} test newsletter successfully"
       redirect_to newsletter_path(@newsletter)
     end
 
