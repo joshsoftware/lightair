@@ -7,7 +7,7 @@ module Light
                                            :show, :edit, :update, :destroy, :web_version]
 
     def index
-      type = params[:type].present? ? params[:type] : "Monthly Newsletter" 
+      type = params[:type].present? ? params[:type] : 'Monthly Newsletter'
       @newsletters = Newsletter.where(newsletter_type: type).order_by([:sent_on, :desc])
     end
 
@@ -26,7 +26,7 @@ module Light
         flash[:success] = "#{@newsletter.newsletter_type} newsletter created successfully"
         redirect_to newsletters_path
       else
-        flash[:error] = "Error while creating newsletter"
+        flash[:error] = 'Error while creating newsletter'
         render action: 'new'
       end
     end
@@ -40,7 +40,7 @@ module Light
         flash[:success] = "#{@newsletter.newsletter_type} newsletter updated successfully"
         redirect_to newsletters_path
       else
-        flash[:error] = "Error while updating newsletter"
+        flash[:error] = 'Error while updating newsletter'
         render action: 'edit'
       end
     end
@@ -50,7 +50,7 @@ module Light
       if @newsletter.destroy
         flash[:success] = "#{type} newsletter deleted successfully"
       else
-        flash[:error] = "Error while deleting newsletter"
+        flash[:error] = 'Error while deleting newsletter'
       end
       redirect_to newsletters_path
     end
@@ -63,27 +63,26 @@ module Light
       type = @newsletter.newsletter_type
 
       case type
-      when "Opt-In Letter"
+      when 'Opt-In Letter'
         Light::OptInWorker.perform_async(@newsletter.id.to_s)
-        flash[:notice] = "Sent Opt-In newsletter successfully"
-        redirect_to newsletters_path
-      when "Opt-Out Letter"
+        flash[:notice] = 'Sent Opt-In newsletter successfully'
+      when 'Opt-Out Letter'
         Light::OptOutWorker.perform_async(@newsletter.id.to_s)
-        flash[:notice] = "Sent Opt-Out newsletter successfully"
-        redirect_to newsletters_path
-      else
+        flash[:notice] = 'Sent Opt-Out newsletter successfully'
+      when 'Monthly Newsletter'
         Light::UserWorker.perform_async(@newsletter.id.to_s)
-        flash[:notice] = "Sent Monthly newsletter successfully"
-        redirect_to newsletters_path
+        flash[:notice] = 'Sent Monthly newsletter successfully'
+      else
+        flash[:error] = 'Invalid newsletter type'
       end
-
+      redirect_to newsletters_path
     end
 
     def send_test_mail
       type = @newsletter.newsletter_type
       emails = params[:email][:email_id].split(",")
       Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
-      flash[:notice] = "Sent #{type} test newsletter successfully"
+      flash[:notice] = 'You will receive newsletter on the given email ids shorly.'
       redirect_to newsletter_path(@newsletter)
     end
 

@@ -1,7 +1,11 @@
-.panel.panel-primary
+%center
+  .panel.panel-primary
   .panel-heading 
-    Test Mail
+    %h2
+      = @newsletter.subject
+      Test Mail
   .panel-body
     = form_for :email, as: :post, url: send_test_mail_newsletter_path(@newsletter) do |f|
-      = f.text_area :email_id
+      = f.text_area :email_id, placeholder: 'For multiple email ids - separate them by comma'
+      %br
       = f.button :submit, class: "btn btn-success"

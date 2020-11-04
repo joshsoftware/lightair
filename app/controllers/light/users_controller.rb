@@ -26,10 +26,10 @@ module Light
       @user.sent_on = Array.new
       if @user.save
         @user.update(source: 'Manual', sent_on: Array.new, sidekiq_status: 'new user' )
-        flash[:success] = "User created successfully"
+        flash[:success] = 'User created successfully'
         redirect_to users_path
       else
-        flash[:error] = "Error while creating user"
+        flash[:error] = 'Error while creating user'
         render action: 'new'
       end
     end
@@ -63,7 +63,7 @@ module Light
 
     def update
       if @user.update_attributes(users_params)
-        flash[:success] = "User info updated successfully"
+        flash[:success] = 'User info updated successfully'
         redirect_to users_path
       else
         flash[:error] = "Error while updating user"
@@ -73,9 +73,9 @@ module Light
 
     def destroy
       if @user.destroy
-        flash[:success] = "User deleted successfully"
+        flash[:success] = 'User deleted successfully'
       else
-        flash[:error] = "Error while deleting user"
+        flash[:error] = 'Error while deleting user'
       end
       redirect_to users_path
     end
