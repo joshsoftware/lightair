@@ -10,3 +10,9 @@
 
     = menu_item "Show Users", users_path, ({:method => 'get'} if params[:controller] == 'light/users' && params[:action].in?(['new', 'create']))
 %br
+
+:javascript
+  $(document).ready(function() {
+    $(".nav").find(".active").removeClass("active");
+    $('a[href="' + location.pathname + location.search + '"]').closest('li').addClass('active'); 
+  });
