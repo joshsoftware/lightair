@@ -35,10 +35,11 @@ module Light
     end
 
     def update
+      type = @newsletter.newsletter_type
       if @newsletter.update_attributes(newsletters_params)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
-        flash[:success] = "#{@newsletter.newsletter_type} newsletter updated successfully"
-        redirect_to newsletters_path(type: @newsletter.newsletter_type)
+        flash[:success] = "#{type} newsletter updated successfully"
+        redirect_to newsletters_path(type: type)
       else
         flash[:error] = 'Error while updating newsletter'
         render action: 'edit'
@@ -52,7 +53,7 @@ module Light
       else
         flash[:error] = 'Error while deleting newsletter'
       end
-      redirect_to newsletters_path(type: @newsletter.newsletter_type)
+      redirect_to newsletters_path(type: type)
     end
 
     def web_version
