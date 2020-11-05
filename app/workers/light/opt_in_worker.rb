@@ -10,7 +10,7 @@ module Light
       number_of_opt_in_users_count = number_of_opt_in_users
       current_batch = 0
       users_in_batch = 250
-      newsletter = Light::Newsletter.find_by(id: newsletter_id)
+      newsletter = Light::Newsletter.where(id: newsletter_id).first
       if newsletter
         while number_of_opt_in_users > 0
           user_ids = users.limit(users_in_batch).skip(users_in_batch*current_batch).collect { |user| user.id.to_s }

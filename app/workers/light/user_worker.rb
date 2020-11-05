@@ -10,7 +10,7 @@ module Light
       number_of_subscribed_users_count = number_of_subscribed_users
       current_batch = 0
       users_in_batch = 250
-      newsletter = Light::Newsletter.find_by(id: newsletter_id)
+      newsletter = Light::Newsletter.where(id: newsletter_id).first
 
       #newsletter = Light::Newsletter.where(newsletter_type: Light::Newsletter::VALID_NEWSLETTER_TYPES[:OPT_IN]).
       #  order_by([:sent_on, :desc]).first

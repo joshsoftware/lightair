@@ -24,7 +24,7 @@ module Light
         @newsletter.update(sent_on: Date.today)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
         flash[:success] = "#{@newsletter.newsletter_type} newsletter created successfully"
-        redirect_to newsletters_path
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
         flash[:error] = 'Error while creating newsletter'
         render action: 'new'
@@ -38,7 +38,7 @@ module Light
       if @newsletter.update_attributes(newsletters_params)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
         flash[:success] = "#{@newsletter.newsletter_type} newsletter updated successfully"
-        redirect_to newsletters_path
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
         flash[:error] = 'Error while updating newsletter'
         render action: 'edit'
@@ -52,7 +52,7 @@ module Light
       else
         flash[:error] = 'Error while deleting newsletter'
       end
-      redirect_to newsletters_path
+      redirect_to newsletters_path(type: @newsletter.newsletter_type)
     end
 
     def web_version
@@ -60,30 +60,44 @@ module Light
     end
 
     def send_newsletter
-      type = @newsletter.newsletter_type
+      if @newsletter
+        type = @newsletter.newsletter_type
 
-      case type
-      when 'Opt-In Letter'
-        Light::OptInWorker.perform_async(@newsletter.id.to_s)
-        flash[:notice] = 'Sent Opt-In newsletter successfully'
-      when 'Opt-Out Letter'
-        Light::OptOutWorker.perform_async(@newsletter.id.to_s)
-        flash[:notice] = 'Sent Opt-Out newsletter successfully'
-      when 'Monthly Newsletter'
-        Light::UserWorker.perform_async(@newsletter.id.to_s)
-        flash[:notice] = 'Sent Monthly newsletter successfully'
+        case type
+        when 'Opt-In Letter'
+          Light::OptInWorker.perform_async(@newsletter.id.to_s)
+          flash[:notice] = 'Sent Opt-In newsletter successfully'
+        when 'Opt-Out Letter'
+          Light::OptOutWorker.perform_async(@newsletter.id.to_s)
+          flash[:notice] = 'Sent Opt-Out newsletter successfully'
+        when 'Monthly Newsletter'
+          Light::UserWorker.perform_async(@newsletter.id.to_s)
+          flash[:notice] = 'Sent Monthly newsletter successfully'
+        else
+          flash[:error] = 'Invalid newsletter type'
+        end
+        redirect_to newsletters_path(type: type)
       else
         flash[:error] = 'Invalid newsletter type'
+        redirect_to newsletters_path
       end
-      redirect_to newsletters_path
     end
 
     def send_test_mail
-      type = @newsletter.newsletter_type
       emails = params[:email][:email_id].split(",")
-      Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
-      flash[:notice] = 'You will receive newsletter on the given email ids shorly.'
-      redirect_to newsletter_path(@newsletter)
+      unless emails.empty?
+        if @newsletter
+          Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver
+          flash[:notice] = 'You will receive newsletter on the given email ids shorly.'
+          redirect_to newsletters_path(type: @newsletter.newsletter_type)
+        else
+          flash[:notice] = 'Newsletter not found.'
+          redirect_to newsletter_path
+        end
+      else
+        flash[:error] = 'Atleast one email ID is expected.'
+        render 'test_mail'
+      end
     end
 
     def test_mail
