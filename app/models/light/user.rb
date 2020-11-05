@@ -1,3 +1,5 @@
+require 'devise'
+
 module Light
   class User
     include Mongoid::Document

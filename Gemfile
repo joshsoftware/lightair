@@ -21,7 +21,9 @@ gem 'mongoid'
 # The following gems for testing purpose in development and testing environment
 group :development, :test do
   # Rspec is used to write the test cases
-  gem 'rspec-rails'
+  gem 'rspec-rails', '~> 3.1'
+  gem 'mongoid-rspec'
+  gem 'byebug'
   # Use factory girl to pass random data for test cases
   gem 'factory_girl_rails'
   # Use faker to generate fake strings and data

@@ -4,12 +4,14 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'simplecov'
 SimpleCov.start 'rails'
 require_relative 'dummy/config/environment'
-require 'rspec/autorun'
 require 'rspec/rails'
 require 'database_cleaner'
 require 'sidekiq/testing'
 require 'webmock/rspec'
 Sidekiq::Testing.fake!
+
+# globally disable all history tracking by default
+Mongoid::History.disable!
 
 ENGINE_RAILS_ROOT = File.join(File.dirname(__FILE__), '../')
 
@@ -39,7 +41,6 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    Rails.application.load_seed
     DatabaseCleaner.start
   end
 
