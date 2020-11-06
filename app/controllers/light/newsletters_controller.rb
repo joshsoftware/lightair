@@ -23,7 +23,7 @@ module Light
       if @newsletter.save
         @newsletter.update(sent_on: Date.today)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
-        flash[:success] = "#{@newsletter.newsletter_type} newsletter created successfully"
+        flash[:success] = 'Newsletter created successfully'
         redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
         flash[:error] = 'Error while creating newsletter'
@@ -35,11 +35,10 @@ module Light
     end
 
     def update
-      type = @newsletter.newsletter_type
       if @newsletter.update_attributes(newsletters_params)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
-        flash[:success] = "#{type} newsletter updated successfully"
-        redirect_to newsletters_path(type: type)
+        flash[:success] = 'Newsletter updated successfully'
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
         flash[:error] = 'Error while updating newsletter'
         render action: 'edit'
@@ -47,13 +46,12 @@ module Light
     end
 
     def destroy
-      type = @newsletter.newsletter_type
       if @newsletter.destroy
-        flash[:success] = "#{type} newsletter deleted successfully"
+        flash[:success] = 'Newsletter deleted successfully'
       else
         flash[:error] = 'Error while deleting newsletter'
       end
-      redirect_to newsletters_path(type: type)
+      redirect_to newsletters_path(type: @newsletter.newsletter_type)
     end
 
     def web_version
@@ -79,7 +77,7 @@ module Light
         end
         redirect_to newsletters_path(type: type)
       else
-        flash[:error] = 'Invalid newsletter type'
+        flash[:error] = 'Newsletter not found.'
         redirect_to newsletters_path
       end
     end
@@ -89,10 +87,10 @@ module Light
       unless emails.empty?
         if @newsletter
           Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver
-          flash[:notice] = 'You will receive newsletter on the given email ids shorly.'
+          flash[:notice] = 'You will receive newsletter on the given email ids shortly.'
           redirect_to newsletters_path(type: @newsletter.newsletter_type)
         else
-          flash[:notice] = 'Newsletter not found.'
+          flash[:error] = 'Newsletter not found.'
           redirect_to newsletter_path
         end
       else
