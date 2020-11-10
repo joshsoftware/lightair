@@ -8,11 +8,6 @@ Light::Engine.routes.draw do
 
   match 'users/import', to: 'users#import', via: [:get, :post]
   resources :newsletters do
-    collection do
-      get 'opt-in', as: 'opt_in'
-      get 'opt-out', as: 'opt_out'
-    end
-
     member do
       get 'test' , to: 'newsletters#test_mail' , as: 'test_mail'
       post 'send' , to: 'newsletters#send_newsletter', as: 'send'

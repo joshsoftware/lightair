@@ -46,12 +46,13 @@ module Light
     end
 
     def destroy
-      if @newsletter.destroy
+      if @newsletter && @newsletter.destroy
         flash[:success] = 'Newsletter deleted successfully'
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
         flash[:error] = 'Error while deleting newsletter'
+        redirect_to newsletters_path
       end
-      redirect_to newsletters_path(type: @newsletter.newsletter_type)
     end
 
     def web_version
@@ -91,7 +92,7 @@ module Light
           redirect_to newsletters_path(type: @newsletter.newsletter_type)
         else
           flash[:error] = 'Newsletter not found.'
-          redirect_to newsletter_path
+          redirect_to newsletters_path
         end
       else
         flash[:error] = 'Atleast one email ID is expected.'
@@ -109,7 +110,7 @@ module Light
     end
 
     def load_newsletter
-      @newsletter = Newsletter.find(params[:id])
+      @newsletter = Newsletter.where(id: params[:id]).first
     end
   end
 end

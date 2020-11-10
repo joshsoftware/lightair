@@ -62,7 +62,7 @@ module Light
     end
 
     def update
-      if @user.update_attributes(users_params)
+      if @user && @user.update_attributes(users_params)
         flash[:success] = 'User info updated successfully'
         redirect_to users_path
       else
@@ -72,7 +72,7 @@ module Light
     end
 
     def destroy
-      if @user.destroy
+      if @user && @user.destroy
         flash[:success] = 'User deleted successfully'
       else
         flash[:error] = 'Error while deleting user'

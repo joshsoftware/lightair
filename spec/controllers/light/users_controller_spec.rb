@@ -37,12 +37,14 @@ module Light
 
         it "redirects to users path" do
           post :create, {user: @create_params}
+          expect(flash[:success]).to be_present
           expect(response).to redirect_to(users_path)
         end
 
         it "default status is new user and is_subscribed is false" do
           post :create, {user: @create_params}
           user = User.find_by(email_id: 'test@sub.com')
+          expect(flash[:success]).to be_present
           expect(user.sidekiq_status).to eq 'new user'
           expect(user.is_subscribed).to eq false
         end
@@ -50,6 +52,7 @@ module Light
 
       it "not arise" do
         post :create, {user: {email_id: "",username: "kanhaiya", is_subscribed: "false"}}
+        expect(flash[:error]).to be_present
         expect(response).to render_template("new")
       end
     end
@@ -65,9 +68,23 @@ module Light
 
     context "DELETE delete" do
       let(:user) {FactoryGirl.create(:user)}
-      it "delete an user" do
+      it "delete an user success" do
         delete :destroy, {id: user.id}
+        expect(flash[:success]).to be_present
         expect(response).to redirect_to(users_path)
+      end
+    end
+
+    context "GET remove" do
+      let(:user) {FactoryGirl.create(:user)}
+      it "remove an user success" do
+        get :remove, {token: user.token}
+        expect(assigns(:message)).to eq('We have removed you from our database!')
+      end
+
+      it "remove an user failure" do
+        get :remove, {token: 'dummy_token'}
+        expect(assigns(:message)).to eq('No user with this token exists!')
       end
     end
 
@@ -76,10 +93,12 @@ module Light
       let(:new_user) {FactoryGirl.create(:user)}
       it "updates details of specified user" do
         patch :update, {id: new_user.id, user: { email_id: new_user.email_id}}
+        expect(flash[:success]).to be_present
         expect(response).to redirect_to(users_path)
       end
       it " not arise" do
         put :update, {id: new_user.id, user: { email_id: ""}}
+        expect(flash[:error]).to be_present
         expect(response).to render_template("edit")
       end
     end
@@ -89,24 +108,6 @@ module Light
       it "unsubcribes a particular user" do
         get :subscribe, {id: new_user.id}
         expect(response).to render_template("subscribe")
-      end
-    end
-
-    context "GET sendmailer" do
-      it "sends mails to user" do
-        VCR.use_cassette 'controllers/user-mails', record: :new_episodes do
-          get :sendmailer
-          expect(response).to redirect_to(newsletters_path)
-        end
-      end
-    end
-
-    context "GET sendTest" do
-      it "sends Test mails to user" do
-        VCR.use_cassette 'controllers/user-mails', record: :new_episodes do
-          get :sendtest, email: {email_id: "pankajb@joshsoftware.com"}
-          expect(response).to redirect_to(newsletters_path)
-        end
       end
     end
 
