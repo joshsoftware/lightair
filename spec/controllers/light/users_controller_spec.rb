@@ -37,14 +37,14 @@ module Light
 
         it "redirects to users path" do
           post :create, {user: @create_params}
-          expect(flash[:success]).to be_present
+          expect(flash[:success]).to eq('User created successfully')
           expect(response).to redirect_to(users_path)
         end
 
         it "default status is new user and is_subscribed is false" do
           post :create, {user: @create_params}
           user = User.find_by(email_id: 'test@sub.com')
-          expect(flash[:success]).to be_present
+          expect(flash[:success]).to eq('User created successfully')
           expect(user.sidekiq_status).to eq 'new user'
           expect(user.is_subscribed).to eq false
         end
@@ -52,7 +52,7 @@ module Light
 
       it "not arise" do
         post :create, {user: {email_id: "",username: "kanhaiya", is_subscribed: "false"}}
-        expect(flash[:error]).to be_present
+        expect(flash[:error]).to eq('Error while creating user')
         expect(response).to render_template("new")
       end
     end
@@ -70,7 +70,7 @@ module Light
       let(:user) {FactoryGirl.create(:user)}
       it "delete an user success" do
         delete :destroy, {id: user.id}
-        expect(flash[:success]).to be_present
+        expect(flash[:success]).to eq('User deleted successfully')
         expect(response).to redirect_to(users_path)
       end
     end
@@ -93,12 +93,12 @@ module Light
       let(:new_user) {FactoryGirl.create(:user)}
       it "updates details of specified user" do
         patch :update, {id: new_user.id, user: { email_id: new_user.email_id}}
-        expect(flash[:success]).to be_present
+        expect(flash[:success]).to eq('User info updated successfully')
         expect(response).to redirect_to(users_path)
       end
       it " not arise" do
         put :update, {id: new_user.id, user: { email_id: ""}}
-        expect(flash[:error]).to be_present
+        expect(flash[:error]).to eq('Error while updating user')
         expect(response).to render_template("edit")
       end
     end
