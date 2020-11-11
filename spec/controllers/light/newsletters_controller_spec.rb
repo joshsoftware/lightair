@@ -18,12 +18,6 @@ module Light
         get :index, params
         expect(response).to have_http_status(:success)
       end
-
-      it "list all the newsletters" do
-        params = {type: 'Opt-Out Letter'}
-        get :index, params
-        expect(response).to have_http_status(:success)
-      end
     end
 
     context "GET show" do
@@ -134,14 +128,11 @@ module Light
       end
     end
 
-    describe 'POST send_newsletter' do
+    context 'POST send_newsletter' do
       before :each do
-        @new_user = FactoryGirl.create(:user, is_subscribed: false)
+        @new_user = FactoryGirl.create(:user, is_subscribed: false, sidekiq_status: 'new user')
         @subscribed = FactoryGirl.create(:user, is_subscribed: true, sidekiq_status: 'Subscribed')
         @unsubscribed = FactoryGirl.create(:user, is_subscribed: false, sidekiq_status: 'Unubscribed')
-        @monthly = FactoryGirl.create(:newsletter, sent_on: [])
-        @opt_in = FactoryGirl.create(:newsletter, sent_on: [], newsletter_type: 'Opt-In Letter')
-        @opt_out = FactoryGirl.create(:newsletter, sent_on: [], newsletter_type: 'Opt-Out Letter')
         @date = Date.today.strftime("%Y%m")
         @sent_on_date = DateTime.now
         ActionMailer::Base.deliveries = []
@@ -156,15 +147,16 @@ module Light
       it 'should send monthly newsletter to subscribed users only' +
         'and update the sent_on attribute for user and newsletter' do
         Sidekiq::Testing.inline! do
+          @monthly = FactoryGirl.create(:newsletter, sent_on: [])
           post :send_newsletter, {id: @monthly.id}
-          @subscribed.reload
-          @monthly.reload
           expect(flash[:notice]).to eq('Sent Monthly newsletter successfully')
           expect(ActionMailer::Base.deliveries.count).to eq(1)
           expect(ActionMailer::Base.deliveries.first.subject).to eq(@monthly.subject)
           expect(ActionMailer::Base.deliveries.first.to).to eq([@subscribed.email_id])
-          expect(@monthly.users_count).to eq(1)
-          expect(@subscribed.sent_on).to include(@date)
+          expect(@monthly.reload.users_count).to eq(1)
+          expect(@subscribed.reload.sent_on).to include(@date)
+          expect(@unsubscribed.reload.sent_on.empty?).to eq(true)
+          expect(@new_user.reload.sent_on.empty?).to eq(true)
           expect(response).to redirect_to(newsletters_path(type: @monthly.newsletter_type))
         end
       end
@@ -172,15 +164,16 @@ module Light
       it 'should send opt-in newsletter to new users only' +
         'and update necessary attributes for user and newsletter' do
         Sidekiq::Testing.inline! do
+          @opt_in = FactoryGirl.create(:newsletter, sent_on: [], newsletter_type: 'Opt-In Letter')
           post :send_newsletter, {id: @opt_in.id}
-          @new_user.reload
-          @opt_in.reload
           expect(flash[:notice]).to eq('Sent Opt-In newsletter successfully')
           expect(ActionMailer::Base.deliveries.count).to eq(1)
           expect(ActionMailer::Base.deliveries.first.subject).to eq(@opt_in.subject)
           expect(ActionMailer::Base.deliveries.first.to).to eq([@new_user.email_id])
-          expect(@opt_in.users_count).to eq(1)
-          expect(@new_user.sent_on).to include(@date)
+          expect(@opt_in.reload.users_count).to eq(1)
+          expect(@new_user.reload.sent_on).to include(@date)
+          expect(@subscribed.reload.sent_on.empty?).to eq(true)
+          expect(@unsubscribed.reload.sent_on.empty?).to eq(true)
           expect(@new_user.sidekiq_status).to eq('Opt in mail sent')
           expect(@new_user.opt_in_mail_sent_at).to be > @sent_on_date
           expect(response).to redirect_to(newsletters_path(type: @opt_in.newsletter_type))
@@ -190,15 +183,16 @@ module Light
       it 'should send opt-out newsletter to new users only' +
         'and update necessary attributes for user and newsletter' do
         Sidekiq::Testing.inline! do
+          @opt_out = FactoryGirl.create(:newsletter, sent_on: [], newsletter_type: 'Opt-Out Letter')
           post :send_newsletter, {id: @opt_out.id}
-          @new_user.reload
-          @opt_out.reload
           expect(flash[:notice]).to eq('Sent Opt-Out newsletter successfully')
           expect(ActionMailer::Base.deliveries.count).to eq(1)
           expect(ActionMailer::Base.deliveries.first.subject).to eq(@opt_out.subject)
           expect(ActionMailer::Base.deliveries.first.to).to eq([@new_user.email_id])
-          expect(@opt_out.users_count).to eq(1)
-          expect(@new_user.sent_on).to include(@date)
+          expect(@opt_out.reload.users_count).to eq(1)
+          expect(@new_user.reload.sent_on).to include(@date)
+          expect(@subscribed.reload.sent_on.empty?).to eq(true)
+          expect(@unsubscribed.reload.sent_on.empty?).to eq(true)
           expect(@new_user.sidekiq_status).to eq('Subscribed')
           expect(@new_user.subscribed_at).to be > @sent_on_date
           expect(@new_user.is_subscribed).to eq(true)
