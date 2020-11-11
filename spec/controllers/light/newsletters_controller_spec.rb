@@ -2,76 +2,74 @@ require 'rails_helper'
 
 module Light
 
-  RSpec.describe NewslettersController, :type => :controller do
+  RSpec.describe NewslettersController, type: :controller do
 
     routes { Light::Engine.routes}
 
-    context "GET index" do
-      it "list all the newsletters" do
-        params = {}
-        get :index, params
+    context 'GET index' do
+      it 'list all the newsletters' do
+        get :index
         expect(response).to have_http_status(:success)
       end
 
-      it "list all the newsletters" do
-        params = {type: 'Opt-In Letter'}
-        get :index, params
+      it 'list all the newsletters' do
+        get :index, {type: 'Opt-In Letter'}
         expect(response).to have_http_status(:success)
       end
     end
 
-    context "GET show" do
+    context 'GET show' do
       let(:newsletter) {FactoryGirl.create(:newsletter)}
-      it "show the deatails of the newsletters" do
-        get :show, {:id => newsletter.id}
+      it 'show the deatails of the newsletters' do
+        get :show, {id: newsletter.id}
         expect(assigns(:newsletter).subject).to eq(newsletter.subject)
-        expect(response).to render_template("show")
+        expect(response).to render_template('show')
       end
     end
 
-    context "GET new" do
+    context 'GET new' do
       let(:new_newsletter) {FactoryGirl.create(:newsletter)}
-      it "display new form for adding newsletter" do
+      it 'display new form for adding newsletter' do
         get :new, {newsletter: new_newsletter}
-        expect(response).to render_template("new")
+        expect(response).to render_template('new')
       end
     end
 
-    context "POST create" do
+    context 'POST create' do
       let(:new_newsletter) {FactoryGirl.attributes_for(:newsletter)}
-      it "display new form for adding newsletter" do
+      it 'display new form for adding newsletter' do
         post :create, {newsletter: new_newsletter}
         expect(flash[:success]).to eq('Newsletter created successfully')
         expect(response).to redirect_to(newsletters_path(type: 'Monthly Newsletter'))
       end
 
-      it "create a newsletter failure" do
-        post :create, {newsletter: {content: "",sent_on: "2014-1-1", users_count: 0}}
+      it 'create a newsletter failure' do
+        post :create, {newsletter: {content: '', sent_on: '2014-1-1', users_count: 0}}
         expect(flash[:error]).to eq('Error while creating newsletter')
-        expect(response).to render_template("new")
+        expect(response).to render_template('new')
       end
     end
 
-    context "GET edit" do
+    context 'GET edit' do
       let(:new_newsletter) {FactoryGirl.create(:newsletter)}
-      it "fetches the specific newsletter" do
+      it 'fetches the specific newsletter' do
         get :edit, {id: new_newsletter.id}
-        expect(response).to render_template("edit")
+        expect(response).to render_template('edit')
       end
     end
 
-    context "PUT update" do
+    context 'PUT update' do
       let(:new_newsletter) {FactoryGirl.create(:newsletter)}
-      it "updates details of specified newsletter" do
+      it 'updates details of specified newsletter' do
         put :update, {id: new_newsletter.id, newsletter: {content: new_newsletter.content}}
         expect(flash[:success]).to eq('Newsletter updated successfully')
         expect(response).to redirect_to(newsletters_path(type: new_newsletter.newsletter_type))
       end
 
-      it "update a newsletter failure" do
-        put :update, {id: new_newsletter.id, newsletter: {content: ""}}
+      it 'update a newsletter failure' do
+        put :update, {id: new_newsletter.id, newsletter: {content: ''}}
         expect(flash[:error]).to eq('Error while updating newsletter')
-        expect(response).to render_template("edit")
+        expect(response).to render_template('edit')
       end
     end
 
@@ -133,7 +131,7 @@ module Light
         @new_user = FactoryGirl.create(:user, is_subscribed: false, sidekiq_status: 'new user')
         @subscribed = FactoryGirl.create(:user, is_subscribed: true, sidekiq_status: 'Subscribed')
         @unsubscribed = FactoryGirl.create(:user, is_subscribed: false, sidekiq_status: 'Unubscribed')
-        @date = Date.today.strftime("%Y%m")
+        @date = Date.today.strftime('%Y%m')
         @sent_on_date = DateTime.now
         ActionMailer::Base.deliveries = []
       end
