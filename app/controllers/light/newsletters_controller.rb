@@ -1,4 +1,4 @@
-require_dependency "light/application_controller"
+require_dependency 'light/application_controller'
 
 module Light
   class NewslettersController < ApplicationController
@@ -14,11 +14,11 @@ module Light
     def show
     end
 
-    def new 
+    def new
       @newsletter = Newsletter.new
     end
 
-    def create 
+    def create
       @newsletter = Newsletter.new(newsletters_params)
       if @newsletter.save
         @newsletter.update(sent_on: Date.today)
@@ -84,7 +84,7 @@ module Light
     end
 
     def send_test_mail
-      emails = params[:email][:email_id].split(",")
+      emails = params[:email][:email_id].split(',')
       unless emails.empty?
         if @newsletter
           Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver
@@ -102,7 +102,7 @@ module Light
 
     def test_mail
     end
-    
+
     private
 
     def newsletters_params

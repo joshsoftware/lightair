@@ -1,4 +1,4 @@
-require_dependency "light/application_controller"
+require_dependency 'light/application_controller'
 module Light
   class UsersController < ApplicationController
     respond_to :js, :json, :html
@@ -36,9 +36,11 @@ module Light
 
     def unsubscribe
       if @user.present? && @user.sidekiq_status == 'Subscribed'
-        @user.update(is_subscribed: 'false',
-                    unsubscribed_at: DateTime.now,
-                    sidekiq_status: 'Unsubscribed')
+        @user.update(
+          is_subscribed: 'false',
+          unsubscribed_at: DateTime.now,
+          sidekiq_status: 'Unsubscribed'
+        )
         @message = 'Unsubscribed successfully!!'
       else
         @message = response_message('unsubscribed')
@@ -47,11 +49,13 @@ module Light
 
     def subscribe
       if @user.present? && @user.sidekiq_status == 'Unsubscribed'
-        @user.update(is_subscribed: 'true',
-                    sidekiq_status: 'Subscribed',
-                    subscribed_at: DateTime.now,
-                    remote_ip: request.remote_ip,
-                    user_agent: request.env['HTTP_USER_AGENT'])
+        @user.update(
+          is_subscribed: 'true',
+          sidekiq_status: 'Subscribed',
+          subscribed_at: DateTime.now,
+          remote_ip: request.remote_ip,
+          user_agent: request.env['HTTP_USER_AGENT']
+        )
         @message = 'Subscribed successfully!!'
       else
         @message = response_message('subscribed')
@@ -66,7 +70,7 @@ module Light
         flash[:success] = 'User info updated successfully'
         redirect_to users_path
       else
-        flash[:error] = "Error while updating user"
+        flash[:error] = 'Error while updating user'
         render action: 'edit'
       end
     end
@@ -83,9 +87,9 @@ module Light
     def remove
       if @user.present?
         @user.destroy
-        @message = "We have removed you from our database!"
+        @message = 'We have removed you from our database!'
       else
-        @message = "No user with this token exists!"
+        @message = 'No user with this token exists!'
       end
     end
 
@@ -106,19 +110,23 @@ module Light
     def opt_in
       @user = Light::User.where(email_id: params[:email]).first
       if @user.present?
-        @user.update_attributes(is_subscribed: true,
-                                sidekiq_status: 'Subscribed',
-                                subscribed_at: DateTime.now)
+        @user.update_attributes(
+          is_subscribed: true,
+          sidekiq_status: 'Subscribed',
+          subscribed_at: DateTime.now
+        )
       else
         u_name = params[:username].blank? ? params[:email] : params[:username]
-        @user = Light::User.new(username: u_name,
-                                email_id: params[:email],
-                                source: 'web subscription request',
-                                subscribed_at: DateTime.now,
-                                sidekiq_status: 'Subscribed')
+        @user = Light::User.new(
+          username: u_name,
+          email_id: params[:email],
+          source: 'web subscription request',
+          subscribed_at: DateTime.now,
+          sidekiq_status: 'Subscribed'
+        )
       end
       respond_to do |format|
-        format.json { head :no_content }
+        format.json {head :no_content}
         format.html {redirect_to main_app.users_thank_you_path}
       end
     end
@@ -144,7 +152,7 @@ module Light
       if dummy_token?
         "#{status.capitalize} successfully!!"
       elsif @user.nil?
-        "Hey, it seems request you are trying to access is invalid. If you have any " + 
+        "Hey, it seems request you are trying to access is invalid. If you have any " +
         "concerns about our newsletter's subscription, kindly get in touch with " +
         "<a href='mailto:hr@joshsoftware.com' class='email'>hr@joshsoftware.com</a>"
       else

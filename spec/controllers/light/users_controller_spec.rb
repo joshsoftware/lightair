@@ -126,11 +126,12 @@ module Light
         let!(:existing_user) {create :user, username: 'Winona Bayer', email_id: 'winona@gmail.com', is_subscribed: false }
 
         it 'File to be imported should contain following data ' do
-          users = [['Full Name', 'Email'],
-                   ['Miss Pamela Kovacek','pamela@gmail.com'],
-                   [nil, 'claud@gmail.com'],
-                   ['Delmer Botsford', nil],
-                   ['Winona Bayer', 'winona@gmail.com'],
+          users = [
+            ['Full Name', 'Email'],
+            ['Miss Pamela Kovacek','pamela@gmail.com'],
+            [nil, 'claud@gmail.com'],
+            ['Delmer Botsford', nil],
+            ['Winona Bayer', 'winona@gmail.com']
           ]
           expect(User.find_by(email_id: users.last.last)).to be_present
           rows = CSV.read(file.path)
