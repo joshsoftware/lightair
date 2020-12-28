@@ -4,7 +4,11 @@ module Light
     include Mongoid::Slug
     include Mongoid::History::Trackable
 
-    NEW_USER = "new user"
+    STATUS = {
+      new_user: 'new_user', subscribed: 'Subscribed', unsubscribed: 'Unsubscribed',
+      block: 'Block', bounced: 'Bounced', spam: 'Spam', invalid: 'Invalid',
+      opt_in: 'Opt in mail sent'
+    }
 
     field :email_id,      type: String
     field :username,      type: String
@@ -32,21 +36,21 @@ module Light
                        :user_agent, :is_subscribed, :unsubscribed_at]
     before_create do
       self.joined_on = Date.today
-      self.sidekiq_status = NEW_USER if self.sidekiq_status.blank?
+      self.sidekiq_status = STATUS[:new_user] if self.sidekiq_status.blank?
       self.token = Devise.friendly_token
       while User.where(token: self.token).present?
         self.token = Devise.friendly_token
       end
     end
 
-    scope :subscribed_users, -> { where(is_subscribed: true, sidekiq_status: 'Subscribed') }
-    scope :unsubscribed_users, -> { where(is_subscribed: false, sidekiq_status: 'Unsubscribed') }
-    scope :new_users, -> { where(is_subscribed: false, sidekiq_status: NEW_USER) }
-    scope :blocked_users, -> { where(is_subscribed: false, sidekiq_status: 'Block') }
-    scope :bounced_users, -> { where(is_subscribed: false, sidekiq_status: 'Bounced') }
-    scope :spam_users, -> { where(is_subscribed: false, sidekiq_status: 'Spam') }
-    scope :invalid_users, -> { where(is_subscribed: false, sidekiq_status: 'Invalid') }
-    scope :opt_in_users, -> { where(is_subscribed: false, sidekiq_status: 'Opt in mail sent') }
+    scope :subscribed_users, -> { where(is_subscribed: true, sidekiq_status: STATUS[:subscribed]) }
+    scope :unsubscribed_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:unsubscribed]) }
+    scope :new_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:new_user]) }
+    scope :blocked_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:block]) }
+    scope :bounced_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:bounced]) }
+    scope :spam_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:spam]) }
+    scope :invalid_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:invalid]) }
+    scope :opt_in_users, -> { where(is_subscribed: false, sidekiq_status: STATUS[:opt_in]) }
 
     def self.add_users_from_worksheet(worksheet, column = 1)
       fails = []

@@ -43,10 +43,12 @@ module Light
     end
 
     def unsubscribe
-      if @user.present? && @user.sidekiq_status == 'Subscribed'
-        @user.update(is_subscribed: 'false',
-                    unsubscribed_at: DateTime.now,
-                    sidekiq_status: 'Unsubscribed')
+      if @user.present? && @user.sidekiq_status == Light::User::STATUS[:subscribed]
+        @user.update(
+          is_subscribed: false,
+          unsubscribed_at: DateTime.now,
+          sidekiq_status: Light::User::STATUS[:unsubscribed]
+        )
         @message = 'Unsubscribed successfully!!'
       else
         @message = response_message('unsubscribed')
@@ -54,9 +56,9 @@ module Light
     end
 
     def subscribe
-      if @user.present? && @user.sidekiq_status == 'Unsubscribed'
-        @user.update(is_subscribed: 'true',
-                    sidekiq_status: 'Subscribed',
+      if @user.present? && @user.sidekiq_status == Light::User::STATUS[:unsubscribed]
+        @user.update(is_subscribed: true,
+                    sidekiq_status: Light::User::STATUS[:subscribed],
                     subscribed_at: DateTime.now,
                     remote_ip: request.remote_ip,
                     user_agent: request.env['HTTP_USER_AGENT'])
@@ -116,16 +118,20 @@ module Light
     def opt_in
       @user = Light::User.where(email_id: params[:email]).first
       if @user.present?
-        @user.update_attributes(is_subscribed: true,
-                                sidekiq_status: 'Subscribed',
-                                subscribed_at: DateTime.now)
+        @user.update_attributes(
+          is_subscribed: true,
+          sidekiq_status: Light::User::STATUS[:subscribed],
+          subscribed_at: DateTime.now
+        )
       else
         u_name = params[:username].blank? ? params[:email] : params[:username]
-        @user = Light::User.new(username: u_name,
-                                email_id: params[:email],
-                                source: 'web subscription request',
-                                subscribed_at: DateTime.now,
-                                sidekiq_status: 'Subscribed')
+        @user = Light::User.new(
+          username: u_name,
+          email_id: params[:email],
+          source: 'web subscription request',
+          subscribed_at: DateTime.now,
+          sidekiq_status: Light::User::STATUS[:subscribed]
+        )
       end
       respond_to do |format|
         format.json { head :no_content }
@@ -139,7 +145,10 @@ module Light
 
     private
     def users_params
-      params.require(:user).permit(:id, :email_id, :is_subscribed, :joined_on, :source, :username)
+      params.require(:user).permit(
+        :id, :email_id, :is_subscribed, :joined_on, :is_blocked,
+        :sidekiq_status, :source, :username
+      )
     end
 
     def user_with_token
@@ -154,7 +163,7 @@ module Light
       if dummy_token?
         "#{status.capitalize} successfully!!"
       elsif @user.nil?
-        "Hey, it seems request you are trying to access is invalid. If you have any " + 
+        "Hey, it seems request you are trying to access is invalid. If you have any " +
         "concerns about our newsletter's subscription, kindly get in touch with " +
         "<a href='mailto:hr@joshsoftware.com' class='email'>hr@joshsoftware.com</a>"
       else

@@ -1,15 +1,32 @@
 = render 'light/newsletters/top_navbar'
-
-= simple_form_for (@user), html: {role: 'form', class: 'form-horizontal'} do |f|
-  %table
-    %tr
-      %td
-        = f.input :email_id, input_html:{class: 'span3'}
-        = f.input :username, input_html:{class: 'span3'}
-        = f.input :is_subscribed, :as => :select, input_html:{class: 'span3'}
-        = f.input :joined_on, input_html: { 'data-behaviour' => 'datepicker'}, input_html:{class: 'span3'}
-        = f.input :source, input_html:{class: 'span3'}
-        = f.button :submit, class: "btn btn-success controls"
+%center
+  = simple_form_for (@user), html: {role: 'form', class: 'form-horizontal'} do |f|
+    %h2 Edit User
+    %br
+    %table
+      %tr
+        %td
+          = f.input :email_id, input_html: {class: 'span3'}
+          = f.input :username, input_html: {class: 'span3'}
+          = f.input :sent_on, label: 'Last Sent On', input_html: {class: 'span3', readonly: true}, value: @user.sent_on.last
+          = f.input :source, input_html: {class: 'span3', readonly: true}
+          = f.input :joined_on, input_html: { 'data-behaviour': 'datepicker'}, input_html:{class: 'span3', readonly: true}
+          = f.input :subscribed_at, input_html: {class: 'span3', readonly: true}
+          = f.input :unsubscribed_at, input_html: {class: 'span3', readonly: true}
+          = f.input :opt_in_mail_sent_at, input_html: {class: 'span3', readonly: true}
+          = f.input :sidekiq_status, as: :select, collection: Light::User::STATUS.values, label: 'Status', prompt: 'Select Status', selected: @user.sidekiq_status
+          %br
+          = f.label 'Blocked'
+          .make-switch{tabindex: 0, 'data-on': 'success', 'data-off': 'warning', 'data-on-label': 'Yes', 'data-off-label': 'No'}
+            = f.check_box :is_blocked, {}, 'true', 'false'
+          %br
+          %br
+          = f.label 'Subscribed'
+          .make-switch{tabindex: 0, 'data-on': 'success', 'data-off': 'warning', 'data-on-label': 'Yes', 'data-off-label': 'No'}
+            = f.check_box :is_subscribed, {}, 'true', 'false'
+          %br
+          %br
+          = f.button :submit, class: 'btn btn-success controls'
 
 :javascript
   $('[data-behaviour~=datepicker]').datepicker({
