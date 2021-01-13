@@ -1,10 +1,12 @@
+require 'devise'
+
 module Light
   class User
     include Mongoid::Document
     include Mongoid::Slug
     include Mongoid::History::Trackable
 
-    NEW_USER = "new user"
+    NEW_USER = 'new user'
 
     field :email_id,      type: String
     field :username,      type: String
@@ -28,7 +30,7 @@ module Light
 
     slug :username
 
-    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip, 
+    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip,
                        :user_agent, :is_subscribed, :unsubscribed_at]
     before_create do
       self.joined_on = Date.today
@@ -57,7 +59,8 @@ module Light
           username:       worksheet[i + 1, column - 1],
           is_subscribed:  true,
           joined_on:      Date.today,
-          source:         'Google Spreadsheet')
+          source:         'Google Spreadsheet'
+        )
 
         if user.save
         else
@@ -69,8 +72,8 @@ module Light
     end
 
     def self.import(file, email='')
-      return {error: "Please select CSV file"} if (file.blank? or file.content_type != 'text/csv')
-      file = CSV.open(file.path, :row_sep => :auto, :col_sep => ",")
+      return {error: 'Please select CSV file'} if (file.blank? or file.content_type != 'text/csv')
+      file = CSV.open(file.path, :row_sep => :auto, :col_sep => ',')
       rows = file.read
       header = rows.delete_at(0)
       if header.first.strip.downcase != 'full name' and header[1].strip.downcase != 'email'
@@ -80,13 +83,8 @@ module Light
       {success: 'You will get an update email.'}
     end
 
-    def self.users_for_opt_in_mail
-      date = Date.today.strftime("%Y%m")
-      self.new_users.where(:sent_on.nin => [date], is_blocked: false).order_by([:email_id, :asc])
-    end
-
-    def self.users_for_opt_out_mail
-      date = Date.today.strftime("%Y%m")
+    def self.get_new_users
+      date = Date.today.strftime('%Y%m')
       self.new_users.where(:sent_on.nin => [date], is_blocked: false).order_by([:email_id, :asc])
     end
   end

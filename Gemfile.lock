@@ -7,6 +7,16 @@ GIT
       oauth (>= 0.3.6)
       oauth2 (>= 0.5.0)
 
+GIT
+  remote: git://github.com/aq1018/mongoid-history.git
+  revision: 2935da05ccf24027c83b3bd1a92b39edc78ee6b8
+  specs:
+    mongoid-history (0.8.4)
+      activesupport
+      easy_diff
+      mongoid (>= 3.0)
+      mongoid-compatibility (>= 0.5.1)
+
 PATH
   remote: .
   specs:
@@ -25,12 +35,13 @@ PATH
       jquery-rails
       mini_magick
       mongoid
+      mongoid-history
       omniauth-google-oauth2
       rails (~> 4.2.5.2)
       redactor-rails (= 0.4.5)
       redis-namespace
       redis-rails
-      rest_client
+      rest-client
       sass-rails (~> 4.0.3)
       select2-rails
       sendgrid
@@ -85,16 +96,17 @@ GEM
       addressable (>= 2.3.1)
       extlib (>= 0.9.15)
       multi_json (>= 1.0.0)
-    autoprefixer-rails (7.2.2)
+    autoprefixer-rails (9.8.6)
       execjs
     bcrypt (3.1.7)
     bootstrap-datepicker-rails (1.3.0.2)
       railties (>= 3.0)
-    bootstrap-sass (3.3.5)
-      autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.2.19)
+    bootstrap-sass (3.4.1)
+      autoprefixer-rails (>= 5.2.1)
+      sassc (>= 2.0.0)
     bson (2.3.0)
     builder (3.2.3)
+    byebug (10.0.2)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -104,7 +116,7 @@ GEM
       carrierwave (>= 0.8.0, < 0.11.0)
       mongoid (>= 3.0, < 5.0)
       mongoid-grid_fs (>= 1.3, < 3.0)
-    celluloid (0.17.3)
+    celluloid (0.17.4)
       celluloid-essentials
       celluloid-extras
       celluloid-fsm
@@ -148,7 +160,10 @@ GEM
     devise_invitable (1.6.1)
       actionmailer (>= 3.2.6)
       devise (>= 3.2.0)
-    diff-lcs (1.2.5)
+    diff-lcs (1.4.4)
+    domain_name (0.5.20190701)
+      unf (>= 0.0.5, < 1.0.0)
+    easy_diff (1.0.0)
     erubis (2.7.0)
     execjs (2.7.0)
     extlib (0.9.16)
@@ -161,7 +176,8 @@ GEM
       i18n (~> 0.5)
     faraday (0.9.0)
       multipart-post (>= 1.2, < 3)
-    globalid (0.4.1)
+    ffi (1.12.2)
+    globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.7.1)
       addressable (>= 2.3.2)
@@ -174,7 +190,7 @@ GEM
       retriable (>= 1.4)
       signet (>= 0.5.0)
       uuidtools (>= 2.1.0)
-    haml (5.0.4)
+    haml (5.2.0)
       temple (>= 0.8.0)
       tilt
     haml-rails (1.0.0)
@@ -186,22 +202,23 @@ GEM
     hashdiff (0.2.3)
     hashie (2.1.2)
     hike (1.2.3)
-    hitimes (1.2.6)
     html2haml (2.2.0)
       erubis (~> 2.7.0)
       haml (>= 4.0, < 6)
       nokogiri (>= 1.6.0)
       ruby_parser (~> 3.5)
+    http-accept (1.7.0)
+    http-cookie (1.0.3)
+      domain_name (~> 0.5)
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     i18n (0.9.1)
       concurrent-ruby (~> 1.0)
     imgkit (1.6.0)
-    jbuilder (2.7.0)
+    jbuilder (2.9.1)
       activesupport (>= 4.2.0)
-      multi_json (>= 1.2)
-    jquery-rails (4.3.1)
+    jquery-rails (4.4.0)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
@@ -213,7 +230,7 @@ GEM
     loofah (2.1.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
-    mail (2.7.0)
+    mail (2.7.1)
       mini_mime (>= 0.1.1)
     method_source (0.8.2)
     mime-types (2.99.3)
@@ -223,7 +240,7 @@ GEM
     mina_extensions (0.0.2)
     mini_magick (3.8.0)
       subexec (~> 0.2.1)
-    mini_mime (1.0.0)
+    mini_mime (1.0.2)
     mini_portile2 (2.3.0)
     minitest (5.10.3)
     mongoid (4.0.0)
@@ -231,11 +248,21 @@ GEM
       moped (~> 2.0.0)
       origin (~> 2.1)
       tzinfo (>= 0.3.37)
+    mongoid-compatibility (0.5.1)
+      activesupport
+      mongoid (>= 2.0)
     mongoid-grid_fs (2.1.0)
       mime-types (>= 1.0, < 3.0)
       mongoid (>= 3.0, < 5.0)
     mongoid-paperclip (0.0.9)
       paperclip (>= 2.3.6)
+    mongoid-rspec (4.1.0)
+      activesupport (>= 3.0.0)
+      mongoid (>= 3.1)
+      mongoid-compatibility (>= 0.5.1)
+      rspec-core (~> 3.3)
+      rspec-expectations (~> 3.3)
+      rspec-mocks (~> 3.3)
     mongoid_slug (3.2.1)
       mongoid (> 3.0)
       stringex (~> 2.0)
@@ -246,7 +273,7 @@ GEM
     multi_json (1.12.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
-    netrc (0.7.7)
+    netrc (0.11.0)
     nokogiri (1.8.1)
       mini_portile2 (~> 2.3.0)
     oauth (0.4.7)
@@ -336,26 +363,30 @@ GEM
     ref (1.0.5)
     responders (2.1.1)
       railties (>= 4.2.0, < 5.1)
-    rest_client (1.7.3)
-      netrc (~> 0.7.7)
+    rest-client (2.1.0)
+      http-accept (>= 1.7.0, < 2.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 4.0)
+      netrc (~> 0.8)
     retriable (1.4.1)
-    rspec-core (3.0.3)
-      rspec-support (~> 3.0.0)
-    rspec-expectations (3.0.3)
+    rspec-core (3.9.3)
+      rspec-support (~> 3.9.3)
+    rspec-expectations (3.9.4)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.0.0)
-    rspec-mocks (3.0.3)
-      rspec-support (~> 3.0.0)
-    rspec-rails (3.0.2)
+      rspec-support (~> 3.9.0)
+    rspec-mocks (3.9.1)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-rails (3.9.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       railties (>= 3.0)
-      rspec-core (~> 3.0.0)
-      rspec-expectations (~> 3.0.0)
-      rspec-mocks (~> 3.0.0)
-      rspec-support (~> 3.0.0)
-    rspec-support (3.0.3)
-    ruby_parser (3.10.1)
+      rspec-core (~> 3.9.0)
+      rspec-expectations (~> 3.9.0)
+      rspec-mocks (~> 3.9.0)
+      rspec-support (~> 3.9.0)
+    rspec-support (3.9.4)
+    ruby_parser (3.15.0)
       sexp_processor (~> 4.9)
     safe_yaml (1.0.3)
     sass (3.2.19)
@@ -364,13 +395,15 @@ GEM
       sass (~> 3.2.2)
       sprockets (~> 2.8, < 3.0)
       sprockets-rails (~> 2.0)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     select2-rails (3.5.9)
       thor (~> 0.14)
     sendgrid (1.2.0)
       json
     sendgrid_toolkit (1.4.0)
       httparty (>= 0.7.6)
-    sexp_processor (4.10.0)
+    sexp_processor (4.15.1)
     sidekiq (3.3.0)
       celluloid (>= 0.16.0)
       connection_pool (>= 2.0.0)
@@ -396,7 +429,7 @@ GEM
     slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
-    sprockets (2.12.4)
+    sprockets (2.12.5)
       hike (~> 1.2)
       multi_json (~> 1.0)
       rack (~> 1.0)
@@ -407,22 +440,24 @@ GEM
       sprockets (>= 2.8, < 4.0)
     stringex (2.5.2)
     subexec (0.2.3)
-    temple (0.8.0)
+    temple (0.8.2)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (1.4.1)
-    timers (4.1.2)
-      hitimes
-    turbolinks (5.0.1)
-      turbolinks-source (~> 5)
-    turbolinks-source (5.0.3)
+    timers (4.3.2)
+    turbolinks (5.2.1)
+      turbolinks-source (~> 5.2)
+    turbolinks-source (5.2.0)
     tzinfo (1.2.4)
       thread_safe (~> 0.1)
-    uglifier (4.0.1)
+    uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.7)
     uuidtools (2.1.4)
     vcr (2.9.2)
     warden (1.2.3)
@@ -436,6 +471,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  byebug
   carrierwave
   carrierwave-mongoid
   database_cleaner
@@ -449,7 +485,9 @@ DEPENDENCIES
   mina_extensions
   mini_magick
   mongoid
+  mongoid-history!
   mongoid-paperclip
+  mongoid-rspec
   mongoid_slug
   omniauth-google-oauth2
   pry
@@ -457,8 +495,8 @@ DEPENDENCIES
   redis-namespace
   redis-rails
   responders (~> 2.0)
-  rest_client
-  rspec-rails
+  rest-client
+  rspec-rails (~> 3.1)
   select2-rails
   sendgrid
   sendgrid_toolkit
@@ -469,5 +507,8 @@ DEPENDENCIES
   vcr
   webmock
 
+RUBY VERSION
+   ruby 2.2.4p230
+
 BUNDLED WITH
-   1.11.2
+   1.17.3

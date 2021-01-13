@@ -1,95 +1,108 @@
-require_dependency "light/application_controller"
+require_dependency 'light/application_controller'
 
 module Light
   class NewslettersController < ApplicationController
 
-    before_filter :load_newsletter, only: [:send_opt_in, :send_opt_in_test, :test_opt_in,
-                                           :send_opt_out, :send_opt_out_test, :test_opt_out]
+    before_filter :load_newsletter, only: [:send_newsletter, :send_test_mail, :test_mail,
+                                           :show, :edit, :update, :destroy, :web_version]
 
     def index
-      @newsletters = Newsletter.monthly_letters.order_by([:sent_on, :desc])
-    end
-
-    def opt_in
-      @newsletters = Newsletter.opt_in_letters.order_by([:sent_on, :desc])
-    end
-
-    def opt_out
-      @newsletters = Newsletter.opt_out_letters.order_by([:sent_on, :desc])
+      type = params[:type].present? ? params[:type] : Newsletter::NEWSLETTER_TYPES[:MONTHLY]
+      @newsletters = Newsletter.where(newsletter_type: type).order_by([:sent_on, :desc])
     end
 
     def show
-      @newsletter = Newsletter.find(params[:id])
     end
 
-    def new 
+    def new
       @newsletter = Newsletter.new
     end
 
-    def create 
+    def create
       @newsletter = Newsletter.new(newsletters_params)
       if @newsletter.save
         @newsletter.update(sent_on: Date.today)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
-        redirect_to newsletters_path
+        flash[:success] = 'Newsletter created successfully'
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
+        flash[:error] = 'Error while creating newsletter'
         render action: 'new'
       end
     end
 
     def edit
-      @newsletter = Newsletter.find(params[:id])
     end
 
     def update
-      @newsletter = Newsletter.find(params[:id])
       if @newsletter.update_attributes(newsletters_params)
         Light::CreateImageWorker.perform_async(@newsletter.id.to_s)
-        redirect_to newsletters_path
+        flash[:success] = 'Newsletter updated successfully'
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
       else
+        flash[:error] = 'Error while updating newsletter'
         render action: 'edit'
       end
     end
 
     def destroy
-      @newsletter = Newsletter.find(params[:id])
-      @newsletter.destroy
-      redirect_to newsletters_path
+      if @newsletter && @newsletter.destroy
+        flash[:success] = 'Newsletter deleted successfully'
+        redirect_to newsletters_path(type: @newsletter.newsletter_type)
+      else
+        flash[:error] = 'Error while deleting newsletter'
+        redirect_to newsletters_path
+      end
     end
 
     def web_version
-      @newsletter = Newsletter.find(params[:id])
       render layout: false
     end
 
-    def test_opt_in
+    def send_newsletter
+      if @newsletter
+        type = @newsletter.newsletter_type
+
+        case type
+        when Newsletter::NEWSLETTER_TYPES[:OPT_IN]
+          Light::OptInWorker.perform_async(@newsletter.id.to_s)
+          flash[:notice] = 'Sent Opt-In newsletter successfully'
+        when Newsletter::NEWSLETTER_TYPES[:OPT_OUT]
+          Light::OptOutWorker.perform_async(@newsletter.id.to_s)
+          flash[:notice] = 'Sent Opt-Out newsletter successfully'
+        when Newsletter::NEWSLETTER_TYPES[:MONTHLY]
+          Light::UserWorker.perform_async(@newsletter.id.to_s)
+          flash[:notice] = 'Sent Monthly newsletter successfully'
+        else
+          flash[:error] = 'Invalid newsletter type'
+        end
+        redirect_to newsletters_path(type: type)
+      else
+        flash[:error] = 'Newsletter not found.'
+        redirect_to newsletters_path
+      end
     end
 
-    def send_opt_in_test
-      emails = params[:email][:email_id].split(",")
-      Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
-      redirect_to newsletter_path(@newsletter)
+    def send_test_mail
+      emails = params[:email][:email_id].split(',')
+      unless emails.empty?
+        if @newsletter
+          Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver_now
+          flash[:notice] = 'You will receive newsletter on the given email ids shortly.'
+          redirect_to newsletters_path(type: @newsletter.newsletter_type)
+        else
+          flash[:error] = 'Newsletter not found.'
+          redirect_to newsletters_path
+        end
+      else
+        flash[:error] = 'Atleast one email ID is expected.'
+        render 'test_mail'
+      end
     end
 
-    def send_opt_in
-      Light::OptInWorker.perform_async(@newsletter.id.to_s)
-      redirect_to opt_in_newsletters_path
-    end
-    
-    def test_opt_out
+    def test_mail
     end
 
-    def send_opt_out_test
-      emails = params[:email][:email_id].split(",")
-      Light::UserMailer.welcome_message(emails, @newsletter, 'test_user_dummy_id').deliver if @newsletter
-      redirect_to newsletter_path(@newsletter)
-    end
-
-    def send_opt_out
-      Light::OptOutWorker.perform_async(@newsletter.id.to_s)
-      redirect_to opt_out_newsletters_path
-    end
-    
     private
 
     def newsletters_params

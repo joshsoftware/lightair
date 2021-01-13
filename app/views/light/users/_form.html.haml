@@ -5,7 +5,9 @@
     = simple_form_for (@user), html: {role: 'form', class: 'form-horizontal'} do |f|
       = f.input :email_id, input_html:{class: 'span3'}
       = f.input :username, input_html:{class: 'span3'}
-      = f.input :is_subscribed, :as => :select, input_html:{class: 'span3'}
+      = f.label 'Subscribed'
+      .make-switch{"data-on" => "success", "data-off" => "warning", "data-on-label" => "True", "data-off-label" => "False"}
+        = f.check_box :is_subscribed, {}, 'true', 'false'
       = f.input :joined_on, input_html: { 'data-behaviour' => 'datepicker'}, input_html:{class: 'span3'}
       = f.input :source, input_html:{class: 'span3'}
       = f.button :submit, class: "btn btn-success controls"

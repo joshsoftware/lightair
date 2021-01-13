@@ -1,7 +1,0 @@
-.panel.panel-primary
-  .panel-heading 
-    Test Mail
-  .panel-body
-    = form_for :email, as: :post, url: sendtest_path do |f|
-      = f.text_area :email_id
-      = f.button :submit, class: "btn btn-success"
