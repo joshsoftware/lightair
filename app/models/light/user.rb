@@ -32,7 +32,7 @@ module Light
 
     slug :username
 
-    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip, 
+    track_history on: [:opt_in_mail_sent_at, :subscribed_at, :remote_ip,
                        :user_agent, :is_subscribed, :unsubscribed_at]
     before_create do
       self.joined_on = Date.today
@@ -73,7 +73,7 @@ module Light
     end
 
     def self.import(file, email='')
-      return {error: "Please select CSV file"} if (file.blank? or file.content_type != 'text/csv')
+      return {error: "Please select CSV file"} if (file.blank? or (file.content_type != 'text/csv' && file.content_type != 'application/octet-stream'))
       file = CSV.open(file.path, :row_sep => :auto, :col_sep => ",")
       rows = file.read
       header = rows.delete_at(0)
