@@ -13,6 +13,7 @@ module Light
     field :sent_on,     type: Date
     field :users_count,  type: Integer, default: 0
     field :newsletter_type,  type: String, default: VALID_NEWSLETTER_TYPES[:MONTHLY]
+    field :sent_via_sendgrid_api, type: Boolean, default: false
 
     validates :content, :subject, :newsletter_type, presence: true
     validates :subject, uniqueness: true
