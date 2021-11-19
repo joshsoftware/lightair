@@ -19,6 +19,8 @@
       %center
         %hr
           = link_to "Edit", edit_newsletter_path(newsletter), class: "btn btn-mini btn-success", data: { no_turbolink: true }
-          = link_to "Delete", newsletter_path(newsletter), method: :delete, class: "btn btn-mini btn-danger"
+          = link_to "Delete", "#", data: {toggle: "modal", target: "#delete-confirmation-modal-#{newsletter.id}"}, class: "btn btn-mini btn-danger delete-button"
+          = render "delete_confirmation_modal", newsletter: newsletter
     -count+=1
+
 

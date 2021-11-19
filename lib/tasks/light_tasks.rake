@@ -42,5 +42,13 @@ namespace :light do
     end
   end
 
+  task update_users_emails: :environment do
+    unless Rails.env.production?
+      Light::User.each do |user|
+        user.email_id = "test_#{user.id}@joshsoftware.com"
+        user.save
+      end
+    end
+  end
 end
 
