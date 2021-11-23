@@ -1,0 +1,11 @@
+%div{class: "modal hide fade", id: "delete-confirmation-modal-#{newsletter.id}", "aria-hidden": "true"}
+  %div.modal-dialog
+    %div.modal-content
+      %div.modal-header{style: "font-size: 14px; text-align: left;"}
+        %h5.modal-title= "Deletion Confirmation"
+      %div.modal-body
+        %p{style: "font-size: 12px; text-align: left;"}
+          ="Do you really want to delete this newsletter with subject #{newsletter.subject}?"
+      %div.modal-footer
+        = link_to "Delete", newsletter_path(newsletter), method: :delete, class: "btn btn-mini btn-danger"
+        %button{type: "button", class: "btn btn-secondary", "data-dismiss": "modal", style: "padding-top: 0px;padding-bottom: 0px;padding-left: 6px;padding-right: 6px;font-size: 12px;"}="Close"
