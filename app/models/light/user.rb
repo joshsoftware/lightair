@@ -5,7 +5,7 @@ module Light
     include Mongoid::History::Trackable
 
     STATUS = {
-      new_user: 'new_user', subscribed: 'Subscribed', unsubscribed: 'Unsubscribed',
+      new_user: 'New User', subscribed: 'Subscribed', unsubscribed: 'Unsubscribed',
       block: 'Block', bounced: 'Bounced', spam: 'Spam', invalid: 'Invalid',
       opt_in: 'Opt in mail sent'
     }
