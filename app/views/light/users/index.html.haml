@@ -16,7 +16,7 @@
         %select.form-control#user_status
           %option{:value => 'Subscribed'} Subscribed: #{Light::User.subscribed_users.count}
           %option{:value => 'Unsubscribed'} Unsubscribed: #{Light::User.unsubscribed_users.count}
-          %option{:value => 'new user'} New User: #{Light::User.new_users.count}
+          %option{:value => 'New User'} New User: #{Light::User.new_users.count}
           %option{:value => 'Block'} Blocked: #{Light::User.blocked_users.count}
           %option{:value => 'Invalid'} Invalid: #{Light::User.invalid_users.count}
           %option{:value => 'Bounced'} Bounced: #{Light::User.bounced_users.count}
