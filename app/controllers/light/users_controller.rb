@@ -25,7 +25,7 @@ module Light
       @user = Light::User.new(users_params)
       @user.sent_on = Array.new
       if @user.save
-        @user.update(source: 'Manual', sent_on: Array.new, sidekiq_status: 'new user' )
+        @user.update(source: 'Manual', sent_on: Array.new, sidekiq_status: Light::User::STATUS[:new_user])
         redirect_to users_path
       else
         render action: 'new'
